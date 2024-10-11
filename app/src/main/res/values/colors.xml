@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="secondary">#999999</color>
+    <color name="third">#7C7C7D</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="semi_transparent">#66000000</color>
+
+    <color name="gray100">#F5F5F5</color>
+    <color name="blue">#444cb4</color>
+    <color name="gris">#F7FBFE</color>
+    <color name="plomo">#6B7F9A</color>
+    <color name="gris_flecha">#BBBBBB</color>
+    <color name="yellow">#ffd700</color>
+    <color name="red">#ff0000</color>
+    <color name="verdeClaro">#178c5f</color>
+    <color name="blue_primary">#2A6BAF</color>
+
+    <!-- paleta -->
+    <color name="negroq">#000900</color>
+    <color name="moradoq">#680042</color>
+    <color name="rosadoq">#d7266f</color>
+    <color name="naranjaq">#eb651c</color>
+    <color name="naranjaclaroq">#ed9e59</color>
+    <color name="verdeq">#195622</color>
+    <color name="primaryColor">#203E6C</color>
+    <color name="verdepastelq">#E0EFF4</color>
+    <color name="verdeclaroq">#E0EFF4</color>
+    <color name="green100">#EDF4EC</color>
+    <color name="green200">#CCD886</color>
+    <color name="blancoq">#fff4e9</color>
+    <color name="plomoq">#C7C7C7</color>
+    <color name="plomoRegular">#DDDDDD</color>
+    <color name="plomoDark">#B3B3B3</color>
+    <color name="grey100">#CECECE</color>
+    <color name="grey200">#979797</color>
+    <color name="verdeMenu">#93B604</color>
+    <color name="grisTitulo">#767676</color>
+    <color name="background">#EEEEEE</color>
+    <color name="bannerActiviry">#F1F4E0</color>
+    <color name="backgroundBanner">#F9F9F9</color>
+    <color name="tituloCategoria">#DADADA</color>
+    <color name="backgroundCard">#E4EFF3</color>
+
+</resources>

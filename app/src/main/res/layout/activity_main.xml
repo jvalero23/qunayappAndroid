@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".vistas.MainActivity">
+
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:src="@drawable/background_main_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/logo_qunay"
+                android:layout_width="220dp"
+                android:layout_height="220dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="40dp"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:backgroundTint="@color/blue_primary"
+                android:fontFamily="@font/worksans_regular"
+                app:cornerRadius="60dp"
+                android:textColor="@color/white"
+                android:id="@+id/btnRegistrar"
+                android:layout_marginTop="42dp"
+                android:layout_gravity="center"
+                android:padding="18dp"
+                android:textAllCaps="false"
+                android:text="@string/next"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:weightSum="100"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:fontFamily="@font/worksans_regular"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:layout_weight="20"
+                    android:textColor="@color/black"
+                    android:text="@string/label_register_with"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="280dp"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:src="@drawable/sigin_google_button"
+                    android:layout_width="220dp"
+                    android:layout_height="60dp"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_linearlayout"
+                android:backgroundTint="@color/blue_primary"
+                android:layout_width="40dp"
+                android:layout_height="6dp"/>
+
+            <TextView
+                android:layout_marginTop="22dp"
+                android:id="@+id/txtlogin"
+                android:fontFamily="@font/worksans_regular"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:text="¿Ya estás registrado? Ingresa aquí"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

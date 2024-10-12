@@ -44,6 +44,7 @@ import com.pe.mascotapp.vistas.adapters.HomeAdapter
 import com.pe.mascotapp.vistas.adapters.HomeListServiceAdapter
 import com.pe.mascotapp.vistas.adapters.HomeServiceAdapter
 import com.pe.mascotapp.vistas.alert.AlertActivity
+import com.pe.mascotapp.vistas.event_history.EventHistoryFragment
 import com.pe.mascotapp.vistas.fragments.home.CalendarFragment
 import com.pe.mascotapp.vistas.fragments.home.HomeFragment
 import com.pe.mascotapp.vistas.fragments.home.PetsFragment
@@ -154,6 +155,7 @@ class HomeActivity : AppCompatActivity() {
             var selectedFragment: Fragment? = null
             when (item.itemId) {
                 R.id.nav_home -> selectedFragment = HomeFragment.newInstance()
+                R.id.nav_history -> selectedFragment = EventHistoryFragment.newInstance()
                 R.id.nav_calendar -> selectedFragment = CalendarFragment.newInstance()
                 R.id.nav_pet -> selectedFragment = PetsFragment.newInstance()
                 R.id.nav_notification -> selectedFragment = ReminderFragment.newInstance()

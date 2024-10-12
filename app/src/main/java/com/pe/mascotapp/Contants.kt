@@ -4,15 +4,46 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val workSansFontFamily = FontFamily(
-    Font(R.font.worksans_bold, FontWeight.Bold),
-    Font(R.font.worksans_regular, FontWeight.Normal),
-    Font(R.font.worksans_light, FontWeight.Light),
-    Font(R.font.worksans_semibold, FontWeight.SemiBold),
-    Font(R.font.worksans_medium, FontWeight.Medium),
+    Font(resId = R.font.worksans_light, weight = FontWeight.Light),
+    Font(resId = R.font.worksans_semibold, weight = FontWeight.SemiBold),
+    Font(resId = R.font.worksans_extrabold, weight = FontWeight.ExtraBold),
+    Font(resId = R.font.worksans_bold, weight = FontWeight.Bold),
+    Font(resId = R.font.worksans_bolditalic, weight = FontWeight.Bold, style = FontStyle.Italic),
+    Font(
+        resId = R.font.worksans_extrabolditalic,
+        weight = FontWeight.ExtraBold,
+        style = FontStyle.Italic
+    ),
+    Font(resId = R.font.worksans_extralight, weight = FontWeight.ExtraLight),
+    Font(
+        resId = R.font.worksans_extralightitalic,
+        weight = FontWeight.ExtraLight,
+        style = FontStyle.Italic
+    ),
+    Font(resId = R.font.worksans_italic, weight = FontWeight.Normal, style = FontStyle.Italic),
+    Font(resId = R.font.worksans_lightitalic, weight = FontWeight.Light, style = FontStyle.Italic),
+    Font(resId = R.font.worksans_medium, weight = FontWeight.Medium),
+    Font(
+        resId = R.font.worksans_mediumitalic,
+        weight = FontWeight.Medium,
+        style = FontStyle.Italic
+    ),
+    Font(resId = R.font.worksans_regular, weight = FontWeight.Normal),
+    Font(resId = R.font.worksans_semibold, weight = FontWeight.SemiBold),
+    Font(
+        resId = R.font.worksans_semibolditalic,
+        weight = FontWeight.SemiBold,
+        style = FontStyle.Italic
+    ),
+    Font(resId = R.font.worksans_thin, weight = FontWeight.Thin),
+    Font(resId = R.font.worksans_extralight, weight = FontWeight.ExtraLight),
+    Font(resId = R.font.worksans_black, weight = FontWeight.Black),
+    Font(resId = R.font.worksans_blackitalic, weight = FontWeight.Black, style = FontStyle.Italic),
 )
 
 val caprasimoFontFamily = FontFamily(
@@ -93,3 +124,4 @@ val colorYellow = Color(0xFFF2C953)
 val colorCyan =Color(0xFFE4EFF3)
 val colorHorizontal =Color(0xFFF9F9F9)
 val colorGrisTittle = Color(0xFF767676)
+val colorLightGrisTitle = Color(0xFFF6F6F6)

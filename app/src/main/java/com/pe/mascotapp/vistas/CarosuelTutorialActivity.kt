@@ -7,6 +7,7 @@ import android.view.View.OnTouchListener
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.tabs.TabLayout
 import com.pe.mascotapp.R
 import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.fragments.CarosuelFragmentTutorialState
@@ -16,6 +17,7 @@ class CarosuelTutorialActivity : AppCompatActivity() {
     var viewPStep: ViewPager? = null
     var btnVolver: TextView? = null
     var btnSiguiente: MaterialButton? = null
+    var tabLayout : TabLayout ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,9 @@ class CarosuelTutorialActivity : AppCompatActivity() {
         btnVolver = findViewById<TextView>(R.id.btnVolver)
         btnSiguiente = findViewById<MaterialButton>(R.id.btnSiguiente)
         viewPStep!!.adapter = CarosuelFragmentTutorialState(supportFragmentManager,this)
+        //tabLayout = findViewById<TabLayout>(R.id.tabStepTutorial)
+
+        //tabLayout!!.setupWithViewPager(viewPStep,true)
 
         btnVolver!!.setOnClickListener{
             finishStep()

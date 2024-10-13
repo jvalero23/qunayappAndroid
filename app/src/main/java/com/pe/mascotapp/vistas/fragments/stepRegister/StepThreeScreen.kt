@@ -231,7 +231,7 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 31.dp),
+                        .padding(top = 22.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -260,12 +260,14 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                             .padding(top = 10.dp, end = 32.dp, start = 32.dp)
                             .fillMaxWidth(),
                         value = usuario.name
-                    )
+                    ){
+                        (ctx as? CarosuelRegisterActivity)?.editPerson()
+                    }
                 }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp),
+                        .padding(top = 8.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

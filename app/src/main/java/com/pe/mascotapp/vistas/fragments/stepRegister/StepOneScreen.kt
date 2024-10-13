@@ -217,6 +217,7 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                     )
                     Spacer(modifier  = Modifier.height(16.dp))
                     CustomTextField(
+                        capitalizacion = true,
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = painterResource(id = R.drawable.nombre_usuario),
                         value = name,

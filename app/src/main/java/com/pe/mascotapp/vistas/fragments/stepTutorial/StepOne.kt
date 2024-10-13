@@ -114,7 +114,7 @@ fun StepsTutorial(
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = title,
-                fontFamily = FontFamily(Font(R.font.worksans_black)),
+                fontFamily = FontFamily(Font(R.font.caprasimo_regular)),
                 textAlign = TextAlign.Center,
                 fontSize = 24.sp,
                 color = colorPrimary

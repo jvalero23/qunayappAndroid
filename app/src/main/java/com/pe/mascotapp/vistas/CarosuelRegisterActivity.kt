@@ -400,6 +400,10 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
         usuario = updatedUsuario
     }
 
+    fun editPerson(){
+        viewPStep!!.setCurrentItem(0, true)
+    }
+
     override fun onBackPressed() {
         if (viewPStep!!.currentItem == 0) {
             super.onBackPressed()

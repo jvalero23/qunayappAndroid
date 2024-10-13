@@ -83,6 +83,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
@@ -280,6 +281,7 @@ fun FormPet(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) 
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = painterResource(id = R.drawable.mascotas),
             value = listPets[pagerState.currentPage].pet.name,
+            capitalizacion = true,
             onValueChange = {
                 val pet = listPets[pagerState.currentPage].pet
                 listPets[pagerState.currentPage] = listPets[pagerState.currentPage].copy(
@@ -624,6 +626,7 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     leadingIcon: Painter? = null,
     suffix: String? = null,
+    capitalizacion: Boolean = false,
     label: String = "",
     textAlign: TextAlign = TextAlign.Start,
     keyBoarType: KeyboardType = KeyboardType.Text,
@@ -633,6 +636,17 @@ fun CustomTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
     val focusManager = LocalFocusManager.current
+    var keyboardOptions =   KeyboardOptions(
+        keyboardType = keyBoarType
+    )
+    if(capitalizacion){
+         keyboardOptions =   KeyboardOptions(
+            keyboardType = keyBoarType,
+            capitalization = KeyboardCapitalization.Sentences
+        )
+    }
+
+
     OutlinedTextField(
         enabled = enabled,
         modifier = modifier,
@@ -670,10 +684,9 @@ fun CustomTextField(
         label = { Text(text = label, style = textFieldTextStyle) },
         suffix = { Text(text = suffix ?: "") },
         textStyle = LocalTextStyle.current.copy(textAlign = textAlign),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyBoarType
-        ),
+        keyboardOptions =  keyboardOptions,
         visualTransformation = visualTransformation,
+
     )
 }
 

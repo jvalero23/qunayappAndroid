@@ -108,7 +108,7 @@ fun MainScreen() {
             ) {
                 Text(
                     fontSize = 16.sp,
-                    text = stringResource(id = R.string.next),
+                    text = "Registrarse",
                     color = Color.White,
                     fontFamily = FontFamily(
                         Font(
@@ -180,7 +180,7 @@ fun MyTextWithClickablePart( context: Context) {
         }
         pushStringAnnotation(tag = "clickable", annotation = "link") // Add an annotation to the clickable part
         withStyle(style = SpanStyle(color = skyBlue)) { // Use your skyBlue color here
-            append("Ingresa aquí")
+            append("Iniciar sesión")
         }
         pop() // Remove the annotation
     }

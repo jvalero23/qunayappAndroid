@@ -19,15 +19,36 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:fillViewport="true"
-            android:layout_above="@id/llBottom">
+            android:layout_above="@id/llBottom"
+            tools:ignore="ScrollViewCount">
 
-            <androidx.viewpager.widget.ViewPager
-                android:adjustViewBounds="true"
+            <LinearLayout
+                android:weightSum="100"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/viewPStep"
-                >
-            </androidx.viewpager.widget.ViewPager>
+                android:layout_height="0dp">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:adjustViewBounds="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="95"
+                    android:id="@+id/viewPStep"
+                    >
+                </androidx.viewpager.widget.ViewPager>
+
+                <!--<com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabStepTutorial"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    app:tabBackground="@drawable/ic_tab_selected"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"/>-->
+
+            </LinearLayout>
+
+
 
         </androidx.core.widget.NestedScrollView>
 

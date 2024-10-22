@@ -1,11 +1,11 @@
 package com.pe.mascotapp.vistas.event_history.navigation
 
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
+import com.pe.mascotapp.vistas.event_history.create.ui.createEventHistoryDestination
+import com.pe.mascotapp.vistas.event_history.create.ui.navigateToCreateEventHistoryDestination
 import com.pe.mascotapp.vistas.event_history.filter.ui.eventHistoryFilterDestination
 import com.pe.mascotapp.vistas.event_history.filter.ui.navigateToEventHistoryFilterDestination
 import com.pe.mascotapp.vistas.event_history.main.ui.EventHistoryDestination
@@ -30,12 +30,14 @@ fun NavGraphBuilder.eventHistoryGraphDestination(
             navToDetail = {
 
             },
-            onAddHistory = {
-            }
+            onAddHistory = navController::navigateToCreateEventHistoryDestination
         )
         eventHistoryFilterDestination(
             onClickAccept = navController::popBackStack,
             onClickBack = navController::popBackStack
+        )
+        createEventHistoryDestination(
+            onCreateSuccess = navController::popBackStack
         )
     }
 }

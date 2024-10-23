@@ -215,7 +215,8 @@ fun ProfileHeader(imageUrl: String, name: String) {
             painter = painterResource(id = R.drawable.bkg_profile_head),
             contentDescription = "Your image description",
             modifier = Modifier.matchParentSize(), // Use matchParentSize() here
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            alpha = 0.5f
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

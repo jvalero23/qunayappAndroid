@@ -174,8 +174,7 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                             .height(58.dp)
                             .padding(horizontal = 77.dp),
                         onClick = {
-                            val intent = Intent(ctx, CarosuelTutorialActivity::class.java)
-                            ctx.startActivity(intent)
+                            (ctx as? CarosuelRegisterActivity)?.registerUser()
                         },
                         content = {
                             Text(text = "Aceptar", style = buttonTitleStyle.copy(fontSize = 20.sp))

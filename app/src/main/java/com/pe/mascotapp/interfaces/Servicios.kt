@@ -13,4 +13,7 @@ interface Servicios {
 
     @GET("login")
     fun getLoginUser(@Query("correo") correo:String, @Query("encriptado") encriptado:String): Call<SesionUsuario>
+
+    @POST("login")
+    fun postRegisterUser(@Query("correo") correo:String, @Query("encriptado") encriptado:String): Call<SesionUsuario>
 }

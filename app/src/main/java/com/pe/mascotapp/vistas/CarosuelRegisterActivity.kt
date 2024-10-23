@@ -403,6 +403,14 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
     fun editPerson(){
         viewPStep!!.setCurrentItem(0, true)
     }
+    fun registerUser(){
+
+        
+
+        val intent = Intent(this, CarosuelTutorialActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
 
     override fun onBackPressed() {
         if (viewPStep!!.currentItem == 0) {

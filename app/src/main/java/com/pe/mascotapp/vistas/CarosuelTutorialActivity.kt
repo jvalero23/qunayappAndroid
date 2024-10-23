@@ -27,9 +27,9 @@ class CarosuelTutorialActivity : AppCompatActivity() {
         btnVolver = findViewById<TextView>(R.id.btnVolver)
         btnSiguiente = findViewById<MaterialButton>(R.id.btnSiguiente)
         viewPStep!!.adapter = CarosuelFragmentTutorialState(supportFragmentManager,this)
-        //tabLayout = findViewById<TabLayout>(R.id.tabStepTutorial)
+        tabLayout = findViewById<TabLayout>(R.id.tabStepTutorial)
 
-        //tabLayout!!.setupWithViewPager(viewPStep,true)
+        tabLayout!!.setupWithViewPager(viewPStep,true)
 
         btnVolver!!.setOnClickListener{
             finishStep()

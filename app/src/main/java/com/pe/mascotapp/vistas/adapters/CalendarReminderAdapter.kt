@@ -1,7 +1,6 @@
 package com.pe.mascotapp.vistas.adapters
 
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.pe.mascotapp.databinding.ItemCalendarPetBinding
 import com.pe.mascotapp.extentions.changeTintColor
 
 
-class CalendarReminderAdapter(val reminders: List<ReminderPetsJoinEntity>): RecyclerView.Adapter<CalendarReminderAdapter.CalendarReminderViewHolder>() {
+class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): RecyclerView.Adapter<CalendarReminderAdapter.CalendarReminderViewHolder>() {
     class  CalendarReminderViewHolder(private val binding: ItemCalendarPetBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(reminder: ReminderPetsJoinEntity) {
             handleState(reminder.reminder.isActivated)
@@ -73,9 +72,9 @@ class CalendarReminderAdapter(val reminders: List<ReminderPetsJoinEntity>): Recy
             )
             binding.txtNotesTitle.setTextColor(
                 ContextCompat.getColor(
-                binding.root.context,
-                primaryTextColor
-            ))
+                    binding.root.context,
+                    primaryTextColor
+                ))
             binding.txtPicturesTitle.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,

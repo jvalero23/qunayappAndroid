@@ -439,8 +439,7 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
 
 
     Column(
-        modifier = Modifier
-            .padding(top = 38.dp)
+        modifier = Modifier.padding(top = 38.dp)
     )
     {
         Box(
@@ -554,7 +553,7 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
             if (listPets.size > 1) {
                 repeat(listPets.size) { iteration ->
                     val color =
-                        if (listPets.size - pagerState.currentPage - 1 == iteration)
+                        if (listPets.size - pagerState.currentPage - 1 == iteration || listPets.size - pagerState.currentPage - 2 == iteration)
                             colorMediumBlue
                         else Color(0xFFCECECE).copy(
                             alpha = 0.5f
@@ -570,5 +569,38 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
             }
         }
 
+    }
+}
+
+@Preview
+@Composable
+private fun SimpleViewPagerPetsPreview() {
+    MascotappTheme {
+        SimpleViewPagerPets(
+            listPets = mutableListOf(
+                PetWithBreedsEntity(
+                    PetEntity(
+                        name = "Luna",
+                        specie = KindPet.Dog.value(),
+                    ),
+                    breeds = emptyList()
+                ),
+                PetWithBreedsEntity(
+                    PetEntity(
+                        name = "Carro",
+                        specie = KindPet.Cat.value(),
+                    ),
+                    breeds = emptyList()
+                ),
+                PetWithBreedsEntity(
+                    PetEntity(
+                        name = "Nube",
+                        specie = KindPet.Cat.value(),
+                    ),
+                    breeds = emptyList()
+                )
+            ),
+            rememberPagerState(initialPage = 1) { 3 }
+        )
     }
 }

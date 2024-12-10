@@ -122,19 +122,14 @@ import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.max
 
-@OptIn(ExperimentalFoundationApi::class)
-@Preview
 @Composable
 fun StepTwoScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableStateListOf()) {
     val currentStep = remember { mutableIntStateOf(1) }
     val ctx = LocalContext.current
-    val listPets = remember {
-        listPetsBreed
-    }
 
-    val pagerState = rememberPagerState(pageCount = {
-        listPets.size
-    })
+    val listPets = remember { listPetsBreed }
+
+    val pagerState = rememberPagerState(pageCount = { listPets.size })
 
     LaunchedEffect(1) {
         pagerState.scrollToPage((ctx as? CarosuelRegisterActivity)?.indexEdit ?: 0)
@@ -240,7 +235,6 @@ fun StepTwoScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableState
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FormPet(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
     val ctx = LocalContext.current
@@ -636,11 +630,11 @@ fun CustomTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
     val focusManager = LocalFocusManager.current
-    var keyboardOptions =   KeyboardOptions(
+    var keyboardOptions = KeyboardOptions(
         keyboardType = keyBoarType
     )
-    if(capitalizacion){
-         keyboardOptions =   KeyboardOptions(
+    if (capitalizacion) {
+        keyboardOptions = KeyboardOptions(
             keyboardType = keyBoarType,
             capitalization = KeyboardCapitalization.Sentences
         )
@@ -684,10 +678,10 @@ fun CustomTextField(
         label = { Text(text = label, style = textFieldTextStyle) },
         suffix = { Text(text = suffix ?: "") },
         textStyle = LocalTextStyle.current.copy(textAlign = textAlign),
-        keyboardOptions =  keyboardOptions,
+        keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
 
-    )
+        )
 }
 
 @Composable
@@ -1037,30 +1031,50 @@ fun BasicEditTextField(
 
 @Composable
 fun CustomDialog(
-    showDialog: Boolean,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    if (showDialog) {
-        Dialog(
-            onDismissRequest = onDismissRequest,
-            properties = DialogProperties(
-                usePlatformDefaultWidth = false
-            )
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        )
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                Modifier
+                    .width(300.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Box(
-                    Modifier
-                        .width(300.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    content()
-                }
-
+                content()
             }
+
         }
     }
+}
+
+@Preview
+@Composable
+private fun StepTwoScreenPreview() {
+    StepTwoScreen(
+        listPetsBreed = mutableListOf(
+            PetWithBreedsEntity(
+                PetEntity(
+                    name = "Luna",
+                    specie = KindPet.Dog.value(),
+                ),
+                breeds = emptyList()
+            ),
+            PetWithBreedsEntity(
+                PetEntity(
+                    name = "Carro",
+                    specie = KindPet.Cat.value(),
+                ),
+                breeds = emptyList()
+            ),
+        )
+    )
 }

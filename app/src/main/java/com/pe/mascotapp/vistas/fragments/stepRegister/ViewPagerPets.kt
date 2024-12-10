@@ -1,8 +1,6 @@
 package com.pe.mascotapp.vistas.fragments.stepRegister
 
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -42,6 +41,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -55,24 +55,41 @@ import com.pe.mascotapp.textColor
 import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import com.pe.mascotapp.vistas.entities.PetEntity
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
+import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+@Preview
 @Composable
-fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
-    val ctx = LocalContext.current
+private fun ViewPagerPetsPreview() {
+    ViewPagerPets(
+        mutableListOf(
+            PetWithBreedsEntity(
+                PetEntity(
+                    name = "Luna",
+                    specie = KindPet.Dog.value(),
+                ),
+                breeds = emptyList()
+            ),
+            PetWithBreedsEntity(
+                PetEntity(
+                    name = "Carro",
+                    specie = KindPet.Cat.value(),
+                ),
+                breeds = emptyList()
+            ),
+        ),
+        rememberPagerState { 2 }
+    )
+}
 
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-
-    val itemWidth = screenWidth / 3
-
-    val scope = rememberCoroutineScope()
-    var actualItem = 0
-    var showDialog by remember { mutableStateOf(false) }
-
+@Composable
+fun DeletePetPageDialog(
+    onDeleteClick: () -> Unit,
+    onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     CustomDialog(
-        showDialog = showDialog,
-        onDismissRequest = { showDialog = false }
+        onDismissRequest = onDismissRequest,
     ) {
         Column {
             Box(
@@ -96,7 +113,7 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Button(
-                    onClick = { showDialog = false },
+                    onClick = onDismissRequest,
                     colors = ButtonDefaults.buttonColors(Color.White)
                 ) {
                     Text(
@@ -105,29 +122,60 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                         style = buttonTitleStyle.copy(fontSize = 20.sp)
                     )
                 }
-                Button(onClick = {
-                    scope.launch {
-                        showDialog = false
-                        if (actualItem >= 1) {
-                            pagerState.scrollToPage(pagerState.currentPage - 1)
-                        }
-                        listPets.removeAt(actualItem)
-                    }
-                }, colors = ButtonDefaults.buttonColors(colorMediumBlue)) {
+                Button(
+                    onClick = onDeleteClick,
+                    colors = ButtonDefaults.buttonColors(colorMediumBlue)
+                ) {
                     Text(text = "Eliminar", style = buttonTitleStyle.copy(fontSize = 20.sp))
                 }
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun DeletePetPageDialogPreview() {
+    MascotappTheme {
+        DeletePetPageDialog(
+            onDeleteClick = {},
+            onDismissRequest = {})
+    }
+}
+
+@Composable
+fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
+    val ctx = LocalContext.current
+
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+
+    val itemWidth = screenWidth / 3
+
+    val scope = rememberCoroutineScope()
+    var actualItem = 0
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        DeletePetPageDialog(
+            onDismissRequest = { showDialog = false },
+            onDeleteClick = {
+                scope.launch {
+                    showDialog = false
+                    if (actualItem >= 1) {
+                        pagerState.scrollToPage(pagerState.currentPage - 1)
+                    }
+                    listPets.removeAt(actualItem)
+                }
+            }
+        )
+    }
 
     Column(
-        modifier = Modifier
-            .padding(top = 38.dp)
+        modifier = Modifier.padding(top = 38.dp)
     )
     {
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center,
         ) {
             if (listPets.size > 1) {
@@ -141,10 +189,10 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                         onClick = {
                             scope.launch {
                                 if (pagerState.currentPage == pagerState.pageCount - 1) {
-                                    pagerState.animateScrollToPage(0)
+                                    pagerState.scrollToPage(0)
                                     return@launch
                                 }
-                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                pagerState.scrollToPage(pagerState.currentPage + 1)
                             }
                         },
                         modifier = Modifier
@@ -156,11 +204,12 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                             modifier = Modifier
                                 .padding(end = 11.13.dp)
                                 .fillMaxSize()
-                                .rotate(180F),
+                                .rotate(180F), // Para indicar que es el botón de "izquierda"
                             contentDescription = "Button Image"
                         )
                     }
                 }
+
                 Row(
                     Modifier
                         .fillMaxWidth()
@@ -171,10 +220,10 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                         onClick = {
                             scope.launch {
                                 if (pagerState.currentPage == 0) {
-                                    pagerState.animateScrollToPage(pagerState.pageCount - 1)
+                                    pagerState.scrollToPage(pagerState.pageCount - 1)
                                     return@launch
                                 }
-                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                                pagerState.scrollToPage(pagerState.currentPage - 1)
                             }
                         },
                         modifier = Modifier
@@ -324,7 +373,6 @@ fun getColorIndex(position: Int): Long {
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
 
@@ -337,55 +385,58 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
     var showDialog by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
-    CustomDialog(
-        showDialog = showDialog,
-        onDismissRequest = { showDialog = false }
-    ) {
-        Column {
-            Box(
-                Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(
-                        MaterialTheme.colorScheme.surface,
-                    )
-                    .padding(22.dp)
-            ) {
-                Text(
-                    "¿Estás seguro de que quieres eliminar este perfil?",
-                    style = semiBoldTitleStyle,
-                    color = textColor
-                )
-            }
-            Row(
-                Modifier
-                    .padding(top = 73.dp, start = 20.dp, end = 20.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Button(
-                    onClick = { showDialog = false },
-                    colors = ButtonDefaults.buttonColors(Color.White)
+
+    if (showDialog) {
+        CustomDialog(
+            onDismissRequest = { showDialog = false }
+        ) {
+            Column {
+                Box(
+                    Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(
+                            MaterialTheme.colorScheme.surface,
+                        )
+                        .padding(22.dp)
                 ) {
                     Text(
-                        text = "Volver",
-                        color = textColor,
-                        style = buttonTitleStyle.copy(fontSize = 20.sp)
+                        "¿Estás seguro de que quieres eliminar este perfil?",
+                        style = semiBoldTitleStyle,
+                        color = textColor
                     )
                 }
-                Button(onClick = {
-                    scope.launch {
-                        showDialog = false
-                        if (actualItem >= 1) {
-                            pagerState.scrollToPage(pagerState.currentPage - 1)
-                        }
-                        listPets.removeAt(actualItem)
+                Row(
+                    Modifier
+                        .padding(top = 73.dp, start = 20.dp, end = 20.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Button(
+                        onClick = { showDialog = false },
+                        colors = ButtonDefaults.buttonColors(Color.White)
+                    ) {
+                        Text(
+                            text = "Volver",
+                            color = textColor,
+                            style = buttonTitleStyle.copy(fontSize = 20.sp)
+                        )
                     }
-                }, colors = ButtonDefaults.buttonColors(colorMediumBlue)) {
-                    Text(text = "Eliminar", style = buttonTitleStyle.copy(fontSize = 20.sp))
+                    Button(onClick = {
+                        scope.launch {
+                            showDialog = false
+                            if (actualItem >= 1) {
+                                pagerState.scrollToPage(pagerState.currentPage - 1)
+                            }
+                            listPets.removeAt(actualItem)
+                        }
+                    }, colors = ButtonDefaults.buttonColors(colorMediumBlue)) {
+                        Text(text = "Eliminar", style = buttonTitleStyle.copy(fontSize = 20.sp))
+                    }
                 }
             }
         }
     }
+
 
     Column(
         modifier = Modifier

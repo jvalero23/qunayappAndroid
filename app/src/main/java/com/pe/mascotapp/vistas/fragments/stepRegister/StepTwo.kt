@@ -24,7 +24,7 @@ class StepTwo : Fragment() {
                     ?: mutableListOf()
             )
         }
-        return view;
+        return view
     }
 
 

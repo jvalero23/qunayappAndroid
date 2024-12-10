@@ -45,7 +45,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -63,12 +62,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,7 +82,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -118,6 +113,7 @@ import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import com.pe.mascotapp.vistas.entities.PetEntity
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
 import com.pe.mascotapp.vistas.fragments.stepRegister.SelectBreedActivity.Companion.BUNDLE_BREED
+import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.max
@@ -512,6 +508,26 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean) {
     }
 }
 
+@Preview
+@Composable
+private fun CircularNamePreview() {
+    MascotappTheme {
+        CircularName(
+            PetEntity(
+                name = "",
+                specie = KindPet.Dog.value(),
+            ),
+            0,
+            0,
+            1,
+            true,
+            canEdit = {
+
+            }
+        )
+    }
+}
+
 @Composable
 fun CircularName(
     pet: PetEntity,
@@ -583,15 +599,21 @@ fun CircularName(
                 }
                 canEdit?.let {
                     BasicEditTextField(
-                        110.dp,
-                        Modifier.fillMaxWidth(),
-                        mediumTitleStyle.copy(
+                        maxWidth = 110.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(
+                                BorderStroke(1.81.dp, colorPrimary),
+                                shape = RoundedCornerShape(8.dp)
+                            ),
+                        textStyle = mediumTitleStyle.copy(
                             color = colorDisabled,
                             fontSize = 17.sp,
                             textAlign = TextAlign.Center
                         ),
                         iconSize = 20.dp,
-                        value = pet.name
+                        value = pet.name,
+                        maxLength = 10
                     ) {
                         canEdit()
                     }
@@ -990,42 +1012,47 @@ fun dateFilter(text: AnnotatedString): TransformedText {
 
 @Composable
 fun BasicEditTextField(
-    maxWidth: Dp, modifier: Modifier,
+    value: String,
+    maxWidth: Dp,
+    maxLength: Int,
     textStyle: TextStyle = mediumTitleStyle.copy(
         color = colorMediumBlue,
         fontSize = 30.sp,
         textAlign = TextAlign.Center
     ),
     iconSize: Dp = 27.dp,
-    value: String,
+    modifier: Modifier = Modifier,
     edit: () -> Unit = {}
 ) {
-    var textState by remember { mutableStateOf(TextFieldValue(value)) }
-
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+    val maskedText = if (value.length > maxLength) {
+        value.substring(0..8).plus("...")
+    } else {
+        value
+    }
+    Box(
+        modifier = modifier
     ) {
-        BasicTextField(
-            value = textState,
-            {
-                textState = it
-            },
-            textStyle = textStyle,
+        Text(
+            text = maskedText,
+            style = textStyle,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .widthIn(max = maxWidth),
-            singleLine = true,
-            readOnly = true
+                .align(Alignment.Center)
+                .widthIn(max = maxWidth)
+                .padding(horizontal = iconSize)
         )
-        Image(
+        Icon(
             painter = painterResource(id = R.drawable.ic_edit_new),
             contentDescription = "",
+            tint = Color.Unspecified,
             modifier = Modifier
+                .align(Alignment.CenterEnd)
                 .width(iconSize)
                 .clickable {
                     edit()
-                })
+                }
+        )
     }
 }
 

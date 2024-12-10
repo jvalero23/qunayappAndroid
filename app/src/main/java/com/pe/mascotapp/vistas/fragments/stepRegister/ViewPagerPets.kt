@@ -264,11 +264,11 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                 }
                 CircularName(
                     pet = listPets[page].pet,
-                    pagerState.currentPage,
-                    page,
-                    listPets.size,
-                    show,
-                    normalSize
+                    currentPage = pagerState.currentPage,
+                    page = page,
+                    totalItems = listPets.size,
+                    show = show,
+                    size = normalSize
                 ) {
                     actualItem = page
                     showDialog = !showDialog
@@ -527,11 +527,11 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
                 val normalSize = 137.dp
                 CircularName(
                     pet = listPets[page].pet,
-                    pagerState.currentPage,
-                    page,
-                    listPets.size,
-                    show,
-                    normalSize,
+                    currentPage = pagerState.currentPage,
+                    page = page,
+                    totalItems = listPets.size,
+                    show = show,
+                    size = normalSize,
                     canEdit = {
                         (ctx as? CarosuelRegisterActivity)?.listPets = listPets
                         (ctx as? CarosuelRegisterActivity)?.editPet(page)

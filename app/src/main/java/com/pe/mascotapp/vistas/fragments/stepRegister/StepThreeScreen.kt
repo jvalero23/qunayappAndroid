@@ -233,11 +233,12 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                     }
 
                     BasicEditTextField(
-                        300.dp,
+                        maxWidth = 300.dp,
                         modifier = Modifier
                             .padding(top = 10.dp, end = 32.dp, start = 32.dp)
                             .fillMaxWidth(),
-                        value = usuario.name
+                        value = usuario.name,
+                        maxLength = 18
                     ) {
                         (ctx as? CarosuelRegisterActivity)?.editPerson()
                     }

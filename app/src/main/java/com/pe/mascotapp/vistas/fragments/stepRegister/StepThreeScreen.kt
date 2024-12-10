@@ -281,8 +281,8 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                             ),
                             shape = ButtonDefaults.elevatedShape,
                             modifier = Modifier
-                                .width(70.dp)
-                                .height(70.dp)
+                                .width(80.dp)
+                                .height(80.dp)
                                 .shadow(elevation = 20.dp, shape = CircleShape)
                         ) {
                             Column(
@@ -292,12 +292,12 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                             ) {
                                 Text(
                                     text = "+",
-                                    style = boldTitleStyle.copy(fontSize = 28.sp),
+                                    style = boldTitleStyle.copy(fontSize = 40.sp),
                                     color = colorPrimary
                                 )
                                 Text(
                                     text = "Agregar\n" + "mascota",
-                                    style = boldTitleStyle.copy(fontSize = 9.sp),
+                                    style = boldTitleStyle.copy(fontSize = 8.sp),
                                     color = colorPrimary,
                                     modifier = Modifier.fillMaxWidth(),
                                     textAlign = TextAlign.Center

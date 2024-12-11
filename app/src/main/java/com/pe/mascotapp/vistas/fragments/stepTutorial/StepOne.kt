@@ -40,6 +40,7 @@ import com.pe.mascotapp.R
 import com.pe.mascotapp.colorMediumBlue
 import com.pe.mascotapp.colorPrimary
 import com.pe.mascotapp.databinding.FragmentTutorialOneBinding
+import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 
 
 class StepOne : Fragment() {
@@ -72,7 +73,6 @@ class StepOne : Fragment() {
     }
 }
 
-@Preview
 @Composable
 fun StepsTutorial(
     title: String = "Bienvenido a Qunay",
@@ -132,5 +132,15 @@ fun StepsTutorial(
             )
         }
 
+    }
+}
+
+@Preview
+@Composable
+private fun StepsTutorialPreview() {
+    MascotappTheme {
+        StepsTutorial(
+            description = "Encuentra profesionales que te ayuden a mejorar la salud física y mental de tu mejor amigo."
+        )
     }
 }

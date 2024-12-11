@@ -11,7 +11,16 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +31,12 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +61,7 @@ import com.pe.mascotapp.buttonTitleStyle
 import com.pe.mascotapp.colorMediumBlue
 import com.pe.mascotapp.colorPrimary
 import com.pe.mascotapp.modelos.Usuario
+import com.pe.mascotapp.titleStyle
 import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import java.util.Calendar
 
@@ -54,7 +69,7 @@ import java.util.Calendar
 
 @Preview
 @Composable
-fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) -> Unit = {}) {
+fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> Unit = {}) {
     val scrollState = rememberScrollState()
     val ctx = LocalContext.current
     val currentStep = remember { mutableIntStateOf(0) }
@@ -68,7 +83,7 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
     var validationMessage by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
-    fun validateInputs() :Boolean {
+    fun validateInputs(): Boolean {
         return (name.isNotBlank() && phone.isNotBlank()
                 && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
                 && birthday.isNotBlank()
@@ -76,22 +91,25 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                 && confirmPassword.isNotBlank()
                 && password == confirmPassword
                 && termsAccepted).apply {
-                 if (!this){
-                     validationMessage = when {
-                         name.isBlank() -> "Ingresa tu nombre"
-                         email.isBlank() -> "Ingresa tu email"
-                         !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> "Ingresa un email válido"
-                         phone.isBlank() -> "Ingresa tu teléfono"
-                         birthday.isBlank() -> "Ingresa tu fecha de nacimiento"
-                         password.isBlank() -> "Ingresa tu contraseña"
-                         password != confirmPassword -> "Las contraseñas no coinciden"
-                         !termsAccepted -> "Acepta los términos y condiciones"
-                         else -> "" // All valid
-                     }
-                 }
+            if (!this) {
+                validationMessage = when {
+                    name.isBlank() -> "Ingresa tu nombre"
+                    email.isBlank() -> "Ingresa tu email"
+                    !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+                        .matches() -> "Ingresa un email válido"
+
+                    phone.isBlank() -> "Ingresa tu teléfono"
+                    birthday.isBlank() -> "Ingresa tu fecha de nacimiento"
+                    password.isBlank() -> "Ingresa tu contraseña"
+                    password != confirmPassword -> "Las contraseñas no coinciden"
+                    !termsAccepted -> "Acepta los términos y condiciones"
+                    else -> "" // All valid
+                }
+            }
         }
     }
-    fun setCalendar(){
+
+    fun setCalendar() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -138,7 +156,7 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                             if (!validateInputs()) {
                                 Toast.makeText(
                                     ctx,
-                                    validationMessage,Toast.LENGTH_SHORT
+                                    validationMessage, Toast.LENGTH_SHORT
                                 ).show()
                                 return@PrimaryButton
                                 Log.d("TAG", "validateInputs: " + validationMessage)
@@ -185,25 +203,26 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                     .verticalScroll(scrollState)
                     .padding(bottom = 20.dp),
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(37.dp)) {
                     Text(
                         text = "Paso 1",
                         textAlign = TextAlign.Center,
                         style = boldTitleStyle,
+                        color = colorPrimary,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = "Completa tus datos",
-                        fontSize = 18.sp,
-                        modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        color = colorMediumBlue // Replace with your actual color resource
+                        style = titleStyle,
+                        color = colorMediumBlue,
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     StepsProgressBar(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 87.dp, end = 87.dp, top = 10.dp),
+                            .padding(horizontal = 87.dp),
                         numberOfSteps = 2,
                         currentStep = currentStep.intValue
                     )
@@ -215,7 +234,7 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                             .padding(top = 16.dp, bottom = 16.dp),
                         alignment = Alignment.Center
                     )
-                    Spacer(modifier  = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     CustomTextField(
                         capitalizacion = true,
                         modifier = Modifier.fillMaxWidth(),
@@ -243,10 +262,10 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                                 .fillMaxHeight(),
                             leadingIcon = painterResource(id = R.drawable.telefono),
                             value = phone,
-                            onValueChange = { newValue->
+                            onValueChange = { newValue ->
                                 val filteredValue = newValue.filter { it.isDigit() }
                                 if (filteredValue.length <= 9) {
-                                    phone=filteredValue
+                                    phone = filteredValue
                                 }
                             },
                             keyBoarType = KeyboardType.Phone,
@@ -288,7 +307,9 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                         label = stringResource(id = R.string.label_password),
                         trailingIcon = {
                             Icon(
-                                painter = if (passwordVisible) painterResource(id = R.drawable.password_show) else painterResource(id = R.drawable.password_hide),
+                                painter = if (passwordVisible) painterResource(id = R.drawable.password_show) else painterResource(
+                                    id = R.drawable.password_hide
+                                ),
                                 contentDescription = null,
                                 modifier = Modifier.clickable { passwordVisible = !passwordVisible }
                             )
@@ -305,13 +326,20 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                         label = stringResource(id = R.string.label_confirm_password),
                         trailingIcon = {
                             Icon(
-                                painter = if (confirmPasswordVisible) painterResource(id = R.drawable.password_show) else painterResource(id = R.drawable.password_hide),
+                                painter = if (confirmPasswordVisible) painterResource(id = R.drawable.password_show) else painterResource(
+                                    id = R.drawable.password_hide
+                                ),
                                 contentDescription = null,
-                                modifier = Modifier.clickable { confirmPasswordVisible = !confirmPasswordVisible }
+                                modifier = Modifier.clickable {
+                                    confirmPasswordVisible = !confirmPasswordVisible
+                                }
                             )
                         }
                     )
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 10.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(top = 10.dp)
+                    ) {
                         Checkbox(
                             checked = termsAccepted,
                             onCheckedChange = { termsAccepted = it },
@@ -322,7 +350,10 @@ fun StepOneScreen(   usuario: Usuario = Usuario(),  onSiguienteClick: (Usuario) 
                         ClickableText(
                             text = AnnotatedString(stringResource(id = R.string.label_terms)),
                             onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://intothewildescapes.com/pet-terms"))
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://intothewildescapes.com/pet-terms")
+                                )
                                 ctx.startActivity(intent)
                             },
                             style = TextStyle(

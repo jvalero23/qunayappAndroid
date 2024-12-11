@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -182,6 +183,7 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                     .padding(paddingValues)
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
+                    .padding(bottom = 20.dp)
             ) {
 
 
@@ -189,20 +191,23 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                     Text(
                         text = "Paso 3",
                         textAlign = TextAlign.Center,
-                        style = boldTitleStyle.copy(colorPrimary),
+                        style = boldTitleStyle,
+                        color = colorPrimary,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = "Confirma tus datos",
                         textAlign = TextAlign.Center,
-                        style = titleStyle.copy(colorMediumBlue),
+                        style = titleStyle,
+                        color = colorMediumBlue,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
+                Spacer(modifier = Modifier.height(16.dp))
                 StepsProgressBar(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 87.dp, end = 87.dp, top = 10.dp),
+                        .padding(horizontal = 87.dp),
                     numberOfSteps = 2,
                     currentStep = currentStep.intValue
                 )

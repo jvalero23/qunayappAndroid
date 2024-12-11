@@ -205,19 +205,22 @@ fun StepTwoScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableState
                         text = "Paso 2",
                         textAlign = TextAlign.Center,
                         style = boldTitleStyle,
+                        color = colorPrimary,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = "Registra a tu mascota",
                         textAlign = TextAlign.Center,
                         style = titleStyle,
+                        color = colorMediumBlue,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
+                Spacer(modifier = Modifier.height(16.dp))
                 StepsProgressBar(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 87.dp, end = 87.dp, top = 10.dp),
+                        .padding(horizontal = 87.dp),
                     numberOfSteps = 2,
                     currentStep = currentStep.intValue
                 )

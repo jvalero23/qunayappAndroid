@@ -56,6 +56,7 @@ import com.pe.mascotapp.titleStyle
 import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import com.pe.mascotapp.vistas.entities.PetEntity
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
+import kotlin.math.max
 
 val listPets = listOf(
     PetEntity(
@@ -129,7 +130,7 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
         listPetsBreed
     }
     val pagerState = rememberPagerState(
-        initialPage = listPets.size - 2,
+        initialPage = max(0, listPets.size - 2),
         pageCount = { listPets.size }
     )
     val usuario = (ctx as? CarosuelRegisterActivity)?.usuario ?: Usuario()

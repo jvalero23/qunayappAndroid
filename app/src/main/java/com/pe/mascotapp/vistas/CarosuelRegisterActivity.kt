@@ -3,57 +3,41 @@ package com.pe.mascotapp.vistas
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.button.MaterialButton
-import com.pe.mascotapp.R
-import com.pe.mascotapp.utils.Utils
-import com.pe.mascotapp.vistas.fragments.CarosuelFragmentRegisterState
-
 import android.view.View.OnTouchListener
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import com.google.android.material.textfield.TextInputLayout
-import com.pe.mascotapp.interfaces.OnEditTextChanged
-import com.pe.mascotapp.modelos.Usuario
-import androidx.viewpager.widget.PagerAdapter
-import com.pe.mascotapp.interfaces.PrincipalPresentador
-import java.io.ByteArrayOutputStream
 import android.view.WindowManager
-import com.pe.mascotapp.utils.Constantes
-import android.graphics.Bitmap.CompressFormat
-import android.content.ContextWrapper
-import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.pe.mascotapp.vistas.entities.PetEntity
+import com.google.android.material.button.MaterialButton
+import com.pe.mascotapp.R
+import com.pe.mascotapp.interfaces.OnEditTextChanged
+import com.pe.mascotapp.interfaces.PrincipalPresentador
+import com.pe.mascotapp.modelos.Usuario
+import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
+import com.pe.mascotapp.vistas.fragments.CarosuelFragmentRegisterState
 import com.pe.mascotapp.vistas.fragments.stepRegister.StepOne
 import com.pe.mascotapp.vistas.fragments.stepRegister.StepThree
 import com.pe.mascotapp.vistas.fragments.stepRegister.StepTwo
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 
+class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
 
-class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, RegisterPets {
-    override var listPets: List<PetWithBreedsEntity> = listOf(
-        PetWithBreedsEntity(
-            PetEntity(),
-            listOf()
-        )
-    )
+    val viewModel: CarouselRegisterViewModel by viewModels()
 
     var viewPStep: ViewPager2? = null
     var btnVolver: TextView? = null
@@ -85,7 +69,8 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
     private lateinit var stepFmList: List<Fragment>
     private lateinit var presentador: PrincipalPresentador.VistaStart
     private var isFromMainPets: Boolean = false
-    var indexEdit:Int? = null
+    var indexEdit: Int? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,20 +171,20 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
 
     fun nextStep() {
         viewPStep!!.setCurrentItem(getItem(+1), true)
-/*        if (viewPStep!!.currentItem != 0) {
-            bottomButtons!!.visibility = View.GONE
-            return
-        }
-        bottomButtons!!.visibility = View.VISIBLE*/
+        /*        if (viewPStep!!.currentItem != 0) {
+                    bottomButtons!!.visibility = View.GONE
+                    return
+                }
+                bottomButtons!!.visibility = View.VISIBLE*/
     }
 
     private fun backStep() {
         viewPStep!!.setCurrentItem(getItem(-1), true)
-/*        if (viewPStep!!.currentItem != 0) {
-            bottomButtons!!.visibility = View.GONE
-            return
-        }
-        bottomButtons!!.visibility = View.VISIBLE*/
+        /*        if (viewPStep!!.currentItem != 0) {
+                    bottomButtons!!.visibility = View.GONE
+                    return
+                }
+                bottomButtons!!.visibility = View.VISIBLE*/
     }
 
     private fun finishStep() {
@@ -235,12 +220,13 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
 
 
     }
-    fun addPet(){
+
+    fun addPet() {
         indexEdit = null
         onBackPressed()
     }
 
-    fun editPet(index:Int){
+    fun editPet(index: Int) {
         indexEdit = index
         onBackPressed()
     }
@@ -396,16 +382,17 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
         dialog.show()
 
     }
+
     fun updateUsuario(updatedUsuario: Usuario) {
         usuario = updatedUsuario
     }
 
-    fun editPerson(){
+    fun editPerson() {
         viewPStep!!.setCurrentItem(0, true)
     }
-    fun registerUser(){
 
-        
+    fun registerUser() {
+
 
         val intent = Intent(this, CarosuelTutorialActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -415,8 +402,7 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged, Registe
     override fun onBackPressed() {
         if (viewPStep!!.currentItem == 0) {
             super.onBackPressed()
-        }
-        else backStep()
+        } else backStep()
     }
 
 }

@@ -81,7 +81,8 @@ data class BreedPetEntity(
 
 enum class BreedCategory {
     INDEX,
-    TYPE
+    TYPE,
+    OTHER
 }
 
 @Composable

@@ -3,7 +3,6 @@ package com.pe.mascotapp.vistas.fragments.stepRegister
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +28,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -56,6 +54,7 @@ import com.pe.mascotapp.titleStyle
 import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import com.pe.mascotapp.vistas.entities.PetEntity
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
+import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 import kotlin.math.max
 
 val listPets = listOf(
@@ -116,19 +115,18 @@ val listPets = listOf(
     )
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-@Preview
-fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableStateListOf()) {
+fun StepThreeScreen(
+    listPets: List<PetWithBreedsEntity>,
+    addNewPet: () -> Unit,
+    removeItemAt: (Int) -> Unit
+) {
     val selectedImage = remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
         selectedImage.value = it
     }
     val currentStep = remember { mutableIntStateOf(2) }
     val ctx = LocalContext.current
-    val listPets = remember {
-        listPetsBreed
-    }
     val pagerState = rememberPagerState(
         initialPage = max(0, listPets.size - 2),
         pageCount = { listPets.size }
@@ -260,7 +258,11 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                         text = "Tus Mascotas",
                         style = caprasimoTitleStyle.copy(color = colorPrimary, fontSize = 20.sp)
                     )
-                    SimpleViewPagerPets(listPets, pagerState = pagerState)
+                    SimpleViewPagerPets(
+                        listPets = listPets,
+                        pagerState = pagerState,
+                        removeItemAt = removeItemAt
+                    )
 
                     Row(
                         modifier = Modifier
@@ -272,14 +274,7 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
                         ElevatedButton(
                             contentPadding = PaddingValues(),
                             onClick = {
-                                listPets.add(
-                                    0,
-                                    PetWithBreedsEntity(
-                                        PetEntity(color = getColorIndex(pagerState.pageCount)),
-                                        listOf()
-                                    )
-                                )
-                                (ctx as? CarosuelRegisterActivity)?.listPets = listPets
+                                addNewPet()
                                 (ctx as? CarosuelRegisterActivity)?.addPet()
                             },
                             colors = ButtonDefaults.buttonColors(
@@ -316,5 +311,17 @@ fun StepThreeScreen(listPetsBreed: MutableList<PetWithBreedsEntity> = mutableSta
 
 
         }
+    }
+}
+
+@Preview
+@Composable
+private fun Step3ScreenPreview() {
+    MascotappTheme {
+        StepThreeScreen(
+            listPets = listPets.map { PetWithBreedsEntity(it, listOf()) },
+            addNewPet = {},
+            removeItemAt = {}
+        )
     }
 }

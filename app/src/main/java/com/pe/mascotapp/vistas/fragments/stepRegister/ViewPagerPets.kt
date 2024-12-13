@@ -1,5 +1,6 @@
 package com.pe.mascotapp.vistas.fragments.stepRegister
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -78,7 +80,9 @@ private fun ViewPagerPetsPreview() {
                 breeds = emptyList()
             ),
         ),
-        rememberPagerState { 2 }
+        rememberPagerState { 2 },
+        removeItemAt = {},
+        addPet = {}
     )
 }
 
@@ -144,7 +148,12 @@ private fun DeletePetPageDialogPreview() {
 }
 
 @Composable
-fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
+fun ViewPagerPets(
+    listPets: List<PetWithBreedsEntity>,
+    pagerState: PagerState,
+    removeItemAt: (Int) -> Unit,
+    addPet: (PetWithBreedsEntity) -> Unit
+) {
     val ctx = LocalContext.current
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -152,7 +161,7 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
     val itemWidth = screenWidth / 3
 
     val scope = rememberCoroutineScope()
-    var actualItem = 0
+    var actualItem by remember { mutableIntStateOf(0) }
     var showDialog by remember { mutableStateOf(false) }
 
     if (showDialog) {
@@ -164,7 +173,7 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                     if (actualItem >= 1) {
                         pagerState.scrollToPage(pagerState.currentPage - 1)
                     }
-                    listPets.removeAt(actualItem)
+                    removeItemAt(actualItem)
                 }
             }
         )
@@ -271,6 +280,7 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                     size = normalSize
                 ) {
                     actualItem = page
+                    Log.d("DELETE", "Delete item at $page")
                     showDialog = !showDialog
                     //scope.launch {
                     //    if (page >= 1) {
@@ -293,8 +303,7 @@ fun ViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerS
                             ).show()
                             return@launch
                         }
-                        listPets.add(
-                            0,
+                        addPet(
                             PetWithBreedsEntity(
                                 PetEntity(color = getColorIndex(pagerState.pageCount)),
                                 mutableListOf()
@@ -374,7 +383,11 @@ fun getColorIndex(position: Int): Long {
 
 
 @Composable
-fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: PagerState) {
+fun SimpleViewPagerPets(
+    listPets: List<PetWithBreedsEntity>,
+    pagerState: PagerState,
+    removeItemAt: (Int) -> Unit
+) {
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -427,7 +440,8 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
                             if (actualItem >= 1) {
                                 pagerState.scrollToPage(pagerState.currentPage - 1)
                             }
-                            listPets.removeAt(actualItem)
+                            //listPets.removeAt(actualItem)
+                            removeItemAt(actualItem)
                         }
                     }, colors = ButtonDefaults.buttonColors(colorMediumBlue)) {
                         Text(text = "Eliminar", style = buttonTitleStyle.copy(fontSize = 20.sp))
@@ -533,7 +547,7 @@ fun SimpleViewPagerPets(listPets: MutableList<PetWithBreedsEntity>, pagerState: 
                     show = show,
                     size = normalSize,
                     canEdit = {
-                        (ctx as? CarosuelRegisterActivity)?.listPets = listPets
+                        //(ctx as? CarosuelRegisterActivity)?.listPets = listPets
                         (ctx as? CarosuelRegisterActivity)?.editPet(page)
                     }
                 ) {
@@ -600,7 +614,8 @@ private fun SimpleViewPagerPetsPreview() {
                     breeds = emptyList()
                 )
             ),
-            rememberPagerState(initialPage = 1) { 3 }
+            rememberPagerState(initialPage = 1) { 3 },
+            removeItemAt = {}
         )
     }
 }

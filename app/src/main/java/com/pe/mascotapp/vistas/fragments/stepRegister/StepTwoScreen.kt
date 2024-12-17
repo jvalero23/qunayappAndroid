@@ -689,12 +689,7 @@ fun CircularName(
                 canEdit?.let {
                     BasicEditTextField(
                         maxWidth = 110.dp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(
-                                BorderStroke(1.81.dp, colorPrimary),
-                                shape = RoundedCornerShape(8.dp)
-                            ),
+                        modifier = Modifier.fillMaxWidth(),
                         textStyle = mediumTitleStyle.copy(
                             color = colorDisabled,
                             fontSize = 17.sp,

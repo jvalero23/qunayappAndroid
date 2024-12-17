@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -158,7 +159,10 @@ fun StepThreeScreen(
                             (ctx as? CarosuelRegisterActivity)?.registerUser()
                         },
                         content = {
-                            Text(text = "Aceptar", style = buttonTitleStyle.copy(fontSize = 20.sp))
+                            Text(
+                                text = "Confirmar",
+                                style = buttonTitleStyle.copy(fontSize = 20.sp)
+                            )
                         }
                     )
 
@@ -282,25 +286,23 @@ fun StepThreeScreen(
                             ),
                             shape = ButtonDefaults.elevatedShape,
                             modifier = Modifier
-                                .width(80.dp)
-                                .height(80.dp)
+                                .size(74.dp)
                                 .shadow(elevation = 20.dp, shape = CircleShape)
                         ) {
                             Column(
-                                modifier = Modifier.fillMaxSize(),
+                                modifier = Modifier.align(Alignment.CenterVertically),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
                                     text = "+",
-                                    style = boldTitleStyle.copy(fontSize = 40.sp),
+                                    style = boldTitleStyle.copy(fontSize = 38.sp),
                                     color = colorPrimary
                                 )
                                 Text(
                                     text = "Agregar\n" + "mascota",
                                     style = boldTitleStyle.copy(fontSize = 8.sp),
                                     color = colorPrimary,
-                                    modifier = Modifier.fillMaxWidth(),
                                     textAlign = TextAlign.Center
                                 )
                             }

@@ -16,7 +16,7 @@
         android:fontFamily="@font/worksans_black"
         android:visibility="visible"
         android:text="@string/my_pets"
-        android:textColor="@color/verdeq"
+        android:textColor="@color/primaryColor"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

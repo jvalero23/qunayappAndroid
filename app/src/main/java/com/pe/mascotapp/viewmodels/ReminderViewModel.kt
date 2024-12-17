@@ -268,20 +268,20 @@ constructor(
         return CalendarUtils.getFormatDate(Calendar.getInstance().time)
     }
 
-    fun getOptionRepeat(): String? {
+    fun getOptionRepeat(): Pair<String, ValueTextOption>? {
         val optionSelected = _listOptionsRepeat.value?.firstOrNull { it.isSelected }
         when (optionSelected) {
             is TextOption -> {
                 reminderEntity.repeatOption = optionSelected.value
                 reminderEntity.countRepeatOption = null
-                return optionSelected.name
+                return optionSelected.name to optionSelected.value
             }
 
             is CounterOption -> {
                 optionSelected.category?.let {
                     reminderEntity.repeatOption = optionSelected.category
                     reminderEntity.countRepeatOption = optionSelected.counter
-                    return optionSelected.name + " " + optionSelected.counter+" "+ optionSelected.name2
+                    return optionSelected.name + " " + optionSelected.counter + " " + optionSelected.name2 to optionSelected.category
                 }
             }
         }

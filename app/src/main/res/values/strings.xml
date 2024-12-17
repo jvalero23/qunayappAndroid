@@ -63,4 +63,20 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_filter">FilterActivity</string>
+    <plurals name="days_quantity">
+        <item quantity="one">%d día</item>
+        <item quantity="other">%d días</item>
+    </plurals>
+    <plurals name="weeks_quantity">
+        <item quantity="one">%d semana</item>
+        <item quantity="other">%d semanas</item>
+    </plurals>
+    <plurals name="months_quantity">
+        <item quantity="one">%d mes</item>
+        <item quantity="other">%d meses</item>
+    </plurals>
+    <plurals name="years_quantity">
+        <item quantity="one">%d año</item>
+        <item quantity="other">%d años</item>
+    </plurals>
 </resources>

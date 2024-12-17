@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pe.mascotapp.R
 import com.pe.mascotapp.databinding.ActivityReminderBinding
 import com.pe.mascotapp.notifications.AlarmEventHelper
 import com.pe.mascotapp.utils.CalendarUtils
@@ -30,11 +31,11 @@ import com.pe.mascotapp.vistas.adapters.PetAdapter
 import com.pe.mascotapp.vistas.adapters.ReminderPetsJoinEntity
 import com.pe.mascotapp.vistas.adapters.TypeOption
 import com.pe.mascotapp.vistas.adapters.VaccineFieldAdapter
+import com.pe.mascotapp.vistas.adapters.ValueTextOption
 import com.pe.mascotapp.vistas.adapters.mapValueTextOption
 import com.pe.mascotapp.vistas.dialogs.DialogOption
 import com.pe.mascotapp.vistas.entities.VaccineFieldEntity
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class ReminderActivity : AppCompatActivity() {
@@ -53,7 +54,7 @@ class ReminderActivity : AppCompatActivity() {
 
     private val viewModel: ReminderViewModel by viewModels()
 
-    private val imageGalleryAdapter = ImageGalleryAdapter(ArrayList()){
+    private val imageGalleryAdapter = ImageGalleryAdapter(ArrayList()) {
         images.removeAt(it)
     }
 
@@ -70,6 +71,7 @@ class ReminderActivity : AppCompatActivity() {
     private fun setUpAlarmHelper(): AlarmEventHelper {
         return AlarmEventHelper(applicationContext)
     }
+
     val images = mutableListOf<Uri>()
     private fun addImages(dataImages: Intent) {
         val data: Intent = dataImages
@@ -165,14 +167,17 @@ class ReminderActivity : AppCompatActivity() {
 
         binding = ActivityReminderBinding.inflate(layoutInflater)
         binding.reminderViewModel = viewModel
-        val reminderPetsJoinEntity = intent.getParcelableExtra<ReminderPetsJoinEntity>("BUNDLE_REMINDER")
+        val reminderPetsJoinEntity =
+            intent.getParcelableExtra<ReminderPetsJoinEntity>("BUNDLE_REMINDER")
         reminderPetsJoinEntity?.let {
             binding.nameReminder.setText(it.reminder.title)
             binding.edtDescription.setText(it.reminder.description)
-            binding.tvDateStart.text = CalendarUtils.stringToDate(it.reminder.startDate,CalendarUtils.CONST_FORMAT)
+            binding.tvDateStart.text =
+                CalendarUtils.stringToDate(it.reminder.startDate, CalendarUtils.CONST_FORMAT)
                     ?.let { it1 -> CalendarUtils.getFormatDate(it1) }
             binding.tvHourStart.text = it.reminder.startHour
-            binding.tvRepeat.text = "${it.reminder.repeatOption.mapValueTextOption()}  ${it.reminder?.countRepeatOption ?: ""}"
+            binding.tvRepeat.text =
+                "${it.reminder.repeatOption.mapValueTextOption()}  ${it.reminder?.countRepeatOption ?: ""}"
             binding.tvAddDuration.text =
                 when (it.reminder.durationTypeRepeat) {
                     TypeOption.COUNTER -> " ${it.reminder.durationRepeat} veces"
@@ -180,7 +185,8 @@ class ReminderActivity : AppCompatActivity() {
                     TypeOption.DATE -> it.reminder.durationRepeat
                     null -> "+ Anadir Duracion"
                 }
-            binding.tvAlarm.text ="${it.reminder.alarmInMinutes} minutos ${it.reminder.alarmInHours} horas ${it.reminder.alarmInDays} dias"
+            binding.tvAlarm.text =
+                "${it.reminder.alarmInMinutes} minutos ${it.reminder.alarmInHours} horas ${it.reminder.alarmInDays} dias"
             viewModel.initValues(it)
         }
         viewModel.getSelectCategories()
@@ -197,7 +203,10 @@ class ReminderActivity : AppCompatActivity() {
 
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestNotificationPermission()
         }
@@ -205,9 +214,17 @@ class ReminderActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestNotificationPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        ) {
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQUEST_CODE_PERMISSION)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                REQUEST_CODE_PERMISSION
+            )
         }
     }
 
@@ -290,7 +307,28 @@ class ReminderActivity : AppCompatActivity() {
         }
         viewModel.listOptionsRepeat.observe(this) { options ->
             showDialogOptions(options) {
-                viewModel.getOptionRepeat()?.let { binding.tvRepeat.text = it }
+                viewModel.getOptionRepeat()?.let {
+                    if (it.second == ValueTextOption.DONT_REPEAT) {
+                        binding.tvRepeat.text = it.first
+                    } else {
+                        // Here we have the repeat cases
+                        val quantity = it.first.split(" ").getOrElse(1) { "0" }.toInt()
+                        val mutableIdRes: Int? = when (it.second) {
+                            ValueTextOption.ALL_DAYS -> R.plurals.days_quantity
+                            ValueTextOption.ALL_WEEKS -> R.plurals.weeks_quantity
+                            ValueTextOption.ALL_MONTHS -> R.plurals.months_quantity
+                            ValueTextOption.ALL_YEARS -> R.plurals.years_quantity
+                            else -> null
+                        }
+                        if (mutableIdRes == null) return@let
+                        val mutableText = buildString {
+                            append("Cada")
+                            append(Typography.nbsp)
+                            append(resources.getQuantityString(mutableIdRes, quantity, quantity))
+                        }
+                        binding.tvRepeat.text = mutableText
+                    }
+                }
                 viewModel.validateForm()
             }
         }

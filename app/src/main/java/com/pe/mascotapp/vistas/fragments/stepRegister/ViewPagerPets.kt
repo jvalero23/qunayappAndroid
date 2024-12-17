@@ -318,8 +318,7 @@ fun ViewPagerPets(
                 modifier = Modifier
                     .padding(start = 200.dp)
                     .zIndex(0F)
-                    .width(70.dp)
-                    .height(70.dp)
+                    .size(75.dp)
                     .shadow(elevation = 20.dp, shape = CircleShape)
             ) {
                 Column(

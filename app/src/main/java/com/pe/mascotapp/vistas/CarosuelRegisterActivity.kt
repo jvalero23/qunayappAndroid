@@ -75,6 +75,9 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carosuel_register)
+        // Change status bar color
+        window?.statusBarColor = getColor(R.color.verdepastelq)
+
 
         //usuario = intent!!.getSerializableExtra("OBJECT_USUARIO") as Usuario
         presentador = PrincipalPresentador.VistaStart(this)

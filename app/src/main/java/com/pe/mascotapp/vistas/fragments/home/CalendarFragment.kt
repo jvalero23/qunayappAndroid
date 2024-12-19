@@ -25,6 +25,7 @@ import com.pe.mascotapp.vistas.adapters.DaysAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -63,7 +64,7 @@ class CalendarFragment : Fragment() {
             binding.calendarView.scrollLeft()
         }
         binding.calendarView.setLocale(TimeZone.getTimeZone("America/Lima"), Locale("es", "PE"))
-        binding.calendarView.setDayColumnNames(arrayOf("L","M","M","J","V","S","D"))
+        binding.calendarView.setDayColumnNames(arrayOf("L", "M", "M", "J", "V", "S", "D"))
         binding.icCalShow.setOnClickListener {
             if (binding.calendarView.isVisible) {
                 binding.calendarView.visibility = View.GONE
@@ -119,13 +120,16 @@ class CalendarFragment : Fragment() {
         val day = viewModel.selectedDate.value ?: LocalDate.now()
         (binding.rvReminders.adapter as? CalendarReminderAdapter)?.apply {
             reminders = viewModel.reminderByDate[day] ?: listOf()
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yy")
+            val formattedDate = day.format(formatter)
+            selectedFormattedDate = formattedDate
             notifyDataSetChanged()
         }
     }
 
     private fun setUpRecyclerViews() {
         binding.rvReminders.apply {
-            this.adapter = CalendarReminderAdapter(listOf())
+            this.adapter = CalendarReminderAdapter(listOf(), "")
             this.layoutManager = LinearLayoutManager(context)
         }
         binding.calendarRecyclerView.apply {
@@ -172,7 +176,13 @@ class CalendarFragment : Fragment() {
 
     private fun setWeekView(selectedDate: LocalDate) {
         val days: ArrayList<LocalDate> = CalendarUtils.daysInWeekArray(selectedDate)
-        val dayEntities = ArrayList(days.map { DayCalendarEntity(it, it == viewModel.selectedDate.value, viewModel.reminderByDateCount[it]?:0) })
+        val dayEntities = ArrayList(days.map {
+            DayCalendarEntity(
+                it,
+                it == viewModel.selectedDate.value,
+                viewModel.reminderByDateCount[it] ?: 0
+            )
+        })
         (binding.calendarRecyclerView.adapter as? DaysAdapter)?.apply {
             this.days = dayEntities
             this.notifyDataSetChanged()

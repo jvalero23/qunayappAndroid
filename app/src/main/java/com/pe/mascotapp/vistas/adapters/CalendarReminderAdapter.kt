@@ -14,9 +14,16 @@ import com.pe.mascotapp.databinding.ItemCalendarPetBinding
 import com.pe.mascotapp.extentions.changeTintColor
 
 
-class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): RecyclerView.Adapter<CalendarReminderAdapter.CalendarReminderViewHolder>() {
-    class  CalendarReminderViewHolder(private val binding: ItemCalendarPetBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(reminder: ReminderPetsJoinEntity) {
+class CalendarReminderAdapter(
+    var reminders: List<ReminderPetsJoinEntity>,
+    var selectedFormattedDate: String,
+) : RecyclerView.Adapter<CalendarReminderAdapter.CalendarReminderViewHolder>() {
+    class CalendarReminderViewHolder(private val binding: ItemCalendarPetBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            reminder: ReminderPetsJoinEntity,
+            selectedFormattedDate: String
+        ) {
             handleState(reminder.reminder.isActivated)
             Glide.with(binding.root.context)
                 .load(reminder.pets.get(0).image)
@@ -24,16 +31,19 @@ class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): Recy
                 .error(R.drawable.perro1)
                 .into(binding.petImage)
             binding.reminder = reminder.reminder
+            binding.selectedFormattedDate = selectedFormattedDate
             binding.txtPetName.text = reminder.getNamesPets()
             itemView.setOnClickListener {
-                binding.grpSecondQuestion.visibility = if(binding.grpSecondQuestion.isVisible) View.GONE else View.VISIBLE
+                binding.grpSecondQuestion.visibility =
+                    if (binding.grpSecondQuestion.isVisible) View.GONE else View.VISIBLE
             }
         }
+
         private fun handleState(isActivated: Boolean) {
             var backgroundColor = R.color.blue_primary
             var primaryTextColor = R.color.white
             var iconColor = R.color.white
-            if (!isActivated){
+            if (!isActivated) {
                 backgroundColor = R.color.green100
                 primaryTextColor = R.color.plomoDark
                 iconColor = R.color.plomoRegular
@@ -44,8 +54,14 @@ class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): Recy
                     backgroundColor
                 )
             )
-            ImageViewCompat.setImageTintList( binding.icDate, ColorStateList.valueOf(ContextCompat.getColor( binding.root.context, iconColor)))
-            ImageViewCompat.setImageTintList( binding.icLocation, ColorStateList.valueOf(ContextCompat.getColor( binding.root.context, iconColor)))
+            ImageViewCompat.setImageTintList(
+                binding.icDate,
+                ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, iconColor))
+            )
+            ImageViewCompat.setImageTintList(
+                binding.icLocation,
+                ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, iconColor))
+            )
             binding.txtReminder.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
@@ -74,12 +90,14 @@ class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): Recy
                 ContextCompat.getColor(
                     binding.root.context,
                     primaryTextColor
-                ))
+                )
+            )
             binding.txtPicturesTitle.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
                     primaryTextColor
-                ))
+                )
+            )
         }
     }
 
@@ -92,6 +110,6 @@ class CalendarReminderAdapter(var reminders: List<ReminderPetsJoinEntity>): Recy
     override fun getItemCount(): Int = reminders.size
 
     override fun onBindViewHolder(holder: CalendarReminderViewHolder, position: Int) {
-        holder.bind(reminders[position])
+        holder.bind(reminders[position], selectedFormattedDate)
     }
 }

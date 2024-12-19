@@ -1,10 +1,10 @@
 package com.pe.mascotapp.vistas
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.OnTouchListener
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
@@ -17,7 +17,13 @@ class CarosuelTutorialActivity : AppCompatActivity() {
     var viewPStep: ViewPager? = null
     var btnVolver: TextView? = null
     var btnSiguiente: MaterialButton? = null
-    var tabLayout : TabLayout ?= null
+    var tabLayout: TabLayout? = null
+
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            backStep()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +32,12 @@ class CarosuelTutorialActivity : AppCompatActivity() {
         viewPStep = findViewById<ViewPager>(R.id.viewPStep)
         btnVolver = findViewById<TextView>(R.id.btnVolver)
         btnSiguiente = findViewById<MaterialButton>(R.id.btnSiguiente)
-        viewPStep!!.adapter = CarosuelFragmentTutorialState(supportFragmentManager,this)
+        viewPStep!!.adapter = CarosuelFragmentTutorialState(supportFragmentManager, this)
         tabLayout = findViewById<TabLayout>(R.id.tabStepTutorial)
 
-        tabLayout!!.setupWithViewPager(viewPStep,true)
+        tabLayout!!.setupWithViewPager(viewPStep, true)
 
-        btnVolver!!.setOnClickListener{
+        btnVolver!!.setOnClickListener {
             finishStep()
         }
 
@@ -53,7 +59,7 @@ class CarosuelTutorialActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 Utils.dump("posicion por scrolear onPageSelected " + position)
 
-                if(position == 4){
+                if (position == 4) {
 
                     btnSiguiente!!.setOnClickListener {
                         /*val str1 = "INSERT INTO usuario(name, birthdate, email,pass, numPhone, img, sex ) VALUES\n"+
@@ -83,7 +89,7 @@ class CarosuelTutorialActivity : AppCompatActivity() {
                     btnVolver!!.setOnClickListener {
                         backStep()
                     }
-                }else{
+                } else {
                     btnSiguiente!!.setOnClickListener {
                         nextStep()
                     }
@@ -96,21 +102,31 @@ class CarosuelTutorialActivity : AppCompatActivity() {
 
         })
 
+
+
+        onBackPressedDispatcher.addCallback(backCallback)
     }
-    private fun backStep(){
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backCallback.remove()
+    }
+
+    private fun backStep() {
         viewPStep!!.setCurrentItem(getItem(-1), true)
     }
-    private fun finishStep(){
+
+    private fun finishStep() {
         finishActivity()
     }
 
-    private fun getItem(i:Int):Int{
+    private fun getItem(i: Int): Int {
         Utils.dump("posicion" + viewPStep?.currentItem)
-        if(viewPStep?.currentItem == 4) {
+        if (viewPStep?.currentItem == 4) {
             btnSiguiente!!.setOnClickListener {
                 finishStep()
             }
-        }else if(viewPStep?.currentItem == 0) {
+        } else if (viewPStep?.currentItem == 0) {
 
             btnVolver!!.setOnClickListener {
                 finishStep()
@@ -118,7 +134,7 @@ class CarosuelTutorialActivity : AppCompatActivity() {
             btnSiguiente!!.setOnClickListener {
                 nextStep()
             }
-        }else{
+        } else {
             btnSiguiente!!.setOnClickListener {
                 nextStep()
             }
@@ -129,11 +145,11 @@ class CarosuelTutorialActivity : AppCompatActivity() {
         return viewPStep!!.currentItem + i
     }
 
-    private fun nextStep(){
+    private fun nextStep() {
         viewPStep!!.setCurrentItem(getItem(+1), true)
     }
 
-    private fun finishActivity(){
+    private fun finishActivity() {
 
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)

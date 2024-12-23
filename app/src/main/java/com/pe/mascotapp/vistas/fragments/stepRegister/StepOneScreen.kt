@@ -271,14 +271,12 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
                             keyBoarType = KeyboardType.Phone,
                             label = stringResource(id = R.string.label_phone)
                         )
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         CustomTextField(
                             Modifier
                                 .weight(1F)
                                 .fillMaxHeight()
-                                .clickable {
-                                    setCalendar()
-                                },
+                                .clickable { setCalendar() },
                             leadingIcon = painterResource(id = R.drawable.edad),
                             value = birthday,
                             keyBoarType = KeyboardType.Number,

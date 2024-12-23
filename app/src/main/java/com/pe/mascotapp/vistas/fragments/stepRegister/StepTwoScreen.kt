@@ -781,7 +781,7 @@ fun CustomTextField(
             unfocusedBorderColor = colorDisabled,
             focusedLabelColor = colorPrimary,
         ),
-        label = { Text(text = label, style = textFieldTextStyle) },
+        label = { Text(text = label, style = textFieldTextStyle, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         suffix = { Text(text = suffix ?: "") },
         textStyle = LocalTextStyle.current.copy(textAlign = textAlign),
         keyboardOptions = keyboardOptions,

@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -223,23 +222,37 @@ fun StepThreeScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    AsyncImage(
-                        model = selectedImage.value ?: R.drawable.ic_camara,
+                    Box(
                         modifier = Modifier
-                            .width(156.dp)
-                            .height(156.dp)
+                            .size(156.dp)
                             .clip(CircleShape)
+                            .background(color = colorMediumBlue)
                             .clickable {
                                 launcher.launch("image/*")
                             },
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null,
-                        placeholder = if (LocalInspectionMode.current) {
-                            painterResource(R.drawable.background_main)
-                        } else {
-                            null
-                        }
-                    )
+                        contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = selectedImage.value ?: R.drawable.ic_camara,
+                            modifier = Modifier
+                                .then(
+                                    if (selectedImage.value != null) {
+                                        Modifier
+                                            .fillMaxSize()
+                                            .clip(CircleShape)
+                                    } else {
+                                        Modifier.size(64.dp)
+                                    }
+                                ),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null,
+                            placeholder = if (LocalInspectionMode.current) {
+                                painterResource(R.drawable.ic_camara)
+                            } else {
+                                null
+                            }
+                        )
+                    }
                     BasicEditTextField(
                         maxWidth = 300.dp,
                         modifier = Modifier

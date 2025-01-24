@@ -67,6 +67,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
@@ -370,9 +371,9 @@ fun FormPet(
                         )
                     )
                 },
-                modifier = Modifier
-                    .fillMaxWidth(),
-                leadingIcon = null
+                modifier = Modifier.fillMaxWidth(),
+                label = "¿Cuál es su especie?",
+                leadingIcon = painterResource(R.drawable.estrella)
             )
         } else {
             ChipGroup(
@@ -423,18 +424,26 @@ fun FormPet(
             CustomTextField(
                 modifier = Modifier
                     .weight(1F)
-                    .fillMaxHeight(),
+                    .fillMaxHeight()
+                    .onFocusEvent {
+                        if (!it.hasFocus) {
+                            val text = listPets[pagerState.currentPage].pet.weight
+                            if (text.isNotEmpty() && text.endsWith('.')) {
+                                updatePetWeight(pagerState.currentPage, text.plus("0"))
+                            }
+                        }
+                    }
+                ,
                 leadingIcon = painterResource(id = R.drawable.peso),
                 value = listPets[pagerState.currentPage].pet.weight,
-                onValueChange = {
-                    if (it.isNotEmpty() && !weightRegex.matches(it)) return@CustomTextField
-                    if (it.length > 9) return@CustomTextField
-                    val amount = if (it.startsWith("0")) {
-                        ""
-                    } else {
-                        it
+                onValueChange = { value ->
+                    val filteredText = value.filter { it.isDigit() || it == '.' }
+                    filteredText.also {
+                        if (it.isNotEmpty() && it.startsWith(".")) return@CustomTextField
+                        if (it.count { char -> char == '.' } > 1) return@CustomTextField
+                        if (it.length > 9) return@CustomTextField
                     }
-                    updatePetWeight(pagerState.currentPage, amount)
+                    updatePetWeight(pagerState.currentPage, filteredText)
                 },
                 label = "Peso",
                 textAlign = TextAlign.End,
@@ -781,7 +790,14 @@ fun CustomTextField(
             unfocusedBorderColor = colorDisabled,
             focusedLabelColor = colorPrimary,
         ),
-        label = { Text(text = label, style = textFieldTextStyle, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+        label = {
+            Text(
+                text = label,
+                style = textFieldTextStyle,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
         suffix = { Text(text = suffix ?: "") },
         textStyle = LocalTextStyle.current.copy(textAlign = textAlign),
         keyboardOptions = keyboardOptions,

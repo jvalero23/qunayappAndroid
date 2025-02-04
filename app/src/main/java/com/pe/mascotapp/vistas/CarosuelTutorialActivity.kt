@@ -2,9 +2,12 @@ package com.pe.mascotapp.vistas
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
@@ -18,6 +21,8 @@ class CarosuelTutorialActivity : AppCompatActivity() {
     var btnVolver: TextView? = null
     var btnSiguiente: MaterialButton? = null
     var tabLayout: TabLayout? = null
+    var composeSplash: ComposeView? = null
+    var rlMain: RelativeLayout? = null
 
     private val backCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -34,6 +39,9 @@ class CarosuelTutorialActivity : AppCompatActivity() {
         btnSiguiente = findViewById<MaterialButton>(R.id.btnSiguiente)
         viewPStep!!.adapter = CarosuelFragmentTutorialState(supportFragmentManager, this)
         tabLayout = findViewById<TabLayout>(R.id.tabStepTutorial)
+
+        composeSplash = findViewById(R.id.composeSplash)
+        rlMain = findViewById(R.id.rlMain)
 
         tabLayout!!.setupWithViewPager(viewPStep, true)
 
@@ -117,7 +125,17 @@ class CarosuelTutorialActivity : AppCompatActivity() {
     }
 
     private fun finishStep() {
-        finishActivity()
+        // Mostrar el ComposeView del splash
+        rlMain?.visibility = View.GONE
+        composeSplash?.visibility = View.VISIBLE
+
+        // Configurar el contenido Compose del splash
+        composeSplash?.setContent {
+            // Usa tu pantalla de splash en Compose; cuando la animación termine se llama onAnimationFinished
+            SplashScreen(onAnimationFinished = {
+                finishActivity()
+            })
+        }
     }
 
     private fun getItem(i: Int): Int {
@@ -151,8 +169,12 @@ class CarosuelTutorialActivity : AppCompatActivity() {
 
     private fun finishActivity() {
 
-        val intent = Intent(this, HomeActivity::class.java)
+        // Iniciar HomeActivity y limpiar la pila de actividades
+        val intent = Intent(this, HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
         startActivity(intent)
+        finish()
 
         /*when(vista){
             0 -> {

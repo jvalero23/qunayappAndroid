@@ -2,40 +2,48 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_patitas"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
+    android:background="@drawable/background_patitas"
+    android:fitsSystemWindows="true"
     tools:context=".vistas.CarosuelTutorialActivity">
 
-
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeSplash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:orientation="vertical"
+        android:id="@+id/rlMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/llBottom"
             android:layout_alignParentTop="true"
             android:fillViewport="true"
-            android:layout_above="@id/llBottom"
             tools:ignore="ScrollViewCount">
 
             <LinearLayout
-                android:weightSum="100"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="100">
 
                 <androidx.viewpager.widget.ViewPager
-                    android:adjustViewBounds="true"
+                    android:id="@+id/viewPStep"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="95"
-                    android:id="@+id/viewPStep"
-                    >
-                </androidx.viewpager.widget.ViewPager>
+                    android:adjustViewBounds="true"></androidx.viewpager.widget.ViewPager>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabStepTutorial"
@@ -44,10 +52,9 @@
                     android:layout_weight="5"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"/>
+                    app:tabIndicatorHeight="0dp" />
 
             </LinearLayout>
-
 
 
         </androidx.core.widget.NestedScrollView>
@@ -69,11 +76,11 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSiguiente"
-                    android:textColor="@color/white"
                     android:layout_width="220dp"
                     android:layout_height="60dp"
                     android:layout_gravity="end"
                     android:text="Siguiente"
+                    android:textColor="@color/white"
                     app:cornerRadius="40dp"
                     app:iconGravity="end" />
 
@@ -82,18 +89,18 @@
 
 
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="24dp"
-                android:layout_weight="50">
+                android:layout_weight="50"
+                android:gravity="center">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:id="@+id/btnVolver"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:text="saltar"
                     android:textColor="@color/primaryColor"
                     android:textSize="14sp"

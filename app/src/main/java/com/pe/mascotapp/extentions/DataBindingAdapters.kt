@@ -38,7 +38,7 @@ fun setStatePet(view: ShapeableImageView, isSelected: Boolean) {
         setUnlocked(view)
         view.strokeWidth = 8.00f
         view.strokeColor =
-            ContextCompat.getColorStateList(view.context, R.color.green200)
+            ContextCompat.getColorStateList(view.context, R.color.black)
         return
     }
     view.strokeWidth = 0.00f

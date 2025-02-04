@@ -1,7 +1,9 @@
 package com.pe.mascotapp.vistas.event_history.main.ui
 
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,26 +23,18 @@ internal fun NavGraphBuilder.eventHistoryDestination(
     navToFilter: () -> Unit,
     navToDetail: (String) -> Unit,
     onAddHistory: () -> Unit
-){
+) {
     composable<EventHistoryDestination> {
-        val context = LocalContext.current
+        val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
         EventHistoryScreen(
             onClickSeeAll = {
-                navToDetail(it)
-                Toast.makeText(
-                    context,
-                    "Navigate to detail",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    navToDetail(it)
+                }
             },
             onClickSeeFilter = navToFilter,
-            onAddHistory = {
+            onAddHistory = dropUnlessResumed {
                 onAddHistory()
-                Toast.makeText(
-                    context,
-                    "Add history",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         )
     }

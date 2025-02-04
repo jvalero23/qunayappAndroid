@@ -28,9 +28,11 @@ fun NavGraphBuilder.eventHistoryGraphDestination(
         eventHistoryDestination(
             navToFilter = navController::navigateToEventHistoryFilterDestination,
             navToDetail = {
-
+                navController.navigateToCreateEventHistoryDestination(editable = false)
             },
-            onAddHistory = navController::navigateToCreateEventHistoryDestination
+            onAddHistory = {
+                navController.navigateToCreateEventHistoryDestination(editable = true)
+            }
         )
         eventHistoryFilterDestination(
             onClickAccept = navController::popBackStack,

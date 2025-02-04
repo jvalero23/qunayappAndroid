@@ -1,5 +1,6 @@
 package com.pe.mascotapp.vistas.event_history.filter.ui
 
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -22,8 +23,8 @@ internal fun NavGraphBuilder.eventHistoryFilterDestination(
     composable<EventHistoryFilterDestination> {
         EventHistoryFilterScreen(
             onClickFilterItem = {},
-            onClickAccept = onClickAccept,
-            onClickBack = onClickBack
+            onClickAccept = dropUnlessResumed(block = onClickAccept),
+            onClickBack = dropUnlessResumed(block = onClickBack)
         )
     }
 }

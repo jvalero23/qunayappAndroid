@@ -42,10 +42,8 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,9 +74,21 @@ import com.pe.mascotapp.vistas.extension.debugPlaceholder
 import com.pe.mascotapp.vistas.extension.toShortDateWithTime
 import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 import com.pe.mascotapp.workSansFontFamily
+import kotlinx.datetime.Clock
 
 @Composable
 fun CreateEventHistoryScreen(
+    editable: Boolean,
+    selectedFilters: List<String>,
+    onClickFilter: (id: String) -> Unit,
+    description: String,
+    onDescriptionChanged: (String) -> Unit,
+    selectedPetsIds: List<String>,
+    onClickPet: (String) -> Unit,
+    isTimerEnabled: Boolean,
+    onToggleAddTimer: () -> Unit,
+    selectedDate: String,
+    onSelectedDateChanged: (date: String, millis: Long) -> Unit,
     onClickAccept: () -> Unit,
     imageUris: List<Uri>,
     onImageUrisChanged: (List<Uri>) -> Unit,
@@ -95,16 +105,25 @@ fun CreateEventHistoryScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             item {
-                PetSelectionSection(modifier = Modifier.fillMaxWidth())
+                PetSelectionSection(
+                    selectedPetsIds = selectedPetsIds,
+                    onClickPet = onClickPet,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
             item {
                 FilterSection(
+                    selectedFilters = selectedFilters,
+                    onClickFilter = onClickFilter,
                     modifier = Modifier
                         .padding(horizontal = contentPadding)
                 )
             }
             item {
                 DescriptionSection(
+                    editable = editable,
+                    description = description,
+                    onDescriptionChanged = onDescriptionChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = contentPadding)
@@ -112,6 +131,11 @@ fun CreateEventHistoryScreen(
             }
             item {
                 TimerSection(
+                    editable = editable,
+                    isTimerEnabled = isTimerEnabled,
+                    onToggleAddTimer = onToggleAddTimer,
+                    selectedDate = selectedDate,
+                    onClickDate = onSelectedDateChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = contentPadding)
@@ -119,6 +143,7 @@ fun CreateEventHistoryScreen(
             }
             item {
                 PhotosSection(
+                    editable = editable,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = contentPadding),
@@ -150,9 +175,10 @@ fun CreateEventHistoryScreen(
 
 @Composable
 fun PhotosSection(
-    modifier: Modifier = Modifier,
+    editable: Boolean,
     selectedUris: (List<Uri>) -> Unit,
     imageUris: List<Uri>,
+    modifier: Modifier = Modifier,
 ) {
     val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickMultipleVisualMedia(),
@@ -172,7 +198,11 @@ fun PhotosSection(
         modifier = modifier
     ) {
         TextButton(
-            onClick = { launchPhotoPicker() },
+            onClick = {
+                if (editable) {
+                    launchPhotoPicker()
+                }
+            },
             colors = ButtonDefaults.textButtonColors(
                 contentColor = colorGrisTittle
             )
@@ -183,9 +213,11 @@ fun PhotosSection(
         Spacer(modifier = Modifier.height(8.dp))
 
         for (row in rows) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            ) {
                 for ((index, item) in row.withIndex()) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
@@ -209,10 +241,13 @@ fun PhotosSection(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerSection(
+    editable: Boolean,
+    isTimerEnabled: Boolean,
+    onToggleAddTimer: () -> Unit,
+    selectedDate: String,
+    onClickDate: (date: String, milis: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var isTimerEnabled by remember { mutableStateOf(false) }
-    var selectedDate by remember { mutableStateOf("Martes 24 julio, 10:22") }
     val openSelectDateDialog = remember { mutableStateOf(false) }
     Column(
         modifier = modifier.fillMaxWidth()
@@ -231,7 +266,8 @@ fun TimerSection(
             )
             Switch(
                 checked = isTimerEnabled,
-                onCheckedChange = { isTimerEnabled = it }
+                onCheckedChange = { onToggleAddTimer() },
+                enabled = editable
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -249,7 +285,11 @@ fun TimerSection(
                 color = colorMediumBlue
             )
             TextButton(
-                onClick = { openSelectDateDialog.value = true }
+                onClick = {
+                    if (editable) {
+                        openSelectDateDialog.value = true
+                    }
+                }
             ) {
                 Text(
                     text = "Cambiar fecha",
@@ -277,8 +317,11 @@ fun TimerSection(
                     onClick = {
                         openSelectDateDialog.value = false
                         // Todo: Revisar la zona horaria para evitar errores
-                        selectedDate =
-                            datePickerState.selectedDateMillis?.toShortDateWithTime() ?: ""
+                        onClickDate(
+                            datePickerState.selectedDateMillis?.toShortDateWithTime() ?: "",
+                            datePickerState.selectedDateMillis ?: Clock.System.now()
+                                .toEpochMilliseconds()
+                        )
                     },
                     enabled = confirmEnabled.value
                 ) {
@@ -301,9 +344,11 @@ fun TimerSection(
 
 @Composable
 fun DescriptionSection(
+    editable: Boolean,
+    description: String,
+    onDescriptionChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var description: String by remember { mutableStateOf("") }
     Column(
         modifier = modifier
     ) {
@@ -317,8 +362,9 @@ fun DescriptionSection(
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
+            readOnly = editable,
             value = description,
-            onValueChange = { description = it },
+            onValueChange = onDescriptionChanged,
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = Color.Black.copy(0.48f),
                 focusedBorderColor = Color.Black.copy(0.48f),
@@ -340,9 +386,10 @@ fun DescriptionSection(
 
 @Composable
 fun FilterSection(
-    modifier: Modifier = Modifier
+    selectedFilters: List<String>,
+    onClickFilter: (id: String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var selectedFilters by remember { mutableStateOf(emptyList<String>()) }
 
     val filterData = filterPreviewData
 
@@ -356,13 +403,7 @@ fun FilterSection(
                     FilterItem(
                         name = item.name,
                         icon = item.icon,
-                        onClickFilter = {
-                            selectedFilters = if (selectedFilters.contains(item.id)) {
-                                selectedFilters - item.id
-                            } else {
-                                selectedFilters + item.id
-                            }
-                        },
+                        onClickFilter = { onClickFilter(item.id) },
                         isSelected = selectedFilters.contains(item.id),
                         modifier = Modifier
                             .weight(1f)
@@ -419,10 +460,10 @@ private fun FilterItem(
 
 @Composable
 fun PetSelectionSection(
+    selectedPetsIds: List<String>,
+    onClickPet: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val selectedIds = remember { mutableStateListOf<String>() }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -438,7 +479,7 @@ fun PetSelectionSection(
                 lineHeight = 18.77.sp
             )
             Text(
-                text = " (${selectedIds.size})",
+                text = " (${selectedPetsIds.size})",
                 fontSize = 16.sp,
                 fontFamily = workSansFontFamily,
                 fontWeight = FontWeight.W600,
@@ -455,13 +496,9 @@ fun PetSelectionSection(
                     petName = it.name,
                     petType = it.type,
                     imageUri = it.imageUri,
-                    isSelected = selectedIds.contains(it.id),
+                    isSelected = selectedPetsIds.contains(it.id),
                     modifier = Modifier.clickable {
-                        if (selectedIds.contains(it.id)) {
-                            selectedIds.remove(it.id)
-                        } else {
-                            selectedIds.add(it.id)
-                        }
+                        onClickPet(it.id)
                     }
                 )
             }
@@ -532,9 +569,23 @@ fun SelectablePet(
 private fun CreateEventHistoryScreenPreview() {
     MascotappTheme {
         CreateEventHistoryScreen(
+            editable = true,
             onClickAccept = {},
-            imageUris = emptyList(),
-            onImageUrisChanged = {}
+            imageUris = listOf(
+                Uri.parse("android.resource://com.pe.mascotapp/drawable/perro1")
+            ),
+            onImageUrisChanged = {},
+            selectedFilters = listOf("VACCINE"),
+            onClickFilter = {},
+            description = "Descripción de la historia",
+            onDescriptionChanged = {},
+            selectedPetsIds = listOf("1"),
+            onClickPet = {},
+            isTimerEnabled = true,
+            onToggleAddTimer = {},
+            selectedDate = "Martes 24 julio, 10:22",
+            onSelectedDateChanged = { _, _ -> },
+            modifier = Modifier
         )
     }
 }

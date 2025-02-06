@@ -1,37 +1,33 @@
 package com.pe.mascotapp.vistas.fragments.home
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.pe.mascotapp.R
 import com.pe.mascotapp.databinding.FragmentHomeBinding
 import com.pe.mascotapp.modelos.Categorias
 import com.pe.mascotapp.modelos.PromocionBanner
-import com.pe.mascotapp.utils.Constantes
-import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.DetailServiceActivity
 import com.pe.mascotapp.vistas.adapters.HomeListServiceAdapter
 import com.pe.mascotapp.vistas.adapters.HomeServiceAdapter
-import java.io.File
-import java.io.FileInputStream
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-
     var categoriasArray: ArrayList<Categorias> = ArrayList()
     var promocionBanner: PromocionBanner = PromocionBanner()
+    private val viewModel by viewModels<HomeViewModel>()
 
-    var homeListServiceAdapterType: HomeListServiceAdapter?= null
-    var homeServiceAdapterType:HomeServiceAdapter ?= null
+    var homeListServiceAdapterType: HomeListServiceAdapter? = null
+    var homeServiceAdapterType: HomeServiceAdapter? = null
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -40,7 +36,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding =FragmentHomeBinding.inflate(inflater, container,false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         obtenerData()
         startRCVHome()
         setUpListener()
@@ -52,12 +48,12 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun setUpListener(){
+    private fun setUpListener() {
         binding.ivFilter.setOnClickListener(filterClickListener)
         binding.tvFilter.setOnClickListener(filterClickListener)
     }
 
-    fun obtenerData(){
+    fun obtenerData() {
         /*val preferences = getSharedPreferences(Constantes.SHARED_PREF, Context.MODE_PRIVATE)
         val id = preferences?.getInt(Constantes.SHARED_ID_USUARIO, 0)
 
@@ -137,14 +133,14 @@ class HomeFragment : Fragment() {
         categoriasArray.add(categorias7)
 
         val categorias8 = Categorias()
-        categorias8.id =7
+        categorias8.id = 7
         categorias8.titulo = "Juguetes, ropa y accesorios"
         categorias8.descripcion = "juguetes y variados"
         categorias8.img = "juguetes_perros"
         categoriasArray.add(categorias8)
 
         val categorias9 = Categorias()
-        categorias9.id =8
+        categorias9.id = 8
         categorias9.titulo = "Cerrar sesión"
         categorias9.descripcion = "Cerrar sesión"
         categorias9.img = "ic_baseline_logout_24"
@@ -157,78 +153,66 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun startRCVHome(){
+    fun startRCVHome() {
         /*val mLayoutManager = GridLayoutManager(this,2)
         rcvHome?.setLayoutManager(mLayoutManager)
         rcvHomeService?.setLayoutManager(mLayoutManager)*/
         binding.rcvHome.setLayoutManager(LinearLayoutManager(context))
-        binding.rcvHomeService.setLayoutManager(LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false))
+        binding.rcvHomeService.setLayoutManager(
+            LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        )
 
-        homeListServiceAdapterType = HomeListServiceAdapter(categoriasArray,promocionBanner){ categorias ->
+        homeListServiceAdapterType =
+            HomeListServiceAdapter(categoriasArray, promocionBanner) { categorias ->
 
-            val intent = Intent(context, DetailServiceActivity::class.java)
-            startActivity(intent)
-            /*when(categorias.id){
-                0,2 -> {
-                    val intent = Intent(this, MarketPlaceActivity::class.java)
-                    startActivity(intent)
-                }
-                3 -> {
-                    val intent = Intent(this, JourneyTipoOneActivity::class.java)
-                    startActivity(intent)
-                }
-                8 -> {
-                    val pref = applicationContext.getSharedPreferences(
-                        Constantes.SHARED_PREF,
-                        MODE_PRIVATE
-                    )
-                    pref.edit().clear().commit()
+                val intent = Intent(context, DetailServiceActivity::class.java)
+                startActivity(intent)
+                /*when(categorias.id){
+                    0,2 -> {
+                        val intent = Intent(this, MarketPlaceActivity::class.java)
+                        startActivity(intent)
+                    }
+                    3 -> {
+                        val intent = Intent(this, JourneyTipoOneActivity::class.java)
+                        startActivity(intent)
+                    }
+                    8 -> {
+                        val pref = applicationContext.getSharedPreferences(
+                            Constantes.SHARED_PREF,
+                            MODE_PRIVATE
+                        )
+                        pref.edit().clear().commit()
 
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                }
-                else -> {
-                    Toast.makeText(this,"Proximamente",Toast.LENGTH_LONG).show()
-                }
-            }*/
+                        val intent = Intent(applicationContext, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                    else -> {
+                        Toast.makeText(this,"Proximamente",Toast.LENGTH_LONG).show()
+                    }
+                }*/
 
-        }
+            }
 
-        homeServiceAdapterType = HomeServiceAdapter(categoriasArray,promocionBanner){ categorias ->
-            /*when(categorias.id){
-                0,2 -> {
-                    val intent = Intent(this, MarketPlaceActivity::class.java)
-                    startActivity(intent)
-                }
-                3 -> {
-                    val intent = Intent(this, JourneyTipoOneActivity::class.java)
-                    startActivity(intent)
-                }
-                8 -> {
-                    val pref = applicationContext.getSharedPreferences(
-                        Constantes.SHARED_PREF,
-                        Context.MODE_PRIVATE
-                    )
-                    pref.edit().clear().commit()
-
-                    val intent = Intent(applicationContext, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                }
-                else -> {
-                    Toast.makeText(this,"Proximamente",Toast.LENGTH_LONG).show()
-                }
-            }*/
-
-
-
-        }
         binding.rcvHome.setAdapter(homeListServiceAdapterType)
-       binding.rcvHome.setItemAnimator(DefaultItemAnimator())
+        binding.rcvHome.setItemAnimator(DefaultItemAnimator())
 
-        binding.rcvHomeService.setAdapter(homeServiceAdapterType)
-        binding.rcvHomeService.setItemAnimator(DefaultItemAnimator())
+        val serviceAdapter = HomeServiceAdapter(
+            onSelectCategory = viewModel::onSelectCategory
+        )
+        binding.rcvHomeService.setAdapter(serviceAdapter)
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    serviceAdapter.submitList(uiState.serviceCategories)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -238,7 +222,7 @@ class HomeFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() : Fragment{
+        fun newInstance(): Fragment {
             val homeFragment = HomeFragment()
             return homeFragment
         }

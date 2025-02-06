@@ -1,75 +1,92 @@
 package com.pe.mascotapp.vistas.adapters
 
-import android.graphics.PorterDuff
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.size.Scale
 import com.pe.mascotapp.R
-import com.pe.mascotapp.modelos.Categorias
-import com.pe.mascotapp.modelos.PromocionBanner
+import com.pe.mascotapp.databinding.ServiceHomeHolderBinding
+
+data class ServiceCategory(
+    val id: Int,
+    val name: String,
+    val isSelected: Boolean,
+    // Change it with urls if it's necessary
+    @DrawableRes val selectedImage: Int,
+    @DrawableRes val unselectedImage: Int
+)
 
 class HomeServiceAdapter(
-    private val categorias: ArrayList<Categorias>,
-    private val promocionBanner: PromocionBanner,
-    private var listener: (Categorias) -> Unit
+    private val onSelectCategory: (Int) -> Unit,
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ListAdapter<ServiceCategory, HomeServiceAdapter.HomeServiceAdapterHolder>(DiffCallBack) {
 
-    var categoriasList = ArrayList<Categorias>()
-    var positionCategorySelected = 0
-
-    init {
-        categoriasList = categorias
-    }
-
-    class HomeServiceAdapterHolder(view: View, isActivated: Boolean) :
-        RecyclerView.ViewHolder(view) {
-        val imgHolder: ImageView = view.findViewById(R.id.imgHolder)
-        private val txtTitle: TextView = view.findViewById(R.id.txtTitle)
-        val cardView: CardView = view.findViewById(R.id.cvItem)
-
-        init {
-            if (!isActivated) {
-                cardView.setCardBackgroundColor(view.context.getColor(R.color.plomoq))
-                imgHolder.setColorFilter(
-                    ContextCompat.getColor(
-                        view.context,
-                        R.color.plomoRegular
-                    ),
-                    PorterDuff.Mode.SRC_IN
-                )
-                txtTitle.setTextColor(view.context.getColor(R.color.plomoq))
+    class HomeServiceAdapterHolder(private val binding: ServiceHomeHolderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            element: ServiceCategory,
+            onSelectCategory: (Int) -> Unit
+        ) {
+            binding.root.setOnClickListener {
+                Log.d("petadapter", "Clickando nuevo adapter")
+                if (!element.isSelected) {
+                    onSelectCategory(element.id)
+                }
             }
+            binding.ivIcon.load(
+                if (element.isSelected) element.selectedImage else element.unselectedImage
+            ) {
+                size(400, 400)
+                scale(Scale.FIT)
+            }
+            binding.tvTitle.text = element.name
+
+            binding.cardView.setCardBackgroundColor(
+                if (element.isSelected) itemView.context.getColor(R.color.backgroundCard)
+                else itemView.context.getColor(R.color.plomoq)
+            )
+            binding.tvTitle.setTextColor(
+                if (element.isSelected) itemView.context.getColor(R.color.primaryColor)
+                else itemView.context.getColor(R.color.plomoq)
+            )
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (positionCategorySelected == position) 1 else 0
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeServiceAdapterHolder {
+        return HomeServiceAdapterHolder(
+            ServiceHomeHolderBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.service_home_holder, parent, false)
-        val isActivated = viewType == 1
-        return HomeServiceAdapterHolder(view, isActivated)
+    override fun onBindViewHolder(holder: HomeServiceAdapterHolder, position: Int) {
+        val current = getItem(position)
+        holder.bind(current, onSelectCategory = onSelectCategory)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    companion object {
+        private val DiffCallBack = object : DiffUtil.ItemCallback<ServiceCategory>() {
+            override fun areItemsTheSame(
+                oldItem: ServiceCategory,
+                newItem: ServiceCategory
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-        holder.itemView.setOnClickListener {
-            positionCategorySelected = position
-            notifyDataSetChanged()
+            override fun areContentsTheSame(
+                oldItem: ServiceCategory,
+                newItem: ServiceCategory
+            ): Boolean {
+                return oldItem.isSelected == newItem.isSelected
+            }
+
         }
-
     }
 
-    override fun getItemCount(): Int {
-        return categoriasList.size
-    }
 }

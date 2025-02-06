@@ -341,9 +341,9 @@ class HomeActivity : AppCompatActivity() {
 
             }
 
-        homeServiceAdapterType =
+        /*homeServiceAdapterType =
             HomeServiceAdapter(categoriasArray, promocionBanner) { categorias ->
-                /*when(categorias.id){
+                when(categorias.id){
                     0,2 -> {
                         val intent = Intent(this, MarketPlaceActivity::class.java)
                         startActivity(intent)
@@ -366,10 +366,10 @@ class HomeActivity : AppCompatActivity() {
                     else -> {
                         Toast.makeText(this,"Proximamente",Toast.LENGTH_LONG).show()
                     }
-                }*/
+                }
 
 
-            }
+            }*/
         rcvHome?.setAdapter(homeListServiceAdapterType)
         rcvHome?.setItemAnimator(DefaultItemAnimator())
 

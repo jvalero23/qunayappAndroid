@@ -55,12 +55,12 @@ class HomeListServiceAdapter (private val categorias:ArrayList<Categorias>, priv
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        /*holder as HomeListServiceAdapterHolder
+        holder as HomeListServiceAdapterHolder
         holder.txtTitle.text = categoriasList[position].titulo
 
         val name = categoriasList[position].img
         val drawable = holder.mContext.resources.getIdentifier(name,"drawable", holder.mContext.packageName)
-        holder.imgHolder.setImageResource(drawable)*/
+        holder.imgHolder.setImageResource(drawable)
 
         holder.itemView.setOnClickListener { listener(categoriasList[position]) }
 

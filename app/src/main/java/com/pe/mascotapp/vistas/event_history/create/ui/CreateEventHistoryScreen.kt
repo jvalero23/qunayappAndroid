@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -536,7 +537,7 @@ fun SelectablePet(
                 .then(
                     if (isSelected) Modifier.border(
                         2.dp,
-                        color = Color.Black,
+                        color = colorResource(id = R.color.blue_primary),
                         CircleShape
                     ) else Modifier
                 ),

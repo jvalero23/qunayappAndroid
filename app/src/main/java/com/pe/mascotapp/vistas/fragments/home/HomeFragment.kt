@@ -84,14 +84,14 @@ class HomeFragment : Fragment() {
 
         val categorias1 = Categorias()
         categorias1.id = 0
-        categorias1.titulo = "Comida y Snacks"
-        categorias1.descripcion = "Comida y variados"
-        categorias1.img = "snack_comida"
+        categorias1.titulo = "Clínica Veterinaria Pancho Cavero"
+        categorias1.descripcion = "Clínica Veterinaria Pancho Cavero"
+        categorias1.img = "clinica_veterinaria_pancho_cavero"
         categoriasArray.add(categorias1)
 
         val categorias2 = Categorias()
         categorias2.id = 1
-        categorias2.titulo = "Paseos y entrenamiento"
+        categorias2.titulo = "Dr. Augusto Baldoceda, Dermatología Veterinaria"
         categorias2.descripcion = "Paseos"
         categorias2.img = "paseo_perros"
         categoriasArray.add(categorias2)
@@ -99,52 +99,52 @@ class HomeFragment : Fragment() {
 
         val categorias3 = Categorias()
         categorias3.id = 2
-        categorias3.titulo = "Juguetes, ropa y accesorios"
+        categorias3.titulo = "Entre Patas Consultorio Veterinario"
         categorias3.descripcion = "juguetes y variados"
         categorias3.img = "juguetes_perros"
         categoriasArray.add(categorias3)
 
         val categorias4 = Categorias()
         categorias4.id = 3
-        categorias4.titulo = "Veterinaria"
+        categorias4.titulo = "San Andrés Vet Care"
         categorias4.descripcion = "Veterinaria"
         categorias4.img = "veterinaria_img"
         categoriasArray.add(categorias4)
 
         val categorias5 = Categorias()
         categorias5.id = 4
-        categorias5.titulo = "Juguetes, ropa y accesorios"
-        categorias5.descripcion = "juguetes y variados"
+        categorias5.titulo = "Veterinaria 922"
+        categorias5.descripcion = "Veterinaria"
         categorias5.img = "juguetes_perros"
         categoriasArray.add(categorias5)
 
         val categorias6 = Categorias()
         categorias6.id = 5
-        categorias6.titulo = "Juguetes, ropa y accesorios"
+        categorias6.titulo = "Veterinaria Feel Vet"
         categorias6.descripcion = "juguetes y variados"
         categorias6.img = "juguetes_perros"
         categoriasArray.add(categorias6)
 
         val categorias7 = Categorias()
         categorias7.id = 6
-        categorias7.titulo = "Juguetes, ropa y accesorios"
+        categorias7.titulo = "Veterinaria Natura Vet"
         categorias7.descripcion = "juguetes y variados"
         categorias7.img = "juguetes_perros"
         categoriasArray.add(categorias7)
 
         val categorias8 = Categorias()
         categorias8.id = 7
-        categorias8.titulo = "Juguetes, ropa y accesorios"
+        categorias8.titulo = "Veterinaria Pet Friendly"
         categorias8.descripcion = "juguetes y variados"
-        categorias8.img = "juguetes_perros"
+        categorias8.img = "snack_comida"
         categoriasArray.add(categorias8)
 
-        val categorias9 = Categorias()
+        /*val categorias9 = Categorias()
         categorias9.id = 8
         categorias9.titulo = "Cerrar sesión"
         categorias9.descripcion = "Cerrar sesión"
         categorias9.img = "ic_baseline_logout_24"
-        categoriasArray.add(categorias9)
+        categoriasArray.add(categorias9)*/
 
         promocionBanner.id = 0
         promocionBanner.titulo = "titulo"

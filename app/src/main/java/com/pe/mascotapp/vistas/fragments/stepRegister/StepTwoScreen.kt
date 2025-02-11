@@ -437,12 +437,14 @@ fun FormPet(
                 leadingIcon = painterResource(id = R.drawable.peso),
                 value = listPets[pagerState.currentPage].pet.weight,
                 onValueChange = { value ->
-                    val filteredText = value.filter { it.isDigit() || it == '.' }
+                    var filteredText = value.filter { it.isDigit() || it == '.' }
                     filteredText.also {
                         if (it.isNotEmpty() && it.startsWith(".")) return@CustomTextField
                         if (it.count { char -> char == '.' } > 1) return@CustomTextField
                         if (it.length > 9) return@CustomTextField
                     }
+                    filteredText = filteredText.trimStart('0').ifEmpty { "0" }
+                    if (filteredText.startsWith(".")) filteredText = "0$filteredText"
                     updatePetWeight(pagerState.currentPage, filteredText)
                 },
                 label = "Peso",
@@ -755,6 +757,27 @@ fun CustomTextField(
         )
     }
 
+    var colors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.Black,
+        unfocusedTextColor = Color.Black,
+        disabledTextColor = Color.Black,
+        focusedContainerColor = Color.White,
+        unfocusedContainerColor = Color.White,
+        disabledContainerColor = Color.White,
+        errorContainerColor = Color.White,
+        cursorColor = colorPrimary,
+        focusedBorderColor = colorPrimary,
+        unfocusedBorderColor = colorDisabled,
+        focusedLabelColor = colorPrimary,
+    )
+
+    if(!enabled){
+        colors = OutlinedTextFieldDefaults.colors(
+            disabledBorderColor = colorDisabled, // Color del borde cuando está deshabilitado
+            disabledTextColor = Color.Black, // Color del texto cuando está deshabilitado
+            disabledPlaceholderColor = colorDisabled // Color del placeholder cuando está deshabilitado
+        )
+    }
 
     OutlinedTextField(
         enabled = enabled,
@@ -777,19 +800,7 @@ fun CustomTextField(
         },
 
         trailingIcon = trailingIcon,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.Black,
-            unfocusedTextColor = Color.Black,
-            disabledTextColor = Color.Black,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            disabledContainerColor = Color.White,
-            errorContainerColor = Color.White,
-            cursorColor = colorPrimary,
-            focusedBorderColor = colorPrimary,
-            unfocusedBorderColor = colorDisabled,
-            focusedLabelColor = colorPrimary,
-        ),
+        colors = colors,
         label = {
             Text(
                 text = label,

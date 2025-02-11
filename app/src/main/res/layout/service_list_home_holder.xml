@@ -31,7 +31,7 @@
                 <ImageView
                     android:id="@+id/imgHolder"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="160dp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_pet_house" />
@@ -112,7 +112,7 @@
                         android:src="@drawable/location" />
 
                     <TextView
-
+                        android:id="@+id/txtUbicacion"
                         style="@style/WorkSans_Regular14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,6 +122,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/txtDescripcion"
                     style="@style/WorkSans_Regular14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

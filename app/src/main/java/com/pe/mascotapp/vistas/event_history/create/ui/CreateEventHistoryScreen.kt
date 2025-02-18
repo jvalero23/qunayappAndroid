@@ -79,7 +79,6 @@ import kotlinx.datetime.Clock
 
 @Composable
 fun CreateEventHistoryScreen(
-    editable: Boolean,
     selectedFilters: List<String>,
     onClickFilter: (id: String) -> Unit,
     description: String,
@@ -122,7 +121,6 @@ fun CreateEventHistoryScreen(
             }
             item {
                 DescriptionSection(
-                    editable = editable,
                     description = description,
                     onDescriptionChanged = onDescriptionChanged,
                     modifier = Modifier
@@ -132,7 +130,6 @@ fun CreateEventHistoryScreen(
             }
             item {
                 TimerSection(
-                    editable = editable,
                     isTimerEnabled = isTimerEnabled,
                     onToggleAddTimer = onToggleAddTimer,
                     selectedDate = selectedDate,
@@ -144,7 +141,6 @@ fun CreateEventHistoryScreen(
             }
             item {
                 PhotosSection(
-                    editable = editable,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = contentPadding),
@@ -176,7 +172,6 @@ fun CreateEventHistoryScreen(
 
 @Composable
 fun PhotosSection(
-    editable: Boolean,
     selectedUris: (List<Uri>) -> Unit,
     imageUris: List<Uri>,
     modifier: Modifier = Modifier,
@@ -200,9 +195,7 @@ fun PhotosSection(
     ) {
         TextButton(
             onClick = {
-                if (editable) {
-                    launchPhotoPicker()
-                }
+                launchPhotoPicker()
             },
             colors = ButtonDefaults.textButtonColors(
                 contentColor = colorGrisTittle
@@ -242,7 +235,6 @@ fun PhotosSection(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerSection(
-    editable: Boolean,
     isTimerEnabled: Boolean,
     onToggleAddTimer: () -> Unit,
     selectedDate: String,
@@ -268,7 +260,6 @@ fun TimerSection(
             Switch(
                 checked = isTimerEnabled,
                 onCheckedChange = { onToggleAddTimer() },
-                enabled = editable
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -287,9 +278,7 @@ fun TimerSection(
             )
             TextButton(
                 onClick = {
-                    if (editable) {
-                        openSelectDateDialog.value = true
-                    }
+                    openSelectDateDialog.value = true
                 }
             ) {
                 Text(
@@ -345,7 +334,6 @@ fun TimerSection(
 
 @Composable
 fun DescriptionSection(
-    editable: Boolean,
     description: String,
     onDescriptionChanged: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -363,7 +351,6 @@ fun DescriptionSection(
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
-            readOnly = editable,
             value = description,
             onValueChange = onDescriptionChanged,
             colors = OutlinedTextFieldDefaults.colors(
@@ -570,7 +557,6 @@ fun SelectablePet(
 private fun CreateEventHistoryScreenPreview() {
     MascotappTheme {
         CreateEventHistoryScreen(
-            editable = true,
             onClickAccept = {},
             imageUris = listOf(
                 Uri.parse("android.resource://com.pe.mascotapp/drawable/perro1")

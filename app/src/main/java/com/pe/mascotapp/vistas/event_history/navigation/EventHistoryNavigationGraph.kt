@@ -28,10 +28,10 @@ fun NavGraphBuilder.eventHistoryGraphDestination(
         eventHistoryDestination(
             navToFilter = navController::navigateToEventHistoryFilterDestination,
             navToDetail = {
-                navController.navigateToCreateEventHistoryDestination(editable = false)
+                navController.navigateToCreateEventHistoryDestination(isEdit = true)
             },
             onAddHistory = {
-                navController.navigateToCreateEventHistoryDestination(editable = true)
+                navController.navigateToCreateEventHistoryDestination(isEdit = false)
             }
         )
         eventHistoryFilterDestination(

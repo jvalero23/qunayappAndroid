@@ -414,8 +414,6 @@ fun FormPet(
                 }
             )
         }
-        val weightRegex = Regex("^[0-9]+(\\.[0-9]{0,2})?\$")
-
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -432,8 +430,7 @@ fun FormPet(
                                 updatePetWeight(pagerState.currentPage, text.plus("0"))
                             }
                         }
-                    }
-                ,
+                    },
                 leadingIcon = painterResource(id = R.drawable.peso),
                 value = listPets[pagerState.currentPage].pet.weight,
                 onValueChange = { value ->
@@ -563,14 +560,15 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean) {
         )
 
         //Circle
-        Canvas(modifier = Modifier
-            .size(15.dp)
-            .align(Alignment.CenterEnd)
-            .border(
-                shape = CircleShape,
-                width = 2.dp,
-                color = colorLightGray
-            ),
+        Canvas(
+            modifier = Modifier
+                .size(15.dp)
+                .align(Alignment.CenterEnd)
+                .border(
+                    shape = CircleShape,
+                    width = 2.dp,
+                    color = colorLightGray
+                ),
             onDraw = {
                 drawCircle(color = color)
             }
@@ -646,7 +644,8 @@ fun CircularName(
             .width(IntrinsicSize.Max)
             .zIndex(if (currentPage == page) totalItems.toFloat() else (totalItems - page).toFloat())
     ) {
-        AnimatedVisibility(visible = show,
+        AnimatedVisibility(
+            visible = show,
             enter = slideInHorizontally(animationSpec = tween(durationMillis = 200)) { fullWidth ->
                 fullWidth / 3
             } + fadeIn(
@@ -745,6 +744,8 @@ fun CustomTextField(
     leadingIconOnClick: () -> Unit = {},
     enabled: Boolean = true,
     trailingIcon: @Composable (() -> Unit)? = null,
+    minLines: Int = 1,
+    singleLine: Boolean = true,
 ) {
     val focusManager = LocalFocusManager.current
     var keyboardOptions = KeyboardOptions(
@@ -771,7 +772,7 @@ fun CustomTextField(
         focusedLabelColor = colorPrimary,
     )
 
-    if(!enabled){
+    if (!enabled) {
         colors = OutlinedTextFieldDefaults.colors(
             disabledBorderColor = colorDisabled, // Color del borde cuando está deshabilitado
             disabledTextColor = Color.Black, // Color del texto cuando está deshabilitado
@@ -784,12 +785,12 @@ fun CustomTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
-        singleLine = true,
+        singleLine = singleLine,
         keyboardActions = KeyboardActions(
             onDone = { focusManager.clearFocus() }
         ),
-        leadingIcon = {
-            if (leadingIcon != null)
+        leadingIcon = leadingIcon?.let {
+            {
                 Icon(
                     painter = leadingIcon,
                     contentDescription = null,
@@ -797,8 +798,8 @@ fun CustomTextField(
                         leadingIconOnClick()
                     }
                 )
+            }
         },
-
         trailingIcon = trailingIcon,
         colors = colors,
         label = {
@@ -813,8 +814,8 @@ fun CustomTextField(
         textStyle = LocalTextStyle.current.copy(textAlign = textAlign),
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
-
-        )
+        minLines = minLines
+    )
 }
 
 @Composable

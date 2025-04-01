@@ -63,8 +63,9 @@ class CalendarFragment : Fragment() {
         binding.btnPrevious.setOnClickListener {
             binding.calendarView.scrollLeft()
         }
-        binding.calendarView.setLocale(TimeZone.getTimeZone("America/Lima"), Locale("es", "PE"))
+        //binding.calendarView.setLocale(TimeZone.getTimeZone("America/Lima"), Locale("es", "PE"))
         binding.calendarView.setDayColumnNames(arrayOf("L", "M", "M", "J", "V", "S", "D"))
+        binding.calendarView.setUseThreeLetterAbbreviation(true);
         binding.icCalShow.setOnClickListener {
             if (binding.calendarView.isVisible) {
                 binding.calendarView.visibility = View.GONE

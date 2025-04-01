@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -171,7 +172,12 @@ class CalendarFragment : Fragment() {
         binding.tvMonthYears.text = CalendarUtils.formatMonthYear(day, Locale("es", "ES"))
         binding.tvNameDay.text =
             CalendarUtils.getAbbreviatedDayName(day, Locale("es", "ES")).capitalize()
-        binding.calendarView.setCurrentDate(CalendarUtils.convertLocalDateToDate(day))
+
+        val calendarDate: Calendar = Calendar.Builder()
+            .setDate(day.year, day.monthValue, day.dayOfMonth)
+            .setLocale(Locale("es", "ES"))
+            .build()
+        binding.calendarView.setCurrentDate(Date.from(calendarDate.toInstant()))
         binding.titleDate.text = CalendarUtils.formatMonthYear(day, Locale("es", "ES")).capitalize()
     }
 

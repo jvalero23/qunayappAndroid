@@ -35,6 +35,8 @@ import java.util.TimeZone
 class CalendarFragment : Fragment() {
     lateinit var binding: FragmentCalendarBinding
     private val viewModel: CalendarViewModel by viewModels()
+    private var shouldUpdateCurrentDate = true
+
     private val launchCreateReminder =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             viewModel.getAllReminders(LocalDate.now())
@@ -64,9 +66,10 @@ class CalendarFragment : Fragment() {
         binding.btnPrevious.setOnClickListener {
             binding.calendarView.scrollLeft()
         }
-        //binding.calendarView.setLocale(TimeZone.getTimeZone("America/Lima"), Locale("es", "PE"))
-        binding.calendarView.setDayColumnNames(arrayOf("L", "M", "M", "J", "V", "S", "D"))
-        binding.calendarView.setUseThreeLetterAbbreviation(true);
+        binding.calendarView.removeAllEvents()
+        binding.calendarView.setLocale(TimeZone.getTimeZone("America/Lima"), Locale("es", "PE"))
+        //binding.calendarView.setDayColumnNames(arrayOf("L", "M", "M", "J", "V", "S", "D"))
+        //binding.calendarView.setUseThreeLetterAbbreviation(true);
         binding.icCalShow.setOnClickListener {
             if (binding.calendarView.isVisible) {
                 binding.calendarView.visibility = View.GONE
@@ -87,6 +90,7 @@ class CalendarFragment : Fragment() {
             }
 
             override fun onMonthScroll(firstDayOfNewMonth: Date?) {
+                shouldUpdateCurrentDate = false
                 binding.titleDate.text =
                     firstDayOfNewMonth?.let { CalendarUtils.formatMonthYear(it).capitalize() }
                 firstDayOfNewMonth?.let { viewModel.updateSelectDate(dateToLocalDate(it)) }
@@ -172,12 +176,14 @@ class CalendarFragment : Fragment() {
         binding.tvMonthYears.text = CalendarUtils.formatMonthYear(day, Locale("es", "ES"))
         binding.tvNameDay.text =
             CalendarUtils.getAbbreviatedDayName(day, Locale("es", "ES")).capitalize()
+        if (shouldUpdateCurrentDate) {
+            val calendarDate: Calendar = Calendar.Builder()
+                .setDate(day.year, day.monthValue - 1, day.dayOfMonth)
+                .setLocale(Locale("es", "ES"))
+                .build()
+            binding.calendarView.setCurrentDate(Date.from(calendarDate.toInstant()))
+        }
 
-        val calendarDate: Calendar = Calendar.Builder()
-            .setDate(day.year, day.monthValue, day.dayOfMonth)
-            .setLocale(Locale("es", "ES"))
-            .build()
-        binding.calendarView.setCurrentDate(Date.from(calendarDate.toInstant()))
         binding.titleDate.text = CalendarUtils.formatMonthYear(day, Locale("es", "ES")).capitalize()
     }
 

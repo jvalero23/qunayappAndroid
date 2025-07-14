@@ -3,6 +3,7 @@ package com.pe.mascotapp.vistas.fragments.stepRegister
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -93,6 +94,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
+import androidx.core.content.ContextCompat
 import com.pe.mascotapp.R
 import com.pe.mascotapp.bigTitleStyle
 import com.pe.mascotapp.boldTitleStyle
@@ -116,6 +118,7 @@ import com.pe.mascotapp.vistas.fragments.stepRegister.SelectBreedActivity.Compan
 import com.pe.mascotapp.vistas.ui.theme.MascotappTheme
 import java.text.DecimalFormat
 import java.util.Calendar
+import java.util.Locale
 import kotlin.math.max
 
 @Composable
@@ -209,7 +212,7 @@ fun StepTwoScreen(
                     .verticalScroll(rememberScrollState())
                     .padding(bottom = 20.dp)
             ) {
-                Column(modifier = Modifier.padding(top = 37.dp)) {
+                Column(modifier = Modifier.padding(top = 12.dp)) {
                     Text(
                         text = "Paso 2",
                         textAlign = TextAlign.Center,
@@ -277,6 +280,38 @@ fun FormPet(
     val currentObj = listPets[pagerState.currentPage]
 
     fun setCalendar() {
+        val locale = Locale("es", "ES")
+        Locale.setDefault(locale)
+
+        val config = ctx.resources.configuration
+        config.setLocale(locale)
+        ctx.resources.updateConfiguration(config, ctx.resources.displayMetrics) // importante
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            ctx, // usa el contexto original
+            R.style.BlueDatePicker,
+            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                val formattedDate = "${dayOfMonth.toString().padStart(2, '0')}${(month + 1).toString().padStart(2, '0')}${year.toString().padStart(4, '0')}"
+                setDateToPet(pagerState.currentPage, formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        datePickerDialog.show()
+
+        val azul = ContextCompat.getColor(ctx, R.color.blue_primary)
+
+        datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(azul)
+        datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE)?.setTextColor(azul)
+    }
+
+    /*fun setCalendar() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -297,7 +332,7 @@ fun FormPet(
         )
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
-    }
+    }*/
 
     Column(
         modifier = Modifier
@@ -439,6 +474,7 @@ fun FormPet(
                         if (it.isNotEmpty() && it.startsWith(".")) return@CustomTextField
                         if (it.count { char -> char == '.' } > 1) return@CustomTextField
                         if (it.length > 9) return@CustomTextField
+                        if (it.matches(Regex("0\\.0{2,}"))) return@CustomTextField
                     }
                     filteredText = filteredText.trimStart('0').ifEmpty { "0" }
                     if (filteredText.startsWith(".")) filteredText = "0$filteredText"

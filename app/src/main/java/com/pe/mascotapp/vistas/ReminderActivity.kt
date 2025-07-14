@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -35,6 +36,8 @@ import com.pe.mascotapp.vistas.adapters.ValueTextOption
 import com.pe.mascotapp.vistas.adapters.mapValueTextOption
 import com.pe.mascotapp.vistas.dialogs.DialogOption
 import com.pe.mascotapp.vistas.entities.VaccineFieldEntity
+import com.pe.mascotapp.databinding.ToolbarActivityBinding
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -167,6 +170,12 @@ class ReminderActivity : AppCompatActivity() {
 
         binding = ActivityReminderBinding.inflate(layoutInflater)
         binding.reminderViewModel = viewModel
+
+        val includedToolbar: View = binding.root.findViewById(R.id.toolbar)
+        val toolbarBinding = ToolbarActivityBinding.bind(includedToolbar)
+        toolbarBinding.btnBack.setOnClickListener {
+            finish()
+        }
         val reminderPetsJoinEntity =
             intent.getParcelableExtra<ReminderPetsJoinEntity>("BUNDLE_REMINDER")
         reminderPetsJoinEntity?.let {

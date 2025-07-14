@@ -14,7 +14,14 @@ enum class CATEGORYID {
     WALK,
     TAKESHOWER,
     WATERFOOD,
-    OTHERS,
+    //OTHERS,
+    FLEATREATMENT,
+    ZEAL,
+    POOP,
+    BEHAVIOR,
+    WEIGHT,
+    SYMPTOMS
+
 }
 
 sealed class CategoryReminderEntity(
@@ -95,13 +102,62 @@ sealed class CategoryReminderEntity(
         R.drawable.ic_water_food,
     )
 
-    @Parcelize
+    /*@Parcelize
     class OthersReminder : CategoryReminderEntity(
         CATEGORYID.OTHERS,
         false,
         "Otros",
         R.drawable.ic_others,
+    )*/
+
+    @Parcelize
+    class Fleatreatment : CategoryReminderEntity(
+        CATEGORYID.FLEATREATMENT,
+        false,
+        "Antipulgas",
+        R.drawable.ic_antipulgas,
     )
+
+    @Parcelize
+    class Zeal : CategoryReminderEntity(
+        CATEGORYID.ZEAL,
+        false,
+        "Celos",
+        R.drawable.ic_celo,
+    )
+
+    @Parcelize
+    class Poop : CategoryReminderEntity(
+        CATEGORYID.POOP,
+        false,
+        "Caca",
+        R.drawable.ic_caca,
+    )
+
+    @Parcelize
+    class Behavior : CategoryReminderEntity(
+        CATEGORYID.BEHAVIOR,
+        false,
+        "Comportamiento",
+        R.drawable.ic_comportamiento,
+    )
+
+    @Parcelize
+    class Weight : CategoryReminderEntity(
+        CATEGORYID.WEIGHT,
+        false,
+        "Peso",
+        R.drawable.ic_paseo,
+    )
+
+    @Parcelize
+    class Symptoms : CategoryReminderEntity(
+        CATEGORYID.SYMPTOMS,
+        false,
+        "Sintomas",
+        R.drawable.ic_sintomas,
+    )
+
 
     companion object {
         fun getReminder(categoryId: CATEGORYID): CategoryReminderEntity {
@@ -115,7 +171,15 @@ sealed class CategoryReminderEntity(
                 CATEGORYID.WALK -> WalkReminder()
                 CATEGORYID.TAKESHOWER -> TakeShowerReminder()
                 CATEGORYID.WATERFOOD -> WaterFoodReminder()
-                CATEGORYID.OTHERS -> OthersReminder()
+                //CATEGORYID.OTHERS -> OthersReminder()
+                CATEGORYID.FLEATREATMENT -> Fleatreatment()
+                CATEGORYID.ZEAL -> Zeal()
+                CATEGORYID.POOP -> Poop()
+                CATEGORYID.BEHAVIOR -> Behavior()
+                CATEGORYID.WEIGHT -> Weight()
+                CATEGORYID.SYMPTOMS -> Symptoms()
+
+
             }
         }
 
@@ -130,7 +194,13 @@ sealed class CategoryReminderEntity(
                 WalkReminder(),
                 TakeShowerReminder(),
                 WaterFoodReminder(),
-                OthersReminder(),
+                //OthersReminder(),
+                Fleatreatment(),
+                Zeal(),
+                Poop(),
+                Behavior(),
+                Weight(),
+                Symptoms()
             )
         }
     }

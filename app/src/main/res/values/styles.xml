@@ -149,4 +149,11 @@
 	<style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
 		<item name="android:textColor">@color/black</item>
 	</style>
+
+	<style name="BlueDatePicker" parent="Theme.MaterialComponents.DayNight.Dialog">
+		<item name="colorPrimary">@color/blue_primary</item>
+		<item name="colorPrimaryVariant">@color/blue</item>
+		<item name="colorAccent">@color/blue_primary</item>
+	</style>
+
 </resources>

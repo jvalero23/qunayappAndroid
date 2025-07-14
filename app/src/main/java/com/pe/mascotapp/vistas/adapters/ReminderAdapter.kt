@@ -207,7 +207,7 @@ class ReminderEntity(
             description = this.description,
             startDate = this.startDate,
             endDate = this.endDate,
-            categoryReminder = this.categoryReminder?.categoryId ?: CATEGORYID.OTHERS,
+            categoryReminder = this.categoryReminder?.categoryId ?: CATEGORYID.WATERFOOD,
             isActivated = this.isActivated,
             alarms = arrayListOf(),
             alarmInMinutes = this.alarmInMinutes,

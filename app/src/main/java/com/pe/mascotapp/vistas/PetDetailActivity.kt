@@ -24,17 +24,9 @@ class PetDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPetDetailBinding.inflate(layoutInflater)
         binding.toolbar.subTitle.text = getString(R.string.my_pets)
-
-        /*        binding.toolbar.btnBack.setOnClickListener {
-                    val callback = object : OnBackPressedCallback(true) {
-                        override fun handleOnBackPressed() {
-                            // Handle back button press event here
-                            // For example, navigate back or perform any necessary actions
-                        }
-                    }
-
-                    onBackPressedDispatcher.addCallback(this@PetDetailActivity, callback)
-                }*/
+        binding.toolbar.btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         petEntity = intent.getParcelableExtra<PetEntity>("petEntity")!!
         setUpValues()
         setListener()

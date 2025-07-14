@@ -1,6 +1,7 @@
 package com.pe.mascotapp.vistas.fragments.stepRegister
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -55,6 +56,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import com.pe.mascotapp.R
 import com.pe.mascotapp.boldTitleStyle
 import com.pe.mascotapp.buttonTitleStyle
@@ -64,6 +66,7 @@ import com.pe.mascotapp.modelos.Usuario
 import com.pe.mascotapp.titleStyle
 import com.pe.mascotapp.vistas.CarosuelRegisterActivity
 import java.util.Calendar
+import java.util.Locale
 
 // Replace with your app's package name
 
@@ -110,7 +113,38 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
     }
 
     fun setCalendar() {
+
+        val locale = Locale("es", "ES")
+        Locale.setDefault(locale)
+
+        val config = ctx.resources.configuration
+        config.setLocale(locale)
+        ctx.resources.updateConfiguration(config, ctx.resources.displayMetrics)
+
         val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            ctx,
+            R.style.BlueDatePicker,
+            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                birthday = "${dayOfMonth.toString().padStart(2, '0')}${(month + 1).toString().padStart(2, '0')}${year.toString().padStart(4, '0')}"
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        datePickerDialog.show()
+
+        val azul = ContextCompat.getColor(ctx, R.color.blue_primary)
+
+        datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(azul)
+        datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE)?.setTextColor(azul)
+
+
+        /*val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -127,7 +161,8 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
             }, year, month, day
         )
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-        datePickerDialog.show()
+        datePickerDialog.show()*/
+
     }
     Box(
         Modifier
@@ -203,7 +238,7 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
                     .verticalScroll(scrollState)
                     .padding(bottom = 20.dp),
             ) {
-                Column(modifier = Modifier.padding(37.dp)) {
+                Column(modifier = Modifier.padding(12.dp)) {
                     Text(
                         text = "Paso 1",
                         textAlign = TextAlign.Center,

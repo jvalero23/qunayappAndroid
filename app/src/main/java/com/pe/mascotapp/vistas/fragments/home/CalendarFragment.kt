@@ -98,11 +98,12 @@ class CalendarFragment : Fragment() {
         })
         viewModel.listRemindersByDateCount.observe(viewLifecycleOwner) {
             updateListReminder()
+            val peruZoneId = ZoneId.of("America/Lima")
             val days = viewModel.reminderByDate.keys.map {
                 Event(
                     R.color.blue_primary,
                     it.atStartOfDay()
-                        .atZone(ZoneId.systemDefault())
+                        .atZone(peruZoneId)
                         .toInstant()
                         .toEpochMilli()
                 )

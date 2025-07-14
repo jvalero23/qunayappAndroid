@@ -191,7 +191,7 @@ fun StepThreeScreen(
             ) {
 
 
-                Column(modifier = Modifier.padding(top = 37.dp)) {
+                Column(modifier = Modifier.padding(top = 12.dp)) {
                     Text(
                         text = "Paso 3",
                         textAlign = TextAlign.Center,
@@ -218,7 +218,7 @@ fun StepThreeScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 22.dp),
+                        .padding(top = 16.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {

@@ -1,0 +1,47 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Mascotapp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryVariant">@color/verdepastelq</item>
+        <item name="colorOnPrimary">@color/negroq</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/verdeq</item>
+        <item name="colorSecondaryVariant">@color/verdepastelq</item>
+        <item name="colorOnSecondary">@color/negroq</item>
+        <!-- Status bar color. -->
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:statusBarColor">@color/blue_primary</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Mascotapp.WhiteTheme" parent="Theme.Mascotapp">
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="Theme.Mascotapp.SkyTheme" parent="Theme.Mascotapp">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/verdeclaroq</item>
+    </style>
+
+    <style name="Theme.Mascotapp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Mascotapp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Mascotapp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#DDD</item>
+        <item name="boxStrokeWidth">10dp</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>

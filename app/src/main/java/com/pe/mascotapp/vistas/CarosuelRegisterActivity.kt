@@ -3,6 +3,7 @@ package com.pe.mascotapp.vistas
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,15 +17,25 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 import com.pe.mascotapp.R
+import com.pe.mascotapp.domain.models.Sex
 import com.pe.mascotapp.interfaces.OnEditTextChanged
 import com.pe.mascotapp.interfaces.PrincipalPresentador
+import com.pe.mascotapp.interfaces.RetrofitServiceApp
 import com.pe.mascotapp.modelos.Usuario
+import com.pe.mascotapp.modelos.request.Credenciales
+import com.pe.mascotapp.modelos.request.Mascota
+import com.pe.mascotapp.modelos.request.RegisterUserRequest
+import com.pe.mascotapp.modelos.request.UsuarioAPI
+import com.pe.mascotapp.utils.Constantes
 import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.entities.PetWithBreedsEntity
 import com.pe.mascotapp.vistas.fragments.CarosuelFragmentRegisterState
@@ -36,7 +47,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
-
     val viewModel: CarouselRegisterViewModel by viewModels()
 
     var viewPStep: ViewPager2? = null
@@ -125,6 +135,8 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
 
             override fun onPageSelected(position: Int) {
                 Utils.dump("posicion por scrolear onPageSelected " + position)
+                Utils.dump(usuario.toString())
+                Utils.dump(viewModel.uiState.toString())
 
                 if (position == viewPStep!!.adapter?.itemCount?.minus(1)) {
 
@@ -394,12 +406,86 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
         viewPStep!!.setCurrentItem(0, true)
     }
 
-    fun registerUser() {
+    fun registerUser(listpets:List<PetWithBreedsEntity>) {
+        Utils.dump(listpets.size.toString())
+        Utils.dump("nombre usuario: " + usuario?.name.toString())
+        Utils.dump("nombre pass: " + usuario?.pass.toString())
+
+        Utils.dump("nombre 1 " + listpets[0].pet.name)
+        Utils.dump("nombre 1: " + listpets[0].pet.birthdate)
+
+        val mascotas = listpets.map { pet ->
+
+            val birthdateRaw = pet.pet.birthdate
+            val day = birthdateRaw.substring(0, 2)
+            val month = birthdateRaw.substring(2, 4)
+            val year = birthdateRaw.substring(4, 8)
+
+            val birthdateFormatted = "$year-$month-$day"
+
+            Mascota(
+                nombre = pet.pet.name,
+                apodo = "", // puedes completarlo desde otro campo si tienes
+                idSexoMascota = when (pet.pet.sex) {
+                    Sex.MALE -> 1
+                    Sex.FEMALE -> 2
+                    else -> 0 // O maneja según corresponda
+                },
+                idIdentificacionMascota = 1, // o el que corresponda
+                numeroIdentificacion = "12345678", // o algún campo pet.numeroIdentificacion si lo tienes
+                fechaNacimiento = birthdateFormatted,
+                fechaAdopcion = birthdateFormatted,
+                idEspecie = 1,
+                idRangoPesos = 1
+            )
+        }
+
+        val request = RegisterUserRequest(
+            usuario = UsuarioAPI(
+                nombre = usuario!!.name,
+                apellidoPaterno = "",
+                apellidoMaterno = "",
+                correo = usuario!!.email,
+                idSexo = 1,
+                idIdentificacion = 1,
+                numeroIdentificacion = "",
+                fechaNacimiento = usuario!!.birthdate,
+                idEstado = 1,
+                idPerfilUsuario = 1
+            ),
+            credenciales = Credenciales(encriptado = Utils.hashPassword(usuario!!.pass)),
+            mascota = mascotas
+        )
+
+        RetrofitServiceApp().postRegisterUser(request){sesionUsuario ->
+            if (sesionUsuario != null) {
+                Toast.makeText(this, "Registro exitoso: ${sesionUsuario.message}", Toast.LENGTH_LONG).show()
+                Utils.dump("sesionUsuario" + sesionUsuario)
+
+                val preferences = this.getSharedPreferences(
+                    Constantes.SHARED_PREF,
+                    Context.MODE_PRIVATE
+                )
+
+                val gson = Gson()
+                val jsonSesion = gson.toJson(sesionUsuario)
+                with(preferences.edit()) {
+                    putBoolean(com.pe.mascotapp.utils.Constantes.SHARED_PREF_SUCCESS, true)
+                    putString(com.pe.mascotapp.utils.Constantes.SHARED_PREF_MESSAGE, sesionUsuario.message ?: "logeado")
+                    putInt(com.pe.mascotapp.utils.Constantes.SHARED_ID_USUARIO, sesionUsuario.usuario?.idUsuario ?: -1)
+                    putString("SHARED_SESION_JSON", jsonSesion)
+                    apply()
+                }
+
+                val intent = Intent(this, CarosuelTutorialActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Error al registrar", Toast.LENGTH_LONG).show()
+            }
+        }
 
 
-        val intent = Intent(this, CarosuelTutorialActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
     }
 
     override fun onBackPressed() {

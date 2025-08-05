@@ -80,6 +80,7 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
     var email by remember { mutableStateOf(usuario.email) }
     var phone by remember { mutableStateOf(usuario.numPhone) }
     var birthday by remember { mutableStateOf(usuario.birthdate) }
+    var birthdayAPI = ""
     var password by remember { mutableStateOf(usuario.pass) }
     var confirmPassword by remember { mutableStateOf(usuario.pass) }
     var termsAccepted by remember { mutableStateOf(usuario.terms) }
@@ -131,6 +132,7 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
             R.style.BlueDatePicker,
             { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
                 birthday = "${dayOfMonth.toString().padStart(2, '0')}${(month + 1).toString().padStart(2, '0')}${year.toString().padStart(4, '0')}"
+                birthdayAPI = "${year.toString().padStart(4, '0')}-${(month + 1).toString().padStart(2, '0')}-${dayOfMonth.toString().padStart(2, '0')}"
             },
             year, month, day
         )
@@ -200,7 +202,7 @@ fun StepOneScreen(usuario: Usuario = Usuario(), onSiguienteClick: (Usuario) -> U
                                 name = name,
                                 email = email,
                                 numPhone = phone,
-                                birthdate = birthday,
+                                birthdate = birthdayAPI,
                                 pass = password,
                                 terms = termsAccepted
                             )

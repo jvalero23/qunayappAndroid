@@ -1,9 +1,8 @@
 package com.pe.mascotapp.interfaces
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import com.pe.mascotapp.modelos.SesionUsuario
-import org.json.JSONObject
+import com.pe.mascotapp.modelos.request.SesionUsuario
+import com.pe.mascotapp.modelos.request.RegisterUserRequest
+import com.pe.mascotapp.modelos.request.SesionUsuarioLogin
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -12,8 +11,9 @@ interface Servicios {
     /* GET ALL */
 
     @GET("login")
-    fun getLoginUser(@Query("correo") correo:String, @Query("encriptado") encriptado:String): Call<SesionUsuario>
+    fun getLoginUser(@Query("correo") correo:String, @Query("encriptado") encriptado:String): Call<SesionUsuarioLogin>
 
-    @POST("login")
-    fun postRegisterUser(@Query("correo") correo:String, @Query("encriptado") encriptado:String): Call<SesionUsuario>
-}
+    @POST("registerUserMascota")
+    fun postRegisterUser(
+        @Body request: RegisterUserRequest
+    ): Call<SesionUsuario>}

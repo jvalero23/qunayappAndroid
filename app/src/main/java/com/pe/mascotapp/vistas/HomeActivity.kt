@@ -18,8 +18,12 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.gson.Gson
 import com.pe.mascotapp.R
 import com.pe.mascotapp.interfaces.PrincipalPresentador
+import com.pe.mascotapp.modelos.request.SesionUsuarioLogin
+import com.pe.mascotapp.utils.Constantes
+import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.alert.AlertActivity
 import com.pe.mascotapp.vistas.event_history.EventHistoryFragment
 import com.pe.mascotapp.vistas.fragments.home.CalendarFragment
@@ -40,7 +44,9 @@ class HomeActivity : AppCompatActivity() {
     var imgBanner: ImageView? = null
     var navigationView: NavigationView? = null
     var iv_notification: ImageView? = null
-
+    var txtNameUser:TextView ?= null
+    var txtCerrarSesion:TextView ?=null
+    var sesionUsuarioLogin:SesionUsuarioLogin ?= null
     private var currentFragment: Fragment? = null
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -94,10 +100,33 @@ class HomeActivity : AppCompatActivity() {
         navigationView = findViewById<NavigationView>(R.id.navigationView)
         drawer_layout = findViewById<DrawerLayout>(R.id.drawer_layout)
         toolbar = findViewById<Toolbar>(R.id.toolbar)
+        txtNameUser = findViewById<TextView>((R.id.txtNameUser))
+        txtCerrarSesion = findViewById<TextView>((R.id.txtCerrarSesion))
+
         val imgDogBanner = findViewById<ShapeableImageView>(R.id.imgDogBanner)
         menuHome!!.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         startMenu(savedInstanceState)
 
+        val preferences = this.getSharedPreferences(Constantes.SHARED_PREF, Context.MODE_PRIVATE)
+        val jsonUsuario = preferences.getString("SHARED_SESION_JSON", null)
+        val gson = Gson()
+
+        if (jsonUsuario != null) {
+            sesionUsuarioLogin = gson.fromJson(jsonUsuario, SesionUsuarioLogin::class.java)
+        }
+        val nombre = sesionUsuarioLogin!!.usuario!!.nombre
+        Utils.dump("Nombre: $nombre")
+        txtNameUser!!.text = nombre
+
+        txtCerrarSesion!!.setOnClickListener {
+            val preferences = getSharedPreferences(Constantes.SHARED_PREF, Context.MODE_PRIVATE)
+            preferences.edit().clear().apply() // Borra todos los datos
+
+            // Ir a pantalla de login o splash
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
         val navViewBackground = navigationView?.background as MaterialShapeDrawable
         navViewBackground.shapeAppearanceModel = navViewBackground.shapeAppearanceModel
             .toBuilder()

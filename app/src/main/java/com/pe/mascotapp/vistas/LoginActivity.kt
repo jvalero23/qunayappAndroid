@@ -50,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.pe.mascotapp.R
 import com.pe.mascotapp.colorPrimary
 import com.pe.mascotapp.interfaces.PrincipalPresentador
@@ -264,7 +265,7 @@ fun LoginScreen() {
                     onValueChange = {
                         user = it
                     },
-                    label = "Nombre ",
+                    label = "Correo electrónico",
                 )
                 Spacer(
                     modifier = Modifier.height(
@@ -305,31 +306,26 @@ fun LoginScreen() {
                         Log.d("TAG", "validateInputs: " + validationMessage)
                     }else {
                         RetrofitServiceApp().getLoginUser(
-                            "'" + user.toString() + "'",
-                            "'" + getSHA(password.toString()) + "'"
+                            user.toString(),
+                            getSHA(password.toString())
                         ) {
-                            Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
+                            //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
                             Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
 
-                            if (it!!.idUsuario != 0) {
+                            if (it!!.usuario!!.idUsuario != 0) {
                                 val preferences = context.getSharedPreferences(
                                     Constantes.SHARED_PREF,
                                     Context.MODE_PRIVATE
                                 )
+
+                                val gson = Gson()
+                                val jsonSesion = gson.toJson(it)
                                 with(preferences.edit()) {
-                                    putBoolean(
-                                        com.pe.mascotapp.utils.Constantes.SHARED_PREF_SUCCESS,
-                                        true
-                                    )
-                                    putString(
-                                        com.pe.mascotapp.utils.Constantes.SHARED_PREF_MESSAGE,
-                                        "logeado"
-                                    )
-                                    putInt(
-                                        com.pe.mascotapp.utils.Constantes.SHARED_ID_USUARIO,
-                                        it!!.idUsuario
-                                    )
-                                    commit()
+                                    putBoolean(Constantes.SHARED_PREF_SUCCESS, true)
+                                    putString(Constantes.SHARED_PREF_MESSAGE, it.message ?: "logeado")
+                                    putInt(Constantes.SHARED_ID_USUARIO, it.usuario?.idUsuario ?: -1)
+                                    putString("SHARED_SESION_JSON", jsonSesion)
+                                    apply()
                                 }
 
                                 val intent = Intent(context, HomeActivity::class.java)

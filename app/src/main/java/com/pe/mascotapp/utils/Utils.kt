@@ -11,8 +11,7 @@ import kotlin.system.exitProcess
 import android.util.Patterns
 
 import android.text.TextUtils
-
-
+import java.security.MessageDigest
 
 
 class Utils {
@@ -56,6 +55,13 @@ class Utils {
 
         fun isValidEmail(target: String?): Boolean {
             return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+        }
+
+        fun hashPassword(password: String): String {
+            val bytes = password.toByteArray()
+            val md = MessageDigest.getInstance("SHA-256")
+            val digest = md.digest(bytes)
+            return digest.joinToString("") { "%02x".format(it) }
         }
     }
 

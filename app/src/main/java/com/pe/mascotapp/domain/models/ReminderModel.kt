@@ -10,6 +10,7 @@ import com.pe.mascotapp.vistas.adapters.TypeOption
 import com.pe.mascotapp.vistas.adapters.ValueTextOption
 import com.pe.mascotapp.vistas.entities.CATEGORYID
 import com.pe.mascotapp.vistas.entities.CategoryReminderEntity
+import java.lang.Exception
 
 @Entity
 data class Reminder(
@@ -34,6 +35,7 @@ data class Reminder(
     val durationTypeRepeat: TypeOption?,
     val durationRepeat: String?,
     val vaccines: List<String>,
+    val exception: String
 ) {
     fun toReminderEntity(): ReminderEntity {
         return ReminderEntity(
@@ -56,6 +58,7 @@ data class Reminder(
             this.durationTypeRepeat,
             this.durationRepeat,
             this.vaccines,
+            exception = ""
         )
     }
 }

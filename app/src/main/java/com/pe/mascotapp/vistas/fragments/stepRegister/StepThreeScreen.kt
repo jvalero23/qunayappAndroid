@@ -155,7 +155,7 @@ fun StepThreeScreen(
                             .height(58.dp)
                             .padding(horizontal = 77.dp),
                         onClick = {
-                            (ctx as? CarosuelRegisterActivity)?.registerUser()
+                            (ctx as? CarosuelRegisterActivity)?.registerUser(listPets)
                         },
                         content = {
                             Text(

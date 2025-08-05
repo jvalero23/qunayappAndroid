@@ -122,7 +122,7 @@ sealed class CategoryReminderEntity(
     class Zeal : CategoryReminderEntity(
         CATEGORYID.ZEAL,
         false,
-        "Celos",
+        "Celo",
         R.drawable.ic_celo,
     )
 
@@ -154,7 +154,7 @@ sealed class CategoryReminderEntity(
     class Symptoms : CategoryReminderEntity(
         CATEGORYID.SYMPTOMS,
         false,
-        "Sintomas",
+        "Síntomas",
         R.drawable.ic_sintomas,
     )
 

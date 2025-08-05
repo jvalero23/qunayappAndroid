@@ -199,6 +199,7 @@ class ReminderEntity(
     var durationTypeRepeat: TypeOption? = null,
     var durationRepeat: String? = null,
     var vaccines: List<String> = listOf(),
+    var exception: String = ""
 ) : Parcelable {
     fun toReminder(): Reminder {
         return Reminder(
@@ -207,6 +208,7 @@ class ReminderEntity(
             description = this.description,
             startDate = this.startDate,
             endDate = this.endDate,
+            exception = this.exception,
             categoryReminder = this.categoryReminder?.categoryId ?: CATEGORYID.WATERFOOD,
             isActivated = this.isActivated,
             alarms = arrayListOf(),

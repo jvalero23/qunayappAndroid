@@ -70,6 +70,17 @@ class TabTwo : Fragment() {
         }
 
 
+        btnVerReviews!!.setOnClickListener {
+            val intent = Intent(activity, ReviewActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnAgregarReview!!.setOnClickListener {
+            val intent = Intent(activity, AddReviewActivity::class.java)
+            startActivity(intent)
+        }
+
+
         return view
     }
 
@@ -97,7 +108,10 @@ class TabTwo : Fragment() {
         categorias3.img = "juguetes_perros"
         categoriasArray.add(categorias3)
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 05bafb8 (3ERAPANTALLA Y ADD REVIEW)
         val categorias4 = Categorias()
         categorias4.id = 3
         categorias4.titulo = "Veterinaria"
@@ -148,6 +162,3 @@ class TabTwo : Fragment() {
         }
     }
 }
-
-
-

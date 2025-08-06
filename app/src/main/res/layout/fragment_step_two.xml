@@ -1,255 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="22dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="31.35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="31.35dp"
+                android:background="@drawable/search_view_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/searchIcon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/search_icon"
+                    android:src="@drawable/ic_search"
+                    app:tint="#C7C7C7" />
+
+                <EditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/buscar"
+                    android:inputType="text"
+                    android:lineSpacingExtra="0.0sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#C7C7C7"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_start_pet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/ic_review_paw" />
 
                 <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_start_pet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/ic_review_paw" />
 
                 <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_start_pet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/ic_review_paw" />
 
                 <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_start_pet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"/>
+                    android:src="@drawable/ic_review_paw" />
 
                 <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_start_pet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"/>
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_review_pawblank" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginEnd="22dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/verdepastelq"
-                    android:layout_marginStart="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="4.88 | 56 reviews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="#2A6BAF"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
-                    android:gravity="end"
-                    android:textSize="16sp"
-                    android:textColor="@color/grisTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="22dp"
+                    android:gravity="end"
                     android:text="+agregar review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="#C7C7C7"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_marginTop="12dp"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content">-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:weightSum="100"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_weight="30"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:layout_marginStart="22dp"-->
+            <!--                        android:text="Puntualidad"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <ProgressBar-->
+            <!--                        android:layout_weight="60"-->
+            <!--                        android:id="@+id/progressPuntualidad"-->
+            <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        tools:progress="90"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_marginEnd="22dp"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:layout_weight="10"-->
+            <!--                        android:id="@+id/txtPuntaje"-->
+            <!--                        android:text="4.9"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                </LinearLayout>-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_marginTop="12dp"-->
+            <!--                    android:weightSum="100"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_weight="30"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:layout_marginStart="22dp"-->
+            <!--                        android:text="Amabilidad"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <ProgressBar-->
+            <!--                        android:layout_weight="60"-->
+            <!--                        android:id="@+id/progressPuntualidad2"-->
+            <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        tools:progress="85"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_marginEnd="22dp"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:layout_weight="10"-->
+            <!--                        android:id="@+id/txtPuntaje2"-->
+            <!--                        android:text="4.88"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                </LinearLayout>-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_marginTop="12dp"-->
+            <!--                    android:weightSum="100"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_weight="30"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:layout_marginStart="22dp"-->
+            <!--                        android:text="Prepración"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <ProgressBar-->
+            <!--                        android:layout_weight="60"-->
+            <!--                        android:id="@+id/progressPuntualidad3"-->
+            <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        tools:progress="95"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_marginEnd="22dp"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:layout_weight="10"-->
+            <!--                        android:id="@+id/txtPuntaje3"-->
+            <!--                        android:text="4.95"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                </LinearLayout>-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_marginTop="12dp"-->
+            <!--                    android:weightSum="100"-->
+            <!--                    android:orientation="horizontal"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_weight="30"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:layout_marginStart="22dp"-->
+            <!--                        android:text="Limpieza"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <ProgressBar-->
+            <!--                        android:layout_weight="60"-->
+            <!--                        android:id="@+id/progressPuntualidad4"-->
+            <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        tools:progress="100"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_marginEnd="22dp"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:layout_weight="10"-->
+            <!--                        android:id="@+id/txtPuntaje4"-->
+            <!--                        android:text="5"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"/>-->
+
+            <!--                </LinearLayout>-->
+
+            <!--            </LinearLayout>-->
+
             <LinearLayout
-                android:layout_marginTop="12dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:weightSum="100"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_weight="30"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="22dp"
-                        android:text="Puntualidad"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <ProgressBar
-                        android:layout_weight="60"
-                        android:id="@+id/progressPuntualidad"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        tools:progress="90"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_marginEnd="22dp"
-                        android:gravity="center"
-                        android:layout_weight="10"
-                        android:id="@+id/txtPuntaje"
-                        android:text="4.9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:weightSum="100"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_weight="30"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="22dp"
-                        android:text="Amabilidad"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <ProgressBar
-                        android:layout_weight="60"
-                        android:id="@+id/progressPuntualidad2"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        tools:progress="85"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_marginEnd="22dp"
-                        android:gravity="center"
-                        android:layout_weight="10"
-                        android:id="@+id/txtPuntaje2"
-                        android:text="4.88"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:weightSum="100"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_weight="30"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="22dp"
-                        android:text="Prepración"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <ProgressBar
-                        android:layout_weight="60"
-                        android:id="@+id/progressPuntualidad3"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        tools:progress="95"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_marginEnd="22dp"
-                        android:gravity="center"
-                        android:layout_weight="10"
-                        android:id="@+id/txtPuntaje3"
-                        android:text="4.95"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:weightSum="100"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_weight="30"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="22dp"
-                        android:text="Limpieza"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <ProgressBar
-                        android:layout_weight="60"
-                        android:id="@+id/progressPuntualidad4"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        tools:progress="100"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:layout_marginEnd="22dp"
-                        android:gravity="center"
-                        android:layout_weight="10"
-                        android:id="@+id/txtPuntaje4"
-                        android:text="5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/background"
-                android:paddingBottom="64dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="64dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="22dp"
-                    android:layout_marginStart="22dp"
                     android:id="@+id/rcvComentarios"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="22dp" />
 
             </LinearLayout>
 

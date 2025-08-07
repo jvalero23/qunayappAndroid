@@ -6,6 +6,11 @@
 		<item name="cornerSize">50%</item>
 	</style>
 
+	<style name="RoundedImageView">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">17dp</item>
+	</style>
+
 	<style name="Widget.Button.Primary" parent="@style/Widget.AppCompat.Button.Borderless">
 		<item name="android:background">@drawable/ic_rectangle_border_28</item>
 		<item name="android:fontFamily">@font/worksans_regular</item>

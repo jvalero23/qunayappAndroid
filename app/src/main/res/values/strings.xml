@@ -81,4 +81,6 @@
         <item quantity="one">%d año</item>
         <item quantity="other">%d años</item>
     </plurals>
+    <string name="title_activity_review_activity.kt">ReviewActivity.kt</string>
+    <string name="title_activity_review">ReviewActivity</string>
 </resources>

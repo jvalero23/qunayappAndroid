@@ -1,5 +1,6 @@
 package com.pe.mascotapp.interfaces
 
+import com.pe.mascotapp.modelos.request.NegocioSede
 import com.pe.mascotapp.modelos.request.SesionUsuario
 import com.pe.mascotapp.modelos.request.RegisterUserRequest
 import com.pe.mascotapp.modelos.request.SesionUsuarioLogin
@@ -16,4 +17,9 @@ interface Servicios {
     @POST("registerUserMascota")
     fun postRegisterUser(
         @Body request: RegisterUserRequest
-    ): Call<SesionUsuario>}
+    ): Call<SesionUsuario>
+
+    @GET("listNegocios")
+    fun getListNegocios(): Call<ArrayList<NegocioSede>>
+
+}

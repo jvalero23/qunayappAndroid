@@ -1,5 +1,6 @@
 package com.pe.mascotapp.interfaces
 
+import com.pe.mascotapp.modelos.request.NegocioSede
 import com.pe.mascotapp.modelos.request.SesionUsuario
 import com.pe.mascotapp.modelos.request.RegisterUserRequest
 import com.pe.mascotapp.modelos.request.SesionUsuarioLogin
@@ -57,6 +58,46 @@ class RetrofitServiceApp {
                 }
 
                 override fun onFailure(call: Call<SesionUsuario>, t: Throwable) {
+                    Utils.dump("Error: ${t.message}")
+                    callback(null)
+                }
+            })
+    }
+
+    /*fun getServicios(request: RegisterUserRequest, callback: (SesionUsuario?) -> Unit) {
+        retrofit.create(Servicios::class.java)
+            .postRegisterUser(request)
+            .enqueue(object : Callback<SesionUsuario> {
+                override fun onResponse(call: Call<SesionUsuario>, response: Response<SesionUsuario>) {
+                    Utils.dump(response.body().toString())
+                    if (response.isSuccessful) {
+                        callback(response.body())
+                    }else{
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<SesionUsuario>, t: Throwable) {
+                    Utils.dump("Error: ${t.message}")
+                    callback(null)
+                }
+            })
+    }*/
+
+    fun getNegocios(callback: (ArrayList<NegocioSede>?) -> Unit) {
+        retrofit.create(Servicios::class.java)
+            .getListNegocios()
+            .enqueue(object : Callback<ArrayList<NegocioSede>> {
+                override fun onResponse(call: Call<ArrayList<NegocioSede>>, response: Response<ArrayList<NegocioSede>>) {
+                    Utils.dump(response.body().toString())
+                    if (response.isSuccessful) {
+                        callback(response.body())
+                    }else{
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<NegocioSede>>, t: Throwable) {
                     Utils.dump("Error: ${t.message}")
                     callback(null)
                 }

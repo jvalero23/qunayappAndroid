@@ -1,10 +1,12 @@
 package com.pe.mascotapp.vistas.fragments.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,10 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.pe.mascotapp.databinding.FragmentHomeBinding
+import com.pe.mascotapp.interfaces.RetrofitServiceApp
 import com.pe.mascotapp.modelos.Categorias
 import com.pe.mascotapp.modelos.PromocionBanner
+import com.pe.mascotapp.utils.Constantes
+import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.DetailServiceActivity
+import com.pe.mascotapp.vistas.HomeActivity
 import com.pe.mascotapp.vistas.adapters.HomeListServiceAdapter
 import com.pe.mascotapp.vistas.adapters.HomeServiceAdapter
 import kotlinx.coroutines.launch
@@ -25,6 +32,7 @@ class HomeFragment : Fragment() {
     var categoriasArray: ArrayList<Categorias> = ArrayList()
     var promocionBanner: PromocionBanner = PromocionBanner()
     private val viewModel by viewModels<HomeViewModel>()
+    var serviceAdapter : HomeServiceAdapter ?= null
 
     var homeListServiceAdapterType: HomeListServiceAdapter? = null
     var homeServiceAdapterType: HomeServiceAdapter? = null
@@ -37,8 +45,10 @@ class HomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        serviceAdapter = HomeServiceAdapter(
+            onSelectCategory = viewModel::onSelectCategory
+        )
         obtenerData()
-        startRCVHome()
         setUpListener()
         return binding.root
     }
@@ -82,7 +92,38 @@ class HomeFragment : Fragment() {
             }while (data.moveToNext())
         }*/
 
-        val categorias1 = Categorias()
+        val rootView = binding.lnlContentFragmetHome;
+        val progressBar = Utils.showLoading(requireContext(), rootView)
+        RetrofitServiceApp().getNegocios() {
+            //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
+            Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
+            Utils.hideLoading(progressBar, rootView)
+            if (it!!.size > 0) {
+
+                categoriasArray.clear()
+
+                for (negocio in it) {
+                    val categoria = Categorias()
+                    categoria.id = negocio.idNegocio ?: 0
+                    categoria.titulo = negocio.nombreComercial ?: ""
+                    categoria.descripcion = negocio.descripcion ?: ""
+                    categoria.img = "clinica_veterinaria_pancho_cavero" // puedes personalizar si tienes una lógica para la imagen
+
+                    categoriasArray.add(categoria)
+                }
+
+                startRCVHome()
+            } else {
+                Toast.makeText(
+                    context,
+                    "Error al obtener información",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+        }
+
+        /*val categorias1 = Categorias()
         categorias1.id = 0
         categorias1.titulo = "Clínica Veterinaria Pancho Cavero"
         categorias1.descripcion = "Clínica Veterinaria Pancho Cavero"
@@ -137,7 +178,7 @@ class HomeFragment : Fragment() {
         categorias8.titulo = "Veterinaria Pet Friendly"
         categorias8.descripcion = "juguetes y variados"
         categorias8.img = "snack_comida"
-        categoriasArray.add(categorias8)
+        categoriasArray.add(categorias8)*/
 
         /*val categorias9 = Categorias()
         categorias9.id = 8
@@ -171,45 +212,17 @@ class HomeFragment : Fragment() {
 
                 val intent = Intent(context, DetailServiceActivity::class.java)
                 startActivity(intent)
-                /*when(categorias.id){
-                    0,2 -> {
-                        val intent = Intent(this, MarketPlaceActivity::class.java)
-                        startActivity(intent)
-                    }
-                    3 -> {
-                        val intent = Intent(this, JourneyTipoOneActivity::class.java)
-                        startActivity(intent)
-                    }
-                    8 -> {
-                        val pref = applicationContext.getSharedPreferences(
-                            Constantes.SHARED_PREF,
-                            MODE_PRIVATE
-                        )
-                        pref.edit().clear().commit()
-
-                        val intent = Intent(applicationContext, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                    }
-                    else -> {
-                        Toast.makeText(this,"Proximamente",Toast.LENGTH_LONG).show()
-                    }
-                }*/
-
             }
 
         binding.rcvHome.setAdapter(homeListServiceAdapterType)
         binding.rcvHome.setItemAnimator(DefaultItemAnimator())
 
-        val serviceAdapter = HomeServiceAdapter(
-            onSelectCategory = viewModel::onSelectCategory
-        )
         binding.rcvHomeService.setAdapter(serviceAdapter)
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    serviceAdapter.submitList(uiState.serviceCategories)
+                    serviceAdapter!!.submitList(uiState.serviceCategories)
                 }
             }
         }

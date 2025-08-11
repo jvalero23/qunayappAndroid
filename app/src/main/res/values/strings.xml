@@ -63,6 +63,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_filter">FilterActivity</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="buscar">Buscar</string>
     <plurals name="days_quantity">
         <item quantity="one">%d día</item>
         <item quantity="other">%d días</item>
@@ -79,4 +81,6 @@
         <item quantity="one">%d año</item>
         <item quantity="other">%d años</item>
     </plurals>
+    <string name="title_activity_review_activity.kt">ReviewActivity.kt</string>
+    <string name="title_activity_review">ReviewActivity</string>
 </resources>

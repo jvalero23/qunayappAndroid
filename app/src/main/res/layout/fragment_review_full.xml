@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <!--Review-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/comentario_user" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <!-- Rating Stars Section -->
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_review_paw" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_review_paw" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_review_paw" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_review_paw" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_review_pawblank" />
+
+                    </LinearLayout>
+
+                    <!-- Username Section -->
+                    <TextView
+                        android:id="@+id/tvUsername1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lucas Vasquez"
+                        android:textColor="#767676"
+                        android:textSize="16.64sp"
+                        android:fontFamily="@font/worksans_bold"/>
+
+                    <!-- Time Section -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="13dp"
+                        android:fontFamily="@font/worksans_light"
+                        android:text="Hace 8 horas"
+                        android:textColor="#767676"
+                        android:textFontWeight="300"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Review Text Section -->
+            <TextView
+                android:id="@+id/tvReviewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="500"
+                android:layout_marginBottom="12dp"
+                android:text=" El servicio de alojamiento para perros fue bueno en general. A mi perro le encantó socializar con otros perros en el área de juegos. Los cuidadores eran amables y parecían amar a los perros. Sin embargo, hubo algunas demoras en las comunicaciones, lo que me hizo sentir un poco nervioso al principio"
+                android:lineSpacingExtra="3sp"
+                android:textColor="#C7C7C7"
+                android:textSize="15sp"
+                android:fontFamily="@font/worksans_medium"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/img" />
+        </LinearLayout>
+
+        <!--Rpta Review-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <!-- Review Text Section -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="end"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp">
+
+                    <!-- Username Section -->
+
+                    <!-- Time Section -->
+
+                    <TextView
+                        android:id="@+id/tvUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lautaro Martínez"
+                        android:textColor="#767676"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="end"
+                        android:textAlignment="viewEnd"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Representante Pet House"
+                        android:textColor="#767676"
+                        android:textSize="12sp"
+                        android:gravity="end"
+                        android:textAlignment="viewEnd"  />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginEnd="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/comentario_user"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvReviewText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:lineSpacingExtra="5sp"
+                android:text=" Agradezco mucho tu reseña y tus comentarios sobre tu experiencia en nuestro servicio de alojamiento para perros. Nos alegra saber que tu perro se divirtió socializando en el área de juegos y que encontraste a nuestros cuidadores amables y apasionados por los perros."
+                android:textColor="#C7C7C7"
+                android:textSize="15sp"
+                android:layout_weight="500"
+                android:fontFamily="@font/worksans_medium"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

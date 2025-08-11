@@ -11,6 +11,11 @@ import kotlin.system.exitProcess
 import android.util.Patterns
 
 import android.text.TextUtils
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ProgressBar
 import java.security.MessageDigest
 
 
@@ -62,6 +67,30 @@ class Utils {
             val md = MessageDigest.getInstance("SHA-256")
             val digest = md.digest(bytes)
             return digest.joinToString("") { "%02x".format(it) }
+        }
+
+        fun showLoading(context: Context, parentView: ViewGroup): ProgressBar {
+            val progressBar = ProgressBar(context).apply {
+                isIndeterminate = true
+                visibility = View.VISIBLE
+            }
+
+            // Opcional: centrado en pantalla
+            val layoutParams = FrameLayout.LayoutParams(
+                120, // ancho en px
+                120  // alto en px
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+
+            // Agrega el ProgressBar al layout
+            parentView.addView(progressBar, layoutParams)
+
+            return progressBar
+        }
+
+        fun hideLoading(progressBar: ProgressBar, parentView: ViewGroup) {
+            parentView.removeView(progressBar)
         }
     }
 

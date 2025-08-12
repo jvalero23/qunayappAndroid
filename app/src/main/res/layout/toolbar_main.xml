@@ -64,16 +64,16 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_marginEnd="22dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="32sp"
-                android:textColor="@color/primaryColor"
                 android:id="@+id/subTitle"
-                android:fontFamily="@font/caprasimo_regular"
-                android:text="Pet House"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginEnd="22dp"
+                android:fontFamily="@font/caprasimo_regular"
+                android:gravity="center"
+                android:text="Pet House"
+                android:textColor="@color/primaryColor"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

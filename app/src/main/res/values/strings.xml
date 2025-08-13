@@ -83,4 +83,5 @@
     </plurals>
     <string name="title_activity_review_activity.kt">ReviewActivity.kt</string>
     <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_comentario_detalle">ComentarioDetalleActivity</string>
 </resources>

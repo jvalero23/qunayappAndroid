@@ -15,35 +15,21 @@
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:layout_weight="20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+        <!-- El botón de regreso ahora es un ImageView directo -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_margin="22dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:tint="@color/primaryColor" />
 
-            <LinearLayout
-                android:id="@+id/btnBack"
-                android:layout_margin="22dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="40dp"
-                android:layout_height="40dp">
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:scaleType="centerInside"
-                    app:tint="@color/primaryColor"
-                    android:src="@drawable/baseline_arrow_back_ios_24"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
+        <!-- Título -->
         <LinearLayout
             android:gravity="end"
-            android:layout_weight="80"
+            android:layout_weight="100"
             android:layout_width="0dp"
             android:layout_height="match_parent">
 

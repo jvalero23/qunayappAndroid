@@ -1,0 +1,213 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/verdepastelq"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/toolbar_add_review" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Contenido -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clToolbar">
+
+        <!-- Titulo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Calificación"
+            android:textColor="#2A6BAF"
+            android:textStyle="bold" />
+
+        <!-- Estrellas -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_review_paw" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_review_paw" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_review_paw" />
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_review_paw" />
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_review_pawblank" />
+        </LinearLayout>
+
+        <!-- Titulo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Titulo"
+                android:textColor="#2A6BAF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTituloCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="0/50"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- EditText del Titulo -->
+        <EditText
+            android:id="@+id/edtTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_radius"
+            android:hint="Escribe el título aquí"
+            android:maxLength="50"
+            android:padding="10dp"
+            android:textColor="#C7C7C7" />
+
+        <!-- Reseña -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reseña"
+                android:textColor="#2A6BAF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtResenaCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="0/1000"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- EditText para la Reseña -->
+        <EditText
+            android:id="@+id/edtResena"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/bg_card_radius"
+            android:gravity="top"
+            android:hint="Escribe la reseña aquí"
+            android:maxLength="1000"
+            android:padding="10dp"
+            android:textColor="#C7C7C7" />
+
+        <LinearLayout
+            android:id="@+id/layoutFoto"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_radius"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical">
+
+            <!-- Imagen seleccionada -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="110dp"
+                android:layout_weight="0"
+                android:contentDescription="Icono de agregar"
+                android:src="@drawable/ic_plus" />
+
+            <!-- Texto de "Fotos" -->
+            <TextView
+                android:id="@+id/txtFotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fotos"
+                android:textColor="#C7C7C7"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnPublicar"
+                style="@style/WorkSans_Regular14"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_linearlayout_precio"
+                android:gravity="center"
+                android:text="Publicar"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/btnCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="Cancelar"
+                android:textColor="#2A6BAF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

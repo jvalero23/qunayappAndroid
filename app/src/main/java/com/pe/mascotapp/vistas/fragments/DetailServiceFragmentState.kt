@@ -5,25 +5,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.pe.mascotapp.vistas.fragments.tabsService.TabOne
+import com.pe.mascotapp.vistas.fragments.tabsService.TabThree
 import com.pe.mascotapp.vistas.fragments.tabsService.TabTwo
 
-class DetailServiceFragmentState (fragmentManager: FragmentManager, context: Context):
+class DetailServiceFragmentState(fragmentManager: FragmentManager, context: Context):
     FragmentStatePagerAdapter(fragmentManager)  {
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> {
-                return TabOne()
-            }
-            1 -> {
-                return TabTwo()
-            }
-            2 -> {
-                return TabOne()
-            }
-
+        return when (position) {
+            0 -> TabOne()
+            1 -> TabTwo()
+            2 -> TabThree()
+            else -> TabOne()
         }
-        return TabOne();
     }
 
     override fun getCount(): Int {
@@ -31,31 +25,15 @@ class DetailServiceFragmentState (fragmentManager: FragmentManager, context: Con
     }
 
     override fun getItemPosition(`object`: Any): Int {
-
-        /*if (`object` is StepThree){
-            val f = `object`
-            f.updateImage()
-        }*/
-
         return super.getItemPosition(`object`)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        //return super.getPageTitle(position)
-        val title = (when (position) {
-            0 -> {
-                return "Info"
-            }
-            1 -> {
-                return "Reviews"
-            }
-            2 -> {
-                return "Detalles de servicio"
-            }
+        return when (position) {
+            0 -> "Info"
+            1 -> "Reviews"
+            2 -> "Detalles de servicio"
             else -> ""
-
-
-        })
-        return title.lowercase()
+        }.lowercase()
     }
 }

@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginStart="12dp"
     android:layout_marginTop="12dp"
     android:layout_marginEnd="12dp">
 
+    <!-- Contenedor principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +28,6 @@
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -35,6 +35,7 @@
                     android:padding="10dp"
                     tools:ignore="MissingConstraints">
 
+                    <!-- Fila de estrellas de reseña -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -78,10 +79,9 @@
                             android:layout_gravity="center"
                             android:layout_marginEnd="4dp"
                             android:src="@drawable/ic_review_pawblank" />
-
                     </LinearLayout>
 
-
+                    <!-- Texto del comentario -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -91,21 +91,27 @@
                         android:layout_weight="50"
                         android:orientation="vertical">
 
+                        <!-- Aquí controlamos la cantidad de líneas y los puntos suspensivos -->
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:letterSpacing="0.04"
-                            android:text="El servicio de alojamiento para perros fue bueno en general. A mi perro le encantó socializar con otros.."
-                            android:textColor="#C7C7C7"
-                            android:textSize="15dp" />
-
-                        <LinearLayout
+                            android:id="@+id/tvDescripcion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="2dp"
+                            android:maxLines="3"
+                            android:text="El servicio de alojamiento para perros fue bueno en general.El servicio de alojamiento para perros fue bueno en general. El servicio de alojamiento para perros fue bueno en general. A mi perro le encantó socializar con otros perros. El servicio de alojamiento para perros fue bueno en general. A mi perro le encantó socializar con otros perros. El servicio de alojamiento para perros fue bueno en general. A mi perro le encantó socializar con otros perros..."
+                            android:textColor="#C7C7C7"
+                            android:textSize="15sp" />
+
+                        <!-- Botón Mostrar más -->
+                        <LinearLayout
+                            android:id="@+id/linearMostrarMas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:clickable="true"
                             android:focusable="true"
-                            android:layout_marginTop="5dp"
-                            android:onClick="onLinearLayoutClick"
                             android:orientation="horizontal">
 
                             <TextView
@@ -115,7 +121,6 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:letterSpacing="0.04"
-                                android:onClick="onMostrarMasClick"
                                 android:text="Mostrar más"
                                 android:textColor="#767676"
                                 android:textSize="16dp"
@@ -125,13 +130,11 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/ic_arrow" />
-
                         </LinearLayout>
-
 
                     </LinearLayout>
 
-
+                    <!-- Información del usuario -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -170,22 +173,16 @@
                                 android:text="hace 8 horas"
                                 android:textColor="#767676"
                                 android:textSize="11sp" />
-
                         </LinearLayout>
-
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-
             </androidx.cardview.widget.CardView>
-
 
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

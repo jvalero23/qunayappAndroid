@@ -1,6 +1,8 @@
 package com.pe.mascotapp.vistas
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,12 @@ class ReviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
+
+        val btnClose: LinearLayout = findViewById(R.id.btnClose)
+
+        btnClose.setOnClickListener {
+            onBackPressed()
+        }
 
         recyclerView = findViewById(R.id.rcvReviews)
 

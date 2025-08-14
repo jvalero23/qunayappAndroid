@@ -23,7 +23,7 @@ import java.io.InputStream
 class AddReviewActivity : AppCompatActivity() {
 
     private lateinit var binding: AddReviewActivityBinding
-    private var rating = 0  // Para llevar el conteo de las estrellas seleccionadas
+    private var rating = 0
 
     private val IMAGE_REQUEST_CODE = 1000
     private lateinit var selectedImageUri: Uri
@@ -35,7 +35,6 @@ class AddReviewActivity : AppCompatActivity() {
 
         configurarEstrellas()
 
-        // Configuración del botón de regresar
         val btnBack: ImageView = findViewById(R.id.btnBack)
         btnBack.setOnClickListener {
             onBackPressed()
@@ -45,12 +44,10 @@ class AddReviewActivity : AppCompatActivity() {
             finish()
         }
 
-        // Lógica para la sección de fotos
         binding.layoutFoto.setOnClickListener {
             openGallery()
         }
 
-        // Contador de caracteres para el título
         binding.edtTitulo.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val charCount = s?.length ?: 0
@@ -60,7 +57,6 @@ class AddReviewActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Contador de caracteres para la reseña
         binding.edtResena.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val charCount = s?.length ?: 0
@@ -70,7 +66,6 @@ class AddReviewActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Lógica para el botón "Publicar"
         binding.btnPublicar.setOnClickListener {
             saveReviewData()
         }
@@ -93,25 +88,21 @@ class AddReviewActivity : AppCompatActivity() {
     }
 
     private fun saveReviewData() {
-        // Calcular el número de estrellas seleccionadas
         val stars = listOf(binding.star1, binding.star2, binding.star3, binding.star4, binding.star5)
 
-        // Cada estrella llena es +1, cada estrella vacía es -1
         val filledStars = stars.count { it.drawable.constantState == resources.getDrawable(R.drawable.ic_review_paw).constantState }
         val emptyStars = stars.size - filledStars
-        val totalRating = filledStars - emptyStars // Resultado final con lógica de +1 y -1
+        val totalRating = filledStars - emptyStars
 
         val title = binding.edtTitulo.text.toString()
         val review = binding.edtResena.text.toString()
 
-        // Guardar la imagen seleccionada si existe
         val selectedImagePath = if (::selectedImageUri.isInitialized) {
             saveImageToGallery(selectedImageUri)
         } else {
             "No image"
         }
 
-        // Mostrar mensaje con los datos guardados (en una implementación real, guardas estos datos)
         Toast.makeText(
             this,
             "Guardado: Título: $title, Reseña: $review, Calificación: $totalRating estrellas, Imagen guardada: $selectedImagePath",
@@ -157,9 +148,9 @@ class AddReviewActivity : AppCompatActivity() {
     private fun actualizarEstrellas(estrellas: List<ImageView>) {
         estrellas.forEachIndexed { index, imageView ->
             if (index < rating) {
-                imageView.setImageResource(R.drawable.ic_review_paw) // Estrella llena
+                imageView.setImageResource(R.drawable.ic_review_paw)
             } else {
-                imageView.setImageResource(R.drawable.ic_review_pawblank) // Estrella vacía
+                imageView.setImageResource(R.drawable.ic_review_pawblank)
             }
         }
     }

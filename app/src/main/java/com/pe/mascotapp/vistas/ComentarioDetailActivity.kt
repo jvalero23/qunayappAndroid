@@ -14,14 +14,12 @@ class ComentarioDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comentario_detail)
 
-        // Acceder al LinearLayout btnBack
         val btnBack: LinearLayout = findViewById(R.id.btnBack)
 
-        // Luego, buscar el ImageView dentro del LinearLayout
         val backIcon: ImageView = btnBack.findViewById(R.id.ivBackIcon) // Asume que tienes un ImageView con este ID dentro de btnBack.
 
         backIcon.setOnClickListener {
-            onBackPressed()  // Regresa a la actividad anterior
+            onBackPressed()
         }
 
         // Recibir los datos pasados desde el adaptador
@@ -53,7 +51,7 @@ class ComentarioDetailActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()  // Para permitir regresar al hacer clic en el botón de arriba
+        onBackPressed()
         return true
     }
 }

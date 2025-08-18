@@ -19,6 +19,7 @@ import com.pe.mascotapp.databinding.FragmentHomeBinding
 import com.pe.mascotapp.interfaces.RetrofitServiceApp
 import com.pe.mascotapp.modelos.Categorias
 import com.pe.mascotapp.modelos.PromocionBanner
+import com.pe.mascotapp.modelos.request.NegocioSede
 import com.pe.mascotapp.utils.Constantes
 import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.DetailServiceActivity
@@ -30,6 +31,8 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
     var categoriasArray: ArrayList<Categorias> = ArrayList()
+    var negociosArray: ArrayList<NegocioSede> = ArrayList()
+
     var promocionBanner: PromocionBanner = PromocionBanner()
     private val viewModel by viewModels<HomeViewModel>()
     var serviceAdapter : HomeServiceAdapter ?= null
@@ -94,20 +97,28 @@ class HomeFragment : Fragment() {
 
         val rootView = binding.lnlContentFragmetHome;
         val progressBar = Utils.showLoading(requireContext(), rootView)
-        RetrofitServiceApp().getNegocios() {
-            //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
-            Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
+        RetrofitServiceApp().getNegocios() { negociosList ->
+            Utils.dump("INGRESO CON EL SIGUIENTE JSON: $negociosList")
             Utils.hideLoading(progressBar, rootView)
-            if (it!!.size > 0) {
 
+            if (!negociosList.isNullOrEmpty()) {
+                negociosArray.clear()
                 categoriasArray.clear()
+                negociosArray = negociosList
+                for (negocio in negociosList) {
+                    val categoria = Categorias().apply {
+                        id = negocio.idNegocio ?: 0
+                        titulo = negocio.nombreComercial ?: ""
+                        descripcion = negocio.descripcion ?: ""
+                        img = "clinica_veterinaria_pancho_cavero"
+                        //fechaRegistro = negocio.fechaRegistro ?: ""
+                        //tipoId = negocio.tipoId ?: 0
+                        //identificacion = negocio.identificacion ?: ""
+                        //razonSocial = negocio.razonSocial ?: ""
 
-                for (negocio in it) {
-                    val categoria = Categorias()
-                    categoria.id = negocio.idNegocio ?: 0
-                    categoria.titulo = negocio.nombreComercial ?: ""
-                    categoria.descripcion = negocio.descripcion ?: ""
-                    categoria.img = "clinica_veterinaria_pancho_cavero" // puedes personalizar si tienes una lógica para la imagen
+                        // Si quieres guardar las sedes completas
+                        //sedes = negocio.sedes ?: emptyList()
+                    }
 
                     categoriasArray.add(categoria)
                 }
@@ -120,8 +131,8 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
         }
+
 
         /*val categorias1 = Categorias()
         categorias1.id = 0
@@ -210,7 +221,10 @@ class HomeFragment : Fragment() {
         homeListServiceAdapterType =
             HomeListServiceAdapter(categoriasArray, promocionBanner) { categorias ->
 
+                val negocioSeleccionado = negociosArray.find { it.idNegocio == categorias.id }
+
                 val intent = Intent(context, DetailServiceActivity::class.java)
+                intent.putExtra("negocioSeleccionado", negocioSeleccionado)
                 startActivity(intent)
             }
 

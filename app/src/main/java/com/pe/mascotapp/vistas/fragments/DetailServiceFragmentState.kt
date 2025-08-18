@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.pe.mascotapp.modelos.request.NegocioSede
 import com.pe.mascotapp.modelos.request.Sede
 import com.pe.mascotapp.vistas.fragments.tabsService.TabOne
+import com.pe.mascotapp.vistas.fragments.tabsService.TabThree
 import com.pe.mascotapp.vistas.fragments.tabsService.TabTwo
 
 class DetailServiceFragmentState (fragmentManager: FragmentManager,
@@ -26,9 +27,8 @@ class DetailServiceFragmentState (fragmentManager: FragmentManager,
             2 -> {
                 return TabOne.newInstance(data, sedeSeleccionada)
             }
-
+            else -> return TabOne.newInstance(data, sedeSeleccionada)
         }
-        return TabOne();
     }
 
     override fun getCount(): Int {
@@ -41,22 +41,12 @@ class DetailServiceFragmentState (fragmentManager: FragmentManager,
 
 
     override fun getPageTitle(position: Int): CharSequence? {
-        //return super.getPageTitle(position)
-        val title = (when (position) {
-            0 -> {
-                return "Info"
-            }
-            1 -> {
-                return "Reviews"
-            }
-            2 -> {
-                return "Detalles de servicio"
-            }
+        return when (position) {
+            0 -> "Info"
+            1 -> "Reviews"
+            2 -> "Detalles de servicio"
             else -> ""
-
-
-        })
-        return title.lowercase()
+        }.lowercase()
     }
 
     fun updateData(newData: NegocioSede, newSede: Sede) {

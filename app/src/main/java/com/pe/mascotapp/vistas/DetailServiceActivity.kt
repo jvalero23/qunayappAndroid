@@ -11,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,7 +28,6 @@ import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.adapters.ComentariosAdapter
 import com.pe.mascotapp.vistas.adapters.SedesAdapter
 import com.pe.mascotapp.vistas.fragments.DetailServiceFragmentState
-
 
 class DetailServiceActivity : AppCompatActivity() {
 
@@ -51,6 +51,12 @@ class DetailServiceActivity : AppCompatActivity() {
         imgNegocio = findViewById<ImageView>(R.id.imgNegocio)
         negociosArray = intent.getSerializableExtra("negocioSeleccionado") as NegocioSede
 
+        val btnBack: LinearLayout = findViewById<LinearLayout>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressed()
+        }
+
         detailServiceAdapter = DetailServiceFragmentState(
             supportFragmentManager,
             negociosArray,
@@ -62,12 +68,14 @@ class DetailServiceActivity : AppCompatActivity() {
         viewPager!!.adapter = detailServiceAdapter
         tabLayout!!.setupWithViewPager(viewPager)
 
+        // Configuración del botón "Contactar"
         btnContactar!!.setOnClickListener {
             openWhatsappContact("+51969928064")
         }
         showCustomModal()
     }
 
+    // Método para abrir WhatsApp con el número de contacto
     fun openWhatsappContact(number: String) {
         val uri = Uri.parse("smsto:$number")
         val i = Intent(Intent.ACTION_SENDTO, uri)

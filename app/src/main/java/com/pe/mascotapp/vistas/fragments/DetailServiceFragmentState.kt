@@ -27,7 +27,7 @@ class DetailServiceFragmentState (fragmentManager: FragmentManager,
             2 -> {
                 return TabOne.newInstance(data, sedeSeleccionada)
             }
-
+            else -> return TabOne.newInstance(data, sedeSeleccionada)
         }
     }
 

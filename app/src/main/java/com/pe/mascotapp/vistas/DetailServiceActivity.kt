@@ -11,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -50,7 +51,7 @@ class DetailServiceActivity : AppCompatActivity() {
         imgNegocio = findViewById<ImageView>(R.id.imgNegocio)
         negociosArray = intent.getSerializableExtra("negocioSeleccionado") as NegocioSede
 
-        val btnBack: LinearLayout = findViewById(R.id.btnBack)
+        val btnBack: LinearLayout = findViewById<LinearLayout>(R.id.btnBack)
 
         btnBack.setOnClickListener {
             onBackPressed()

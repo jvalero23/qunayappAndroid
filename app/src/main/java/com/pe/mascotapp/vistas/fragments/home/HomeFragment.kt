@@ -19,10 +19,7 @@ import com.pe.mascotapp.databinding.FragmentHomeBinding
 import com.pe.mascotapp.interfaces.RetrofitServiceApp
 import com.pe.mascotapp.modelos.Categorias
 import com.pe.mascotapp.modelos.PromocionBanner
-<<<<<<< HEAD
 import com.pe.mascotapp.modelos.request.NegocioSede
-=======
->>>>>>> 5014fd4 (MERGE QUNAY)
 import com.pe.mascotapp.utils.Constantes
 import com.pe.mascotapp.utils.Utils
 import com.pe.mascotapp.vistas.DetailServiceActivity
@@ -100,7 +97,6 @@ class HomeFragment : Fragment() {
 
         val rootView = binding.lnlContentFragmetHome;
         val progressBar = Utils.showLoading(requireContext(), rootView)
-<<<<<<< HEAD
         RetrofitServiceApp().getNegocios() { negociosList ->
             Utils.dump("INGRESO CON EL SIGUIENTE JSON: $negociosList")
             Utils.hideLoading(progressBar, rootView)
@@ -123,22 +119,6 @@ class HomeFragment : Fragment() {
                         // Si quieres guardar las sedes completas
                         //sedes = negocio.sedes ?: emptyList()
                     }
-=======
-        RetrofitServiceApp().getNegocios() {
-            //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
-            Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
-            Utils.hideLoading(progressBar, rootView)
-            if (it!!.size > 0) {
-
-                categoriasArray.clear()
-
-                for (negocio in it) {
-                    val categoria = Categorias()
-                    categoria.id = negocio.idNegocio ?: 0
-                    categoria.titulo = negocio.nombreComercial ?: ""
-                    categoria.descripcion = negocio.descripcion ?: ""
-                    categoria.img = "clinica_veterinaria_pancho_cavero" // puedes personalizar si tienes una lógica para la imagen
->>>>>>> 5014fd4 (MERGE QUNAY)
 
                     categoriasArray.add(categoria)
                 }
@@ -151,15 +131,9 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-<<<<<<< HEAD
         }
 
 
-=======
-
-        }
-
->>>>>>> 5014fd4 (MERGE QUNAY)
         /*val categorias1 = Categorias()
         categorias1.id = 0
         categorias1.titulo = "Clínica Veterinaria Pancho Cavero"

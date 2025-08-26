@@ -427,8 +427,8 @@ class CarosuelRegisterActivity : AppCompatActivity(), OnEditTextChanged {
                 nombre = pet.pet.name,
                 apodo = "", // puedes completarlo desde otro campo si tienes
                 idSexoMascota = when (pet.pet.sex) {
-                    Sex.MALE -> 1
-                    Sex.FEMALE -> 2
+                    Sex.MALE.toString() -> 1
+                    Sex.FEMALE.toString() -> 2
                     else -> 0 // O maneja según corresponda
                 },
                 idIdentificacionMascota = 1, // o el que corresponda

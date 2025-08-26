@@ -1,3 +1,6 @@
 <resources>
-        <dimen name="fab_margin">16dp</dimen>
-    </resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="input_pad_h">16dp</dimen>
+    <dimen name="input_pad_v">12dp</dimen>
+
+</resources>

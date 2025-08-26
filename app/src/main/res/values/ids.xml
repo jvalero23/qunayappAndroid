@@ -1,0 +1,5 @@
+<resources>
+    <item name="tag_orig_bg" type="id"/>
+    <item name="tag_orig_text_color" type="id"/>
+    <item name="tag_orig_padding" type="id"/>
+</resources>

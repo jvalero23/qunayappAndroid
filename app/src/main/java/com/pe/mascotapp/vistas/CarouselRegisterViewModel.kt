@@ -93,7 +93,7 @@ class CarouselRegisterViewModel : ViewModel() {
                 listPets = state.listPets.mapIndexed { i, petWithDetails ->
                     if (i == index) {
                         petWithDetails.copy(
-                            pet = petWithDetails.pet.copy(sex = sex)
+                            pet = petWithDetails.pet.copy(sex = sex.toString())
                         )
                     } else {
                         petWithDetails

@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +33,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -88,12 +90,13 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 }
-
 @Preview
 @Composable
 fun UserProfileScreen() {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+    var isEditing by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             Row(
@@ -132,17 +135,20 @@ fun UserProfileScreen() {
                 .background(Color.White)
         ) {
             ProfileHeader(
-                imageUrl = "https://example.com/user_image.jpg", // Placeholder
-                name = "Julian Alvarez"
+                imageUrl = R.drawable.img_prueba,
+                name = "Julian Alvarez",
+                onEditClick = { isEditing = !isEditing }
             )
             Spacer(modifier = Modifier.height(32.dp))
+
             UserInfo(
                 id = "47717687",
                 email = "jalvarez@gmail.com",
                 phone = "+51 999 888 777",
                 birthDate = "14 de Diciembre, 1992",
                 gender = "Masculino",
-                address = "Jr. 24, 243 San Borja, Dept 101, Lima Metropolitana"
+                address = "Jr. 24, 243 San Borja, Dept 101, Lima Metropolitana",
+                isEditing = isEditing
             )
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalLine()
@@ -181,14 +187,10 @@ fun UserProfileScreen() {
                     )
                 )
             )
-            //HorizontalLine()
-            //Spacer(modifier = Modifier.height(16.dp))
-            //PreferencesSection( )
+            PreferencesSection()
         }
     }
-
 }
-
 @Composable
 fun HorizontalLine(
     modifier: Modifier = Modifier,
@@ -203,29 +205,38 @@ fun HorizontalLine(
     )
 }
 
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ProfileHeader(imageUrl: String, name: String) {
+fun ProfileHeader(imageUrl: Int, name: String, onEditClick: () -> Unit) {
+    var editableName by remember { mutableStateOf(name) }
+    var isEditing by remember { mutableStateOf(false) }
+
     Box(
         Modifier
-            .background(color = colorDisabled)
+            .background(color = Color(0xFFF8F8F8))
             .fillMaxWidth()
     ) {
         Image(
             painter = painterResource(id = R.drawable.bkg_profile_head),
-            contentDescription = "Your image description",
-            modifier = Modifier.matchParentSize(), // Use matchParentSize() here
+            contentDescription = "Background Image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .align(Alignment.TopCenter),
             contentScale = ContentScale.Crop,
             alpha = 0.5f
         )
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(vertical = 16.dp)
         ) {
-            GlideImage(
-                model = imageUrl,
+
+            Image(
+                painter = painterResource(id = imageUrl),
                 contentDescription = "Profile Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -233,13 +244,27 @@ fun ProfileHeader(imageUrl: String, name: String) {
                     .clip(CircleShape)
                     .border(2.dp, Color.White, CircleShape)
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = name,
-                style = semiBoldTitleStyle.copy(fontSize = 30.sp, color = colorMediumBlue),
-            )
+            Spacer(modifier = Modifier.height(2.dp))
+            if (isEditing) {
+                TextField(
+                    value = editableName,
+                    onValueChange = { editableName = it },
+                    textStyle = semiBoldTitleStyle.copy(fontSize = 20.sp, color = Color.Black),
+                    singleLine = true,
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .border(2.dp, Color.Gray, RoundedCornerShape(10.dp))
+                        .background(Color.White)
+                )
+            } else {
+                Text(
+                    text = editableName,
+                    style = semiBoldTitleStyle.copy(fontSize = 30.sp, color = colorMediumBlue),
+                )
+            }
         }
 
+        // Botón de edición
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -247,7 +272,8 @@ fun ProfileHeader(imageUrl: String, name: String) {
                 .width(26.dp)
                 .background(colorMediumBlue, RoundedCornerShape(4.dp))
                 .clickable {
-                    /// aqui el click
+                    isEditing = !isEditing
+                    onEditClick()
                 }
         ) {
             Image(
@@ -256,7 +282,6 @@ fun ProfileHeader(imageUrl: String, name: String) {
                 modifier = Modifier.padding(4.dp)
             )
         }
-
     }
 }
 
@@ -267,8 +292,16 @@ fun UserInfo(
     phone: String,
     birthDate: String,
     gender: String,
-    address: String
+    address: String,
+    isEditing: Boolean
 ) {
+    var editableId by remember { mutableStateOf(id) }
+    var editableEmail by remember { mutableStateOf(email) }
+    var editablePhone by remember { mutableStateOf(phone) }
+    var editableBirthDate by remember { mutableStateOf(birthDate) }
+    var editableGender by remember { mutableStateOf(gender) }
+    var editableAddress by remember { mutableStateOf(address) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -279,17 +312,26 @@ fun UserInfo(
             text = "Información",
             style = caprasimoTitleStyle.copy(fontSize = 18.sp, color = colorPrimary),
         )
-        InfoRow(label = "Número de identidad", value = id)
-        InfoRow(label = "Email", value = email)
-        InfoRow(label = "Celular", value = phone)
-        InfoRow(label = "Fecha de nacimiento", value = birthDate)
-        InfoRow(label = "Género", value = gender)
-        InfoRow(label = "Dirección", value = address)
+
+
+        InfoRow(label = "Número de identidad", value = editableId, isEditable = isEditing) { editableId = it }
+        InfoRow(label = "Email", value = editableEmail, isEditable = isEditing) { editableEmail = it }
+        InfoRow(label = "Celular", value = editablePhone, isEditable = isEditing) { editablePhone = it }
+        InfoRow(label = "Fecha de nacimiento", value = editableBirthDate, isEditable = isEditing) { editableBirthDate = it }
+        InfoRow(label = "Género", value = editableGender, isEditable = isEditing) { editableGender = it }
+        InfoRow(label = "Dirección", value = editableAddress, isEditable = isEditing) { editableAddress = it }
     }
 }
 
+
+private fun ColumnScope.DropdownMenuItem(
+    onClick: () -> Unit,
+    interactionSource: @Composable () -> Unit
+) {
+}
+
 @Composable
-fun InfoRow(label: String, value: String) {
+fun InfoRow(label: String, value: String, isEditable: Boolean, onValueChange: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -299,12 +341,24 @@ fun InfoRow(label: String, value: String) {
             text = "$label:",
             style = semiBoldTitleStyle.copy(color = colorDisabled, fontSize = 18.sp),
         )
-        Text(
-            text = value,
-            style = descriptionTextStyle.copy(color = colorDisabled, fontSize = 16.sp)
-        )
+
+        if (isEditable) {
+            TextField(
+                value = value,
+                onValueChange = { newValue -> onValueChange(newValue) },
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = descriptionTextStyle.copy(color = colorDisabled, fontSize = 16.sp),
+                singleLine = true
+            )
+        } else {
+            Text(
+                text = value,
+                style = descriptionTextStyle.copy(color = colorDisabled, fontSize = 16.sp)
+            )
+        }
     }
 }
+
 
 @Composable
 fun PetsSection(pets: List<PetEntity>) {
@@ -320,7 +374,7 @@ fun PetsSection(pets: List<PetEntity>) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp) // Add space between items
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             pets.forEach { pet ->
                 PetItem(pet = pet)
@@ -364,7 +418,7 @@ fun PetItem(pet: PetEntity, modifier: Modifier = Modifier) {
                     text = pet.specie,
                     style = descriptionTextStyle.copy(color = colorDisabled, fontSize = 18.sp)
                 )
-                Spacer(Modifier.weight(1f)) // Pushes the image to the right
+                Spacer(Modifier.weight(1f))
             }
         }
     }
@@ -372,10 +426,10 @@ fun PetItem(pet: PetEntity, modifier: Modifier = Modifier) {
 
 @Composable
 fun PreferencesSection() {
-    // Definir el estado usando remember para cada preferencia
     var notificationsEnabled by remember { mutableStateOf(false) }
     var soundEnabled by remember { mutableStateOf(false) }
     var vibrationEnabled by remember { mutableStateOf(true) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -388,7 +442,6 @@ fun PreferencesSection() {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Pasa el estado y el callback para actualizar el estado al dar clic
         SwitchPreference(
             label = "Notificaciones",
             isEnabled = notificationsEnabled,
@@ -404,7 +457,6 @@ fun PreferencesSection() {
             isEnabled = vibrationEnabled,
             onCheckedChange = { vibrationEnabled = it }
         )
-
     }
 }
 
@@ -423,9 +475,9 @@ fun SwitchPreference(label: String, isEnabled: Boolean, onCheckedChange: (Boolea
         )
         CustomSwitch(
             checked = isEnabled,
-            onCheckedChange = onCheckedChange, // Pasa el callback para manejar cambios
-            borderColor = Color.White, // Ejemplo de color de borde
-            thumbColor = Color.White   // Ejemplo de color del thumb
+            onCheckedChange = onCheckedChange,
+            borderColor = Color.White,
+            thumbColor = Color.White
         )
     }
 }
@@ -445,7 +497,6 @@ fun CustomSwitch(
     val trackHeight = 20.dp
     val trackWidth = 44.dp
 
-    // Definir la animación para la posición del thumb
     val thumbOffset by animateDpAsState(
         targetValue = if (checked) trackWidth - thumbSize - 4.dp else 4.dp,
         animationSpec = tween(durationMillis = 200)
@@ -456,11 +507,10 @@ fun CustomSwitch(
             .size(trackWidth, trackHeight)
             .border(borderWidth, borderColor, RoundedCornerShape(10.dp))
             .clickable {
-                onCheckedChange(!checked) // Cambia el estado al dar clic
+                onCheckedChange(!checked)
             },
         contentAlignment = Alignment.CenterStart
     ) {
-        // Dibuja el track
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -470,7 +520,6 @@ fun CustomSwitch(
                 )
         )
 
-        // Dibuja y anima el thumb
         Box(
             modifier = Modifier
                 .size(thumbSize)

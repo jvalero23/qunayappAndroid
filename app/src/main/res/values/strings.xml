@@ -84,4 +84,7 @@
     <string name="title_activity_review_activity.kt">ReviewActivity.kt</string>
     <string name="title_activity_review">ReviewActivity</string>
     <string name="title_activity_comentario_detalle">ComentarioDetalleActivity</string>
+    <string name="title_activity_edit_pet_detail">EditPetDetailActivity</string>
+    <string name="cambiar_foto">Cambiar foto</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

@@ -23,4 +23,3 @@ interface Servicios {
     fun getListNegocios(): Call<ArrayList<NegocioSede>>
 
 }
-

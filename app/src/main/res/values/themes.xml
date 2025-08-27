@@ -44,4 +44,33 @@
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="ThemeOverlay.Mascotapp.PetEdit" parent="">
+        <!-- Colores base de la pantalla editable -->
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorSecondary">@color/verdeq</item>
+        <item name="android:statusBarColor">@color/verdeclaroq</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Estilos por defecto para inputs -->
+        <item name="textInputStyle">@style/EditTextStyle.PetEdit</item>
+        <item name="materialButtonStyle">@style/ButtonStyle.PetEdit</item>
+    </style>
+
+    <!-- Estilo de TextInputLayout/TextInputEditText -->
+    <style name="EditTextStyle.PetEdit" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/blue_primary</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+    <!-- Estilo de botón -->
+    <style name="ButtonStyle.PetEdit" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/worksans_medium</item>
+    </style>
 </resources>

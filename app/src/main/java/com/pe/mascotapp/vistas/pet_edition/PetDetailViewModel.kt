@@ -85,7 +85,7 @@ class PetDetailViewModel @Inject constructor(
             state.copy(
                 petObj = state.petObj.copy(
                     pet = state.petObj.pet.copy(
-                        sex = sex
+                        sex = sex.toString()
                     )
                 )
             )

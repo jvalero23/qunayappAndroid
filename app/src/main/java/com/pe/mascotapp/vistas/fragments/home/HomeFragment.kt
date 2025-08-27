@@ -231,7 +231,6 @@ class HomeFragment : Fragment() {
         binding.rcvHome.setAdapter(homeListServiceAdapterType)
         binding.rcvHome.setItemAnimator(DefaultItemAnimator())
 
-
         binding.rcvHomeService.setAdapter(serviceAdapter)
 
         lifecycleScope.launch {

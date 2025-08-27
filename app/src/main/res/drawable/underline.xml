@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size
+        android:height="2dp" /> <!-- Altura de la línea del subrayado -->
+    <solid
+        android:color="#2A6BAF" /> <!-- Color del subrayado, que es el mismo que el color del texto -->
+</shape>

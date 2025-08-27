@@ -346,14 +346,14 @@ fun GeneralInformationSection(
             )
             Row {
                 SelectableChip(
-                    isSelected = petEntity.sex == Sex.MALE,
+                    isSelected = petEntity.sex == Sex.MALE.toString(),
                     onSelect = { setSexToPet(Sex.MALE) },
                     labelText = "Macho",
                     painter = painterResource(R.drawable.hombre)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 SelectableChip(
-                    isSelected = petEntity.sex == Sex.FEMALE,
+                    isSelected = petEntity.sex == Sex.FEMALE.toString(),
                     onSelect = { setSexToPet(Sex.FEMALE) },
                     labelText = "Hembra",
                     painter = painterResource(R.drawable.mujer)
@@ -467,7 +467,7 @@ private fun GeneralInformationSectionPreview() {
             name = "Anuel",
             specie = "",
             weight = "10",
-            sex = Sex.MALE,
+            sex = Sex.MALE.toString(),
             birthdate = "12/12/2021",
             isSelected = false,
             color = 0
@@ -923,7 +923,7 @@ private fun PetDetailScreenPreview() {
                     name = "Anna Morales",
                     specie = "vocent",
                     weight = "14",
-                    sex = Sex.MALE,
+                    sex = Sex.MALE.toString(),
                     birthdate = "ullamcorper",
                     isSelected = false,
                     color = 5740,

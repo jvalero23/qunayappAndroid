@@ -14,11 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_edit_second"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/activityOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:context=".vistas.PetDetailActivity">
 
             <include
@@ -41,7 +57,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:orientation="vertical"
                     android:paddingBottom="16dp">
 
                     <ImageView
@@ -63,13 +78,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center_horizontal"
-                        android:scaleType="centerCrop"
-                        android:text="@{petEntity.specie}"
+                        android:text='@{petEntity.specie}'
                         android:textColor="@color/white"
                         app:drawableTint="@color/white"
                         app:drawableTopCompat="@drawable/perro"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/petImage"
                         tools:text="Perro" />
 
                     <TextView
@@ -79,13 +93,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center_horizontal"
-                        android:scaleType="fitXY"
-                        android:text="@{petEntity.sex.toSpanish()}"
+                        android:text='@{petEntity.sexToSpanish()}'
                         android:textColor="@color/white"
                         app:drawableTint="@color/white"
                         app:drawableTopCompat="@drawable/hombre"
                         app:layout_constraintEnd_toStartOf="@+id/tvSpecies"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/petImage"
                         tools:text="Macho" />
 
                     <TextView
@@ -93,12 +106,11 @@
                         style="@style/WorkSans_Regular32"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginStart="24dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="8dp"
                         android:paddingTop="10dp"
-                        android:text="@{petEntity.name}"
+                        android:text='@{petEntity.name}'
                         android:textColor="@color/white"
                         android:textSize="32sp"
                         app:layout_constraintBottom_toBottomOf="@+id/petImage"
@@ -114,7 +126,7 @@
                         android:background="@color/gray100"
                         android:text=""
                         android:textAlignment="center"
-                        android:textColor="@color/primaryColor"
+                        android:textColor="#203E6C"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -140,10 +152,7 @@
                             android:drawablePadding="8dp"
                             android:text="@string/general_information"
                             android:textColor="@color/primaryColor"
-                            app:drawableEndCompat="@drawable/ic_edit_second"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/petImage" />
+                            android:textSize="22sp" />
 
                         <TextView
                             style="@style/WorkSans_Regular_SemiBold16"
@@ -151,7 +160,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_age"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtAge"
@@ -162,7 +172,9 @@
                             android:gravity="start|top"
                             android:inputType="text"
                             android:scrollbars="vertical"
-                            android:text="@{petEntity.birthdate}"
+                            android:text='@{petEntity.birthdate}'
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="7 años 3 meses" />
 
                         <TextView
@@ -171,7 +183,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_weight"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtWeight"
@@ -182,7 +195,9 @@
                             android:gravity="start|top"
                             android:inputType="text|number"
                             android:scrollbars="vertical"
-                            android:text='@{String.valueOf(petEntity.weight)+ "kg"}'
+                            android:text='@{String.valueOf(petEntity.weight) + "kg"}'
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="24kg" />
 
                         <TextView
@@ -191,7 +206,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_esteralized"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtEsteralized"
@@ -203,6 +219,8 @@
                             android:inputType="text"
                             android:scrollbars="vertical"
                             android:text="si"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
 
                         <TextView
@@ -211,7 +229,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_trained"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtTrained"
@@ -223,6 +242,8 @@
                             android:inputType="text"
                             android:scrollbars="vertical"
                             android:text="si"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
 
                         <TextView
@@ -231,7 +252,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_friendly_with_others_dogs"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtFriendlyDogs"
@@ -243,6 +265,8 @@
                             android:inputType="text"
                             android:scrollbars="vertical"
                             android:text="si"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
 
                         <TextView
@@ -251,7 +275,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_friendly_with_kids"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtFriendlyKids"
@@ -263,6 +288,8 @@
                             android:inputType="text"
                             android:scrollbars="vertical"
                             android:text="si"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -284,11 +311,8 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="8dp"
                             android:text="@string/care_information"
-                            android:textColor="@color/primaryColor"
-                            app:drawableEndCompat="@drawable/ic_edit_second"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/petImage" />
+                            android:textColor="#203E6C"
+                            android:textSize="22sp" />
 
                         <TextView
                             style="@style/WorkSans_Regular_SemiBold16"
@@ -296,7 +320,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_bathroom_outlets"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtBathroomOut"
@@ -307,6 +332,8 @@
                             android:gravity="start|top"
                             android:inputType="text"
                             android:scrollbars="vertical"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="6 horas" />
 
                         <TextView
@@ -315,7 +342,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_energy_level"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtEnergyLevel"
@@ -326,6 +354,8 @@
                             android:gravity="start|top"
                             android:inputType="text|number"
                             android:scrollbars="vertical"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="high" />
 
                         <TextView
@@ -334,7 +364,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_lunch_hours"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtLunchHours"
@@ -345,6 +376,8 @@
                             android:gravity="start|top"
                             android:inputType="text"
                             android:scrollbars="vertical"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="cada 8 horas" />
 
                         <TextView
@@ -353,7 +386,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_additional_info"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtAditionalInfo"
@@ -364,6 +398,8 @@
                             android:gravity="start|top"
                             android:inputType="text"
                             android:scrollbars="vertical"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -385,11 +421,8 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="8dp"
                             android:text="@string/health_information"
-                            android:textColor="@color/primaryColor"
-                            app:drawableEndCompat="@drawable/ic_edit_second"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/petImage" />
+                            android:textColor="#203E6C"
+                            android:textSize="22sp" />
 
                         <TextView
                             style="@style/WorkSans_Regular_SemiBold16"
@@ -397,7 +430,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_has_illness"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtHasIllness"
@@ -409,6 +443,8 @@
                             android:inputType="text"
                             android:scrollbars="vertical"
                             android:text="si"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="si" />
 
                         <TextView
@@ -417,7 +453,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/label_additional_details"
-                            android:textColor="@color/grisTitulo" />
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/edtAdditionalDet"
@@ -428,6 +465,8 @@
                             android:gravity="start|top"
                             android:inputType="text|number"
                             android:scrollbars="vertical"
+                            android:textColor="#C7C7C7"
+                            android:textSize="16sp"
                             tools:text="high" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -449,21 +488,119 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="8dp"
                             android:text="@string/pictures_gallery"
-                            android:textColor="@color/primaryColor"
-                            app:drawableEndCompat="@drawable/ic_edit_second"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/petImage" />
+                            android:textColor="#203E6C"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:id="@+id/galleryRows"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="0dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="4dp"
+                                    android:layout_weight="1"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/img1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/perro1" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="0dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="4dp"
+                                    android:layout_weight="1"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/img2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/perro1" />
+                                </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/row2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="0dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="4dp"
+                                    android:layout_weight="1"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/img3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/perro1" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/btnAddPhoto"
+                                    android:layout_width="0dp"
+                                    android:layout_height="150dp"
+                                    android:layout_margin="4dp"
+                                    android:layout_weight="1"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp"
+                                    app:strokeColor="@color/gray100"
+                                    app:strokeWidth="2dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="+"
+                                            android:textColor="@color/plomo"
+                                            android:textSize="32sp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Agregar Fotos"
+                                            android:textColor="@color/plomo"
+                                            android:textSize="14sp" />
+                                    </LinearLayout>
+                                </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
+                        </LinearLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

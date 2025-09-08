@@ -613,7 +613,7 @@ private fun SimpleViewPagerPetsPreview() {
                     breeds = emptyList()
                 )
             ),
-            rememberPagerState(initialPage = 1) { 3 },
+            rememberPagerState(initialPage = 0) { 3 },
             removeItemAt = {}
         )
     }

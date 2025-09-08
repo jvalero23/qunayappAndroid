@@ -309,34 +309,43 @@ fun LoginScreen() {
                             user.toString(),
                             getSHA(password.toString())
                         ) {
-                            //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
-                            Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
+                            try{
+                                //Toast.makeText(context, "Ingreso", Toast.LENGTH_LONG).show()
+                                Utils.dump("INGRESO CON EL SIGUIENTE JSON: " + it)
 
-                            if (it!!.usuario!!.idUsuario != 0) {
-                                val preferences = context.getSharedPreferences(
-                                    Constantes.SHARED_PREF,
-                                    Context.MODE_PRIVATE
-                                )
+                                if (it!!.usuario!!.idUsuario != 0) {
+                                    val preferences = context.getSharedPreferences(
+                                        Constantes.SHARED_PREF,
+                                        Context.MODE_PRIVATE
+                                    )
 
-                                val gson = Gson()
-                                val jsonSesion = gson.toJson(it)
-                                with(preferences.edit()) {
-                                    putBoolean(Constantes.SHARED_PREF_SUCCESS, true)
-                                    putString(Constantes.SHARED_PREF_MESSAGE, it.message ?: "logeado")
-                                    putInt(Constantes.SHARED_ID_USUARIO, it.usuario?.idUsuario ?: -1)
-                                    putString("SHARED_SESION_JSON", jsonSesion)
-                                    apply()
+                                    val gson = Gson()
+                                    val jsonSesion = gson.toJson(it)
+                                    with(preferences.edit()) {
+                                        putBoolean(Constantes.SHARED_PREF_SUCCESS, true)
+                                        putString(Constantes.SHARED_PREF_MESSAGE, it.message ?: "logeado")
+                                        putInt(Constantes.SHARED_ID_USUARIO, it.usuario?.idUsuario ?: -1)
+                                        putString("SHARED_SESION_JSON", jsonSesion)
+                                        apply()
+                                    }
+
+                                    val intent = Intent(context, HomeActivity::class.java)
+                                    context.startActivity(intent)
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Contraseña o usuario invalido",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
-
-                                val intent = Intent(context, HomeActivity::class.java)
-                                context.startActivity(intent)
-                            } else {
+                            } catch (e: Exception) {
                                 Toast.makeText(
                                     context,
                                     "Contraseña o usuario invalido",
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
+
 
                         }
                     }

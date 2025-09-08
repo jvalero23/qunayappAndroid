@@ -40,6 +40,7 @@ class RetrofitServiceApp {
             override fun onFailure(call: Call<SesionUsuarioLogin>, t: Throwable) {
                 // Procesar error en la petición
                 Utils.dump(t.message.toString())
+                callback(null)
             }
         })
     }

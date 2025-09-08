@@ -143,11 +143,11 @@
 	<color name="dialogBackground">#6603082f</color>
 
 	<style name="TimePickerStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
-		<item name="colorControlNormal">@color/green200</item>
+		<item name="colorControlNormal">@color/blue_primary</item>
 	</style>
 
 	<style name="CalenderViewCustom" parent="Theme.AppCompat">
-		<item name="colorControlActivated">@color/green200</item>
+		<item name="colorControlActivated">@color/blue_primary</item>
 		<item name="android:textColorPrimary">@color/black</item>
 	</style>
 

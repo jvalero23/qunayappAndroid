@@ -66,7 +66,7 @@ val listPets = listOf(
         "Asdfasdf asdfasdf",
         "asdfasdf",
         "20.0",
-        Sex.MALE,
+        Sex.MALE.toString(),
         "01/01/2023",
         false,
         0xFF48A7D3
@@ -77,7 +77,7 @@ val listPets = listOf(
         "Asdfasdfff ffff",
         "asdfasdf",
         "20.0",
-        Sex.MALE,
+        Sex.MALE.toString(),
         "01/01/2023",
         false,
         0xFF2A6BAF
@@ -88,7 +88,7 @@ val listPets = listOf(
         "fffddf fdfds",
         "asdfasdf",
         "20.0",
-        Sex.MALE,
+        Sex.MALE.toString(),
         "01/01/2023",
         false,
         0xFF48A7D3
@@ -99,7 +99,7 @@ val listPets = listOf(
         "Asdfasdf",
         "asdfasdf",
         "20.0",
-        Sex.MALE,
+        Sex.MALE.toString(),
         "01/01/2023",
         false,
         0xFF6EA6E1
@@ -110,7 +110,7 @@ val listPets = listOf(
         "Asdfasdf",
         "asdfasdf",
         "20.0",
-        Sex.MALE,
+        Sex.MALE.toString(),
         "01/01/2023",
         false,
         0xFF2A6BAF

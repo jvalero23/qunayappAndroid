@@ -1,15 +1,12 @@
 package com.pe.mascotapp.vistas.entities
 
 import android.os.Parcelable
-import android.util.Log
 import com.pe.mascotapp.R
 import com.pe.mascotapp.domain.models.Pet
-import com.pe.mascotapp.domain.models.Sex
 import com.pe.mascotapp.vistas.fragments.stepRegister.BreedPetEntity
 import com.pe.mascotapp.vistas.fragments.stepRegister.KindPet
 import com.pe.mascotapp.vistas.fragments.stepRegister.value
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
 
 @Parcelize
 data class PetEntity(
@@ -18,11 +15,21 @@ data class PetEntity(
     var name: String = "",
     var specie: String = KindPet.None.value(),
     var weight: String = "",
-    var sex: Sex = Sex.NONE,
+    var sex: String = "",
     var birthdate: String = "",
     var isSelected: Boolean = false,
     val color: Long = 0xFF48A7D3
 ) : Parcelable {
+
+    // Método para traducir el sexo al español
+    fun sexToSpanish(): String {
+        return when (sex.lowercase()) {
+            "male" -> "Macho"
+            "female" -> "Hembra"
+            else -> "Desconocido"
+        }
+    }
+
     fun toPet(): Pet {
         return Pet(
             petId,
@@ -47,8 +54,6 @@ data class PetEntity(
             else -> R.drawable.llama
         }
     }
-
-
 }
 
 @Parcelize

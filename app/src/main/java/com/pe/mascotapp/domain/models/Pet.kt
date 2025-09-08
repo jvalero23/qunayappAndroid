@@ -1,6 +1,5 @@
 package com.pe.mascotapp.domain.models
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Junction
@@ -16,7 +15,7 @@ data class Pet(
     val name: String,
     val specie: String,
     val weight: Double,
-    val sex: Sex,
+    val sex: String,
     val birthdate: String
 ) {
     fun toPetEntity(): PetEntity {

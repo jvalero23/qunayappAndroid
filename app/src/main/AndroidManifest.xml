@@ -21,8 +21,7 @@
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".components.MainApplication"
@@ -33,6 +32,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mascotapp"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".vistas.pet_edition.EditPetDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_edit_pet_detail"
+            android:theme="@style/Theme.Mascotapp" />
         <activity
             android:name=".vistas.AddReviewActivity"
             android:exported="false" />

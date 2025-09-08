@@ -429,7 +429,7 @@ fun FormPet(
             IconTextButton(
                 name = "Macho",
                 icon = R.drawable.hombre,
-                isEnabled = listPets[pagerState.currentPage].pet.sex == Sex.MALE,
+                isEnabled = listPets[pagerState.currentPage].pet.sex == Sex.MALE.toString(),
                 modifier = Modifier
                     .weight(1F)
                     .fillMaxHeight(),
@@ -440,7 +440,7 @@ fun FormPet(
             IconTextButton(
                 name = "Hembra",
                 icon = R.drawable.mujer,
-                isEnabled = listPets[pagerState.currentPage].pet.sex == Sex.FEMALE,
+                isEnabled = listPets[pagerState.currentPage].pet.sex == Sex.FEMALE.toString(),
                 modifier = Modifier
                     .weight(1F)
                     .fillMaxHeight(),
